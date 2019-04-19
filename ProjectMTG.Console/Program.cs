@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ProjectMTG
 {
-	class Program
+	public class Program
 	{
 		static void Main(string[] args)
 		{
@@ -25,10 +25,9 @@ namespace ProjectMTG
 			using (StreamReader r = new StreamReader("Standard.json"))
 			{
 				//String representation of JSON
-				string json = r.ReadToEnd();
+				var json = r.ReadToEnd();
 
-				var settings = new JsonSerializerSettings();
-				settings.CheckAdditionalContent = false;
+				var settings = new JsonSerializerSettings {CheckAdditionalContent = false};
 
 				var model = JsonConvert.DeserializeObject<Carddata>(json);
 
