@@ -16,6 +16,7 @@ namespace ProjectMTG
 		static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
+			Console.WriteLine("Jauda");
 			loadJson();
 		}
 
