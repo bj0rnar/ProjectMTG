@@ -17,10 +17,10 @@ namespace ProjectMTG
 		{
 			Console.WriteLine("Hello World!");
 			Console.WriteLine("Jauda");
-			loadJson();
+			LoadJson();
 		}
 
-		static void loadJson()
+		private static void LoadJson()
 		{
 			using (StreamReader r = new StreamReader("Standard.json"))
 			{
