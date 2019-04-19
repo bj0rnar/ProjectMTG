@@ -63,7 +63,7 @@ namespace ProjectMTG
 				//Console.WriteLine(model.DOM.cards[0].artist.ToString());
 				//Console.ReadKey();
 
-				//Wat
+				//DEMO!"!!!!
 
 				//Eksempel fra timen:
 				/**
