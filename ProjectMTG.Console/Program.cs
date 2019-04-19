@@ -19,7 +19,8 @@ namespace ProjectMTG
 			Console.WriteLine("Hello World!");
 			Console.WriteLine("Jauda");
 			//LoadJson();
-			AddTest();
+			//AddTest();
+			UserTest();
 		}
 
 		private static void AddTest()
@@ -37,10 +38,37 @@ namespace ProjectMTG
 
 				foreach (var y in test)
 				{
-					deck.DeckList.Add(y);
+					deck.CardList.Add(y);
 				}
 
-				Console.WriteLine(deck.DeckList.Count);
+				Console.WriteLine(deck.CardList.Count);
+				Console.ReadKey();
+
+			}
+		}
+
+		private static void UserTest()
+		{
+			using (var r = new StreamReader("Standard.json"))
+			{
+				var json = r.ReadToEnd();
+				var model = JsonConvert.DeserializeObject<Carddata>(json);
+
+				var user = new User();
+				var deck = new Deck();
+
+				var modelQuery = from w in model.DOM.cards
+								 select w;
+
+				foreach (var q in modelQuery)
+				{
+					deck.CardList.Add(q);					
+				}
+
+				user.DeckLists.Add(deck);
+
+				Console.WriteLine("Users total decks: " + user.DeckLists.Count);
+				Console.WriteLine("Decks total card: " + deck.CardList.Count);
 				Console.ReadKey();
 
 			}

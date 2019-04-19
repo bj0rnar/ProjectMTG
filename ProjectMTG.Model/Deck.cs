@@ -9,6 +9,6 @@ namespace ProjectMTG.Model
 		public string DeckName;
 		public int DeckId;
 
-		public ICollection<Card> DeckList { get; set; } = new List<Card>();
+		public ICollection<Card> CardList { get; set; } = new List<Card>();
 	}
 }
