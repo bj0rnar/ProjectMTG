@@ -68,7 +68,11 @@ namespace ProjectMTG
 		private static void AddTest()
 		{
 			using (var r = new StreamReader("Standard.json"))
-			{
+			{	
+
+				//Not doing it this way :O
+
+				/*
 				var json = r.ReadToEnd();
 				var model = JsonConvert.DeserializeObject<Carddata>(json);
 
@@ -80,11 +84,12 @@ namespace ProjectMTG
 
 				foreach (var y in test)
 				{
-					deck.CardList.Add(y);
+					deck.Cards.Add(y);
 				}
 
-				Console.WriteLine(deck.CardList.Count);
+				Console.WriteLine(deck.Cards.Count);
 				Console.ReadKey();
+				*/
 
 			}
 		}
@@ -104,13 +109,13 @@ namespace ProjectMTG
 
 				foreach (var q in modelQuery)
 				{
-					deck.CardList.Add(q);					
+					deck.Cards.Add(q);					
 				}
 
-				user.DeckLists.Add(deck);
+				user.Decks.Add(deck);
 
-				Console.WriteLine("Users total decks: " + user.DeckLists.Count);
-				Console.WriteLine("Decks total card: " + deck.CardList.Count);
+				Console.WriteLine("Users total decks: " + user.Decks.Count);
+				Console.WriteLine("Decks total card: " + deck.Cards.Count);
 				Console.ReadKey();
 
 			}

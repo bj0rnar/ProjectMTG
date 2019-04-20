@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectMTG.Model
 	{
@@ -39,6 +40,9 @@ namespace ProjectMTG.Model
 
 		public class Card
 		{
+			[Key]
+			public int CardId { get; set; }
+
 			public string artist { get; set; }
 			public string borderColor { get; set; }
 			public string[] colorIdentity { get; set; }
@@ -79,6 +83,9 @@ namespace ProjectMTG.Model
 			public string watermark { get; set; }
 			public string[] variations { get; set; }
 			public bool isStarter { get; set; }
+
+			public ICollection<DeckCardsDir> InCollection = new List<DeckCardsDir>();
+
 		}
 
 		public class Legalities
