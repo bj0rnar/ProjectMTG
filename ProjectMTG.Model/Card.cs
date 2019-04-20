@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ProjectMTG.Model
 	{
@@ -27,7 +28,6 @@ namespace ProjectMTG.Model
 			public string name { get; set; }
 			public string releaseDate { get; set; }
 			public int tcgplayerGroupId { get; set; }
-			public Token[] tokens { get; set; }
 			public int totalSetSize { get; set; }
 			public string type { get; set; }
 		}
@@ -44,72 +44,59 @@ namespace ProjectMTG.Model
 			public int CardId { get; set; }
 
 			public string artist { get; set; }
-			public string borderColor { get; set; }
-			public string[] colorIdentity { get; set; }
-			public string[] colors { get; set; }
+			public List<ColorIdentity> colorIdentities { get; set; }
+			public List<Colors> colors { get; set; }
 			public float convertedManaCost { get; set; }
-			public Foreigndata[] foreignData { get; set; }
-			public string frameVersion { get; set; }
-			public bool hasFoil { get; set; }
-			public bool hasNonFoil { get; set; }
-			public string layout { get; set; }
-			public Legalities legalities { get; set; }
 			public string loyalty { get; set; }
 			public string manaCost { get; set; }
 			public int multiverseId { get; set; }
 			public string name { get; set; }
 			public object[] names { get; set; }
 			public string number { get; set; }
-			public string originalText { get; set; }
-			public string originalType { get; set; }
-			public string[] printings { get; set; }
 			public string rarity { get; set; }
 			public Ruling[] rulings { get; set; }
 			public string scryfallId { get; set; }
 			public string scryfallIllustrationId { get; set; }
 			public string scryfallOracleId { get; set; }
-			public string[] subtypes { get; set; }
-			public string[] supertypes { get; set; }
+			public List<Subtypes> subtypes { get; set; }
+			public List<Supertypes> supertypes { get; set; }
 			public int tcgplayerProductId { get; set; }
 			public string tcgplayerPurchaseUrl { get; set; }
 			public string text { get; set; }
 			public string type { get; set; }
-			public string[] types { get; set; }
+			public List<Types> types { get; set; }
 			public string uuid { get; set; }
 			public string uuidV421 { get; set; }
-			public string flavorText { get; set; }
 			public string power { get; set; }
 			public string toughness { get; set; }
-			public string watermark { get; set; }
-			public string[] variations { get; set; }
-			public bool isStarter { get; set; }
 
 			public ICollection<DeckCardsDir> InCollection { get; set; } = new List<DeckCardsDir>();
 
 		}
 
-		public class Legalities
+		public class ColorIdentity
 		{
-			public string commander { get; set; }
-			public string duel { get; set; }
-			public string frontier { get; set; }
-			public string future { get; set; }
-			public string legacy { get; set; }
-			public string modern { get; set; }
-			public string standard { get; set; }
-			public string vintage { get; set; }
-			public string pauper { get; set; }
-			public string penny { get; set; }
+			public string colorIdentity { get; set; }
 		}
 
-		public class Foreigndata
+		public class Colors
 		{
-			public string language { get; set; }
-			public int multiverseId { get; set; }
-			public string name { get; set; }
-			public string text { get; set; }
-			public string type { get; set; }
-			public string flavorText { get; set; }
+			public string colors { get; set; }
+		}
+
+		public class Subtypes
+		{
+			public string subtypes { get; set; }
+		}
+
+		public class Supertypes
+		{
+			public string supertypes { get; set; }
+		}
+
+		public class Types
+		{
+			public string types { get; set; }
 		}
 
 		public class Ruling
@@ -118,25 +105,7 @@ namespace ProjectMTG.Model
 			public string text { get; set; }
 		}
 
-		public class Token
-		{
-			public string artist { get; set; }
-			public string borderColor { get; set; }
-			public string[] colorIdentity { get; set; }
-			public string[] colors { get; set; }
-			public string layout { get; set; }
-			public string name { get; set; }
-			public string number { get; set; }
-			public string power { get; set; }
-			public string[] reverseRelated { get; set; }
-			public string scryfallId { get; set; }
-			public string scryfallIllustrationId { get; set; }
-			public string scryfallOracleId { get; set; }
-			public string text { get; set; }
-			public string toughness { get; set; }
-			public string type { get; set; }
-			public string uuid { get; set; }
-		}
+	
 
 		public class GRN
 		{
@@ -152,7 +121,6 @@ namespace ProjectMTG.Model
 			public string name { get; set; }
 			public string releaseDate { get; set; }
 			public int tcgplayerGroupId { get; set; }
-			public Token[] tokens { get; set; }
 			public int totalSetSize { get; set; }
 			public string type { get; set; }
 		}
@@ -172,7 +140,6 @@ namespace ProjectMTG.Model
 			public string name { get; set; }
 			public string releaseDate { get; set; }
 			public int tcgplayerGroupId { get; set; }
-			public Token[] tokens { get; set; }
 			public int totalSetSize { get; set; }
 			public string type { get; set; }
 		}
@@ -193,7 +160,6 @@ namespace ProjectMTG.Model
 			public string name { get; set; }
 			public string releaseDate { get; set; }
 			public int tcgplayerGroupId { get; set; }
-			public Token[] tokens { get; set; }
 			public int totalSetSize { get; set; }
 			public string type { get; set; }
 		}
@@ -213,7 +179,6 @@ namespace ProjectMTG.Model
 			public string name { get; set; }
 			public string releaseDate { get; set; }
 			public int tcgplayerGroupId { get; set; }
-			public Token[] tokens { get; set; }
 			public int totalSetSize { get; set; }
 			public string type { get; set; }
 		}
@@ -234,7 +199,6 @@ namespace ProjectMTG.Model
 			public string name { get; set; }
 			public string releaseDate { get; set; }
 			public int tcgplayerGroupId { get; set; }
-			public Token[] tokens { get; set; }
 			public int totalSetSize { get; set; }
 			public string type { get; set; }
 		}
