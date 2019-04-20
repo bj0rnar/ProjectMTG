@@ -22,14 +22,61 @@ namespace ProjectMTG
 			Console.WriteLine("Jauda");
 			//LoadJson();
 			//AddTest();
-			UserTest();
+			//UserTest();
 			//CheckAllCards();
+			//wat();
+			demotest();
+		}
+
+		private static void demotest()
+		{
+			string json =
+				@"{""data"":[{""id"":""518523721"",""name"":""ftyft""}, {""id"":""527032438"",""name"":""ftyftyf""}, {""id"":""527572047"",""name"":""ftgft""}, {""id"":""531141884"",""name"":""ftftft""}]}";
+
+			Friends facebookFriends = JsonConvert.DeserializeObject<Friends>(json);
+
+			foreach (var x in facebookFriends.data)
+			{
+				Console.WriteLine(x.name);
+			}
+			Console.ReadKey();
+		}
+
+		public class Friends
+		{
+
+			public List<FacebookFriend> data { get; set; }
+		}
+
+		public class FacebookFriend
+		{
+			public string name { get; set; }
 		}
 
 
-		private static void AddStuffToDb()
+		private static void wat()
 		{
-			
+			using (var r = new StreamReader("Standard.json"))
+			{
+				var json = r.ReadToEnd();
+
+				var model = JsonConvert.DeserializeObject<Carddata>(json);
+
+				var query = from x in model.DOM.cards
+							select x.allColors;
+
+				
+
+				foreach (var item in query)
+				{
+					foreach (var innerItem in item)
+					{
+						Console.WriteLine(innerItem.colors);
+					}
+				}
+
+				Console.ReadKey();
+			}
 		}
 
 		private static void CheckAllCards()
@@ -44,30 +91,55 @@ namespace ProjectMTG
 
 
 				var testing = from i in model.GRN.cards
-					select i.names;
+					select i.name;
+
+				foreach (String i in testing)
+				{
+					Console.WriteLine(i);
+					Console.WriteLine(i);
+				}
 
 				var hopeless = from x in model.M19.cards
-					select x.names;
+					select x.name;
+
+				foreach (String i in hopeless)
+				{
+					Console.WriteLine(i);
+				}
 
 				var allthings = from w in model.DOM.cards
-					select w.names;
+					select w.name;
+
+				foreach (String i in allthings)
+				{
+					Console.WriteLine(i);
+				}
+
 
 				var baybay = from s in model.RIX.cards
-					select s.names;
+					select s.name;
+
+				foreach (String i in baybay)
+				{
+					Console.WriteLine(i);
+				}
 
 				var lattis = from p in model.RNA.cards
-					select p.names;
+					select p.name;
+
+				foreach (String i in lattis)
+				{
+					Console.WriteLine(i);
+				}
 
 				var jaujau = from k in model.XLN.cards
-					select k.names;
+					select k.name;
 
-
-				Console.WriteLine("GRN count: " + testing.Count());
-				Console.WriteLine("M19 count " + hopeless.Count());
-				Console.WriteLine("DOM count " + allthings.Count());
-				Console.WriteLine("RIX count " + baybay.Count());
-				Console.WriteLine("RNA count " + lattis.Count());
-				Console.WriteLine("XLN count " + jaujau.Count());
+				foreach (String i in jaujau)
+				{
+					Console.WriteLine(i);
+				}
+				
 				Console.ReadKey();
 			}
 		}

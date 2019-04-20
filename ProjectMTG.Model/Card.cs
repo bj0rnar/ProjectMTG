@@ -18,7 +18,6 @@ namespace ProjectMTG.Model
 		public class DOM
 		{
 			public int baseSetSize { get; set; }
-			public object[] boosterV3 { get; set; }
 			public Card[] cards { get; set; }
 			public string code { get; set; }
 			public bool isFoilOnly { get; set; }
@@ -45,7 +44,7 @@ namespace ProjectMTG.Model
 
 			public string artist { get; set; }
 			public List<ColorIdentity> colorIdentities { get; set; }
-			public List<Colors> colors { get; set; }
+			public List<Colors> allColors { get; set; }
 			public float convertedManaCost { get; set; }
 			public string loyalty { get; set; }
 			public string manaCost { get; set; }
@@ -58,13 +57,13 @@ namespace ProjectMTG.Model
 			public string scryfallId { get; set; }
 			public string scryfallIllustrationId { get; set; }
 			public string scryfallOracleId { get; set; }
-			public List<Subtypes> subtypes { get; set; }
-			public List<Supertypes> supertypes { get; set; }
+			public List<Subtypes> subtypeList { get; set; }
+			public List<Supertypes> supertypeList { get; set; }
 			public int tcgplayerProductId { get; set; }
 			public string tcgplayerPurchaseUrl { get; set; }
 			public string text { get; set; }
 			public string type { get; set; }
-			public List<Types> types { get; set; }
+			public List<Types> allTypes { get; set; }
 			public string uuid { get; set; }
 			public string uuidV421 { get; set; }
 			public string power { get; set; }
@@ -98,6 +97,7 @@ namespace ProjectMTG.Model
 		{
 			public string types { get; set; }
 		}
+
 
 		public class Ruling
 		{
