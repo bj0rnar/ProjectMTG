@@ -10,6 +10,7 @@ using System.IO;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using ProjectMTG.Model;
 using Newtonsoft.Json.Linq;
+using ProjectMTG.DataAccess;
 
 namespace ProjectMTG
 {
@@ -23,6 +24,12 @@ namespace ProjectMTG
 			//AddTest();
 			UserTest();
 			//CheckAllCards();
+		}
+
+
+		private static void AddStuffToDb()
+		{
+			
 		}
 
 		private static void CheckAllCards()
@@ -95,9 +102,10 @@ namespace ProjectMTG
 		}
 
 		private static void UserTest()
-		{
+		{	
 			using (var r = new StreamReader("Standard.json"))
 			{
+				/*
 				var json = r.ReadToEnd();
 				var model = JsonConvert.DeserializeObject<Carddata>(json);
 
@@ -109,7 +117,7 @@ namespace ProjectMTG
 
 				foreach (var q in modelQuery)
 				{
-					deck.Cards.Add(q);					
+					deck.Has.Add(q);					
 				}
 
 				user.Decks.Add(deck);
@@ -117,6 +125,7 @@ namespace ProjectMTG
 				Console.WriteLine("Users total decks: " + user.Decks.Count);
 				Console.WriteLine("Decks total card: " + deck.Cards.Count);
 				Console.ReadKey();
+				*/
 
 			}
 		}

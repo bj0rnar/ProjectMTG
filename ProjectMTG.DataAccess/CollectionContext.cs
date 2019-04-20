@@ -13,6 +13,8 @@ namespace ProjectMTG.DataAccess
 
 		public CollectionContext(DbContextOptions<CollectionContext> options) : base(options) { }
 
+		public CollectionContext() { }
+
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
@@ -29,6 +31,20 @@ namespace ProjectMTG.DataAccess
 		{
 			modelBuilder.Entity<DeckCardsDir>().HasKey(dc => new {dc.CardId, dc.DeckId});
 
+			modelBuilder.Entity<DeckCardsDir>()
+				.HasOne<Deck>(d => d.Deck)
+				.WithMany(s => s.Contains)
+				.HasForeignKey(c => c.DeckId);
+
+			modelBuilder.Entity<DeckCardsDir>()
+				.HasOne<Card>(c => c.Card)
+				.WithMany(r => r.InCollection)
+				.HasForeignKey(r => r.CardId);
+
+			modelBuilder.Entity<User>()
+				.HasMany(d => d.Decks)
+				.WithOne(u => u.User)
+				.IsRequired();
 		}
 
 	}

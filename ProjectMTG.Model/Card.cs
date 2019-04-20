@@ -84,7 +84,7 @@ namespace ProjectMTG.Model
 			public string[] variations { get; set; }
 			public bool isStarter { get; set; }
 
-			public ICollection<DeckCardsDir> InCollection = new List<DeckCardsDir>();
+			public ICollection<DeckCardsDir> InCollection { get; set; } = new List<DeckCardsDir>();
 
 		}
 

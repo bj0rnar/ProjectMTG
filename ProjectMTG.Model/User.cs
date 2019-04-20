@@ -8,10 +8,11 @@ namespace ProjectMTG.Model
 	public class User
 	{
 		[Key]
-		public int UserId;
-		public string UserName;
+		public int UserId { get; set; }
+		public string UserName { get; set; }
 		
-		public ICollection<Deck> Decks = new List<Deck>();
-		public ICollection<Card> Cards = new List<Card>();
+		public ICollection<Deck> Decks { get; set; } = new List<Deck>();
+		
+		//public ICollection<Card> Cards = new List<Card>();
 	}
 }
