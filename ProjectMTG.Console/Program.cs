@@ -7,6 +7,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.EntityFrameworkCore.Query.Expressions;
 using ProjectMTG.Model;
 using Newtonsoft.Json.Linq;
 
@@ -21,6 +22,47 @@ namespace ProjectMTG
 			//LoadJson();
 			//AddTest();
 			UserTest();
+			//CheckAllCards();
+		}
+
+		private static void CheckAllCards()
+		{
+			using (var r = new StreamReader("Standard.json"))
+			{
+
+				var json = r.ReadToEnd();
+
+
+				var model = JsonConvert.DeserializeObject<Carddata>(json);
+
+
+				var testing = from i in model.GRN.cards
+					select i.names;
+
+				var hopeless = from x in model.M19.cards
+					select x.names;
+
+				var allthings = from w in model.DOM.cards
+					select w.names;
+
+				var baybay = from s in model.RIX.cards
+					select s.names;
+
+				var lattis = from p in model.RNA.cards
+					select p.names;
+
+				var jaujau = from k in model.XLN.cards
+					select k.names;
+
+
+				Console.WriteLine("GRN count: " + testing.Count());
+				Console.WriteLine("M19 count " + hopeless.Count());
+				Console.WriteLine("DOM count " + allthings.Count());
+				Console.WriteLine("RIX count " + baybay.Count());
+				Console.WriteLine("RNA count " + lattis.Count());
+				Console.WriteLine("XLN count " + jaujau.Count());
+				Console.ReadKey();
+			}
 		}
 
 		private static void AddTest()
@@ -90,11 +132,9 @@ namespace ProjectMTG
 				var products = from y in model.DOM.cards
 							   select y.name;
 
-				var testing = from i in model.DOM.cards
-							  from j in model.M19.cards
-							  select new { i, j };
 
-				Console.WriteLine(products.ToArray<string>());
+
+			    Console.WriteLine(products.ToArray<string>());
 				//COUNT FUNKE FAKTISK!!
 				Console.WriteLine(products.Count());
 				/*
