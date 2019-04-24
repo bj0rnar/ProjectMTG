@@ -10,6 +10,7 @@ namespace ProjectMTG.DataAccess
 		public DbSet<Card> Cards { get; set; }
 		public DbSet<Deck> Decks { get; set; }
 		public DbSet<User> Users { get; set; }
+		public DbSet<DeckCardsDir> DeckCardsDirs { get; set; }
 
 		public CollectionContext(DbContextOptions<CollectionContext> options) : base(options) { }
 

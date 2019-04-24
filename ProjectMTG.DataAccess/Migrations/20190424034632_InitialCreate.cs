@@ -76,7 +76,7 @@ namespace ProjectMTG.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeckCardsDir",
+                name: "DeckCardsDirs",
                 columns: table => new
                 {
                     DeckId = table.Column<int>(nullable: false),
@@ -84,15 +84,15 @@ namespace ProjectMTG.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeckCardsDir", x => new { x.CardId, x.DeckId });
+                    table.PrimaryKey("PK_DeckCardsDirs", x => new { x.CardId, x.DeckId });
                     table.ForeignKey(
-                        name: "FK_DeckCardsDir_Cards_CardId",
+                        name: "FK_DeckCardsDirs_Cards_CardId",
                         column: x => x.CardId,
                         principalTable: "Cards",
                         principalColumn: "CardId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DeckCardsDir_Decks_DeckId",
+                        name: "FK_DeckCardsDirs_Decks_DeckId",
                         column: x => x.DeckId,
                         principalTable: "Decks",
                         principalColumn: "DeckId",
@@ -100,8 +100,8 @@ namespace ProjectMTG.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeckCardsDir_DeckId",
-                table: "DeckCardsDir",
+                name: "IX_DeckCardsDirs_DeckId",
+                table: "DeckCardsDirs",
                 column: "DeckId");
 
             migrationBuilder.CreateIndex(
@@ -113,7 +113,7 @@ namespace ProjectMTG.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DeckCardsDir");
+                name: "DeckCardsDirs");
 
             migrationBuilder.DropTable(
                 name: "Cards");

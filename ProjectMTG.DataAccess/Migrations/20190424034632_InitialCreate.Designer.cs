@@ -9,7 +9,7 @@ using ProjectMTG.DataAccess;
 namespace ProjectMTG.DataAccess.Migrations
 {
     [DbContext(typeof(CollectionContext))]
-    [Migration("20190424034106_InitialCreate")]
+    [Migration("20190424034632_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,7 +104,7 @@ namespace ProjectMTG.DataAccess.Migrations
 
                     b.HasIndex("DeckId");
 
-                    b.ToTable("DeckCardsDir");
+                    b.ToTable("DeckCardsDirs");
                 });
 
             modelBuilder.Entity("ProjectMTG.Model.User", b =>

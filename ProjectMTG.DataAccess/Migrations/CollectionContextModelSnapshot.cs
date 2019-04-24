@@ -102,7 +102,7 @@ namespace ProjectMTG.DataAccess.Migrations
 
                     b.HasIndex("DeckId");
 
-                    b.ToTable("DeckCardsDir");
+                    b.ToTable("DeckCardsDirs");
                 });
 
             modelBuilder.Entity("ProjectMTG.Model.User", b =>
