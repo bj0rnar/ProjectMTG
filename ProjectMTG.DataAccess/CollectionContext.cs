@@ -45,6 +45,7 @@ namespace ProjectMTG.DataAccess
 				.HasMany(d => d.Decks)
 				.WithOne(u => u.User)
 				.IsRequired();
+
 		}
 
 	}

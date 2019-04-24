@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ProjectMTG.Model
@@ -43,8 +46,23 @@ namespace ProjectMTG.Model
 			public int CardId { get; set; }
 
 			public string artist { get; set; }
-			public List<ColorIdentity> colorIdentities { get; set; }
-			public List<Colors> allColors { get; set; }
+			public string[] colors { get; set; }
+
+
+			//public string[] colorIdentities { get; set; }
+			/*
+			public string colors
+			{
+				get { return string.Join(",", ColorList); }
+				set { ColorList = value.Split(',').ToList(); }
+			}
+
+			[NotMapped]
+			public ICollection<string> ColorList { get; set; }
+			eller den her metoda:
+			public List<Colors> colors { get; set; }
+			*/
+
 			public float convertedManaCost { get; set; }
 			public string loyalty { get; set; }
 			public string manaCost { get; set; }
@@ -57,13 +75,13 @@ namespace ProjectMTG.Model
 			public string scryfallId { get; set; }
 			public string scryfallIllustrationId { get; set; }
 			public string scryfallOracleId { get; set; }
-			public List<Subtypes> subtypeList { get; set; }
-			public List<Supertypes> supertypeList { get; set; }
+			public string[] subtype { get; set; }
+			public string[] supertype { get; set; }
 			public int tcgplayerProductId { get; set; }
 			public string tcgplayerPurchaseUrl { get; set; }
 			public string text { get; set; }
 			public string type { get; set; }
-			public List<Types> allTypes { get; set; }
+			public string[] types { get; set; }
 			public string uuid { get; set; }
 			public string uuidV421 { get; set; }
 			public string power { get; set; }

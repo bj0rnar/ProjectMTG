@@ -23,9 +23,9 @@ namespace ProjectMTG
 			//LoadJson();
 			//AddTest();
 			//UserTest();
-			//CheckAllCards();
+			CheckAllCards();
 			//wat();
-			demotest();
+			//demotest();
 		}
 
 		private static void demotest()
@@ -60,22 +60,35 @@ namespace ProjectMTG
 			{
 				var json = r.ReadToEnd();
 
+
+
+				dynamic data = JsonConvert.DeserializeObject(json);
+				IDictionary<string, JToken> cards = data;
+
+				foreach (var card in cards)
+				{
+					var key = card.Key;
+					var value = card.Value;
+				}
+
+
+				Console.ReadKey();
+
+				/*
+
 				var model = JsonConvert.DeserializeObject<Carddata>(json);
 
 				var query = from x in model.DOM.cards
-							select x.allColors;
-
+					select x.artist;
 				
 
 				foreach (var item in query)
 				{
-					foreach (var innerItem in item)
-					{
-						Console.WriteLine(innerItem.colors);
-					}
+					Console.WriteLine(item);
 				}
 
 				Console.ReadKey();
+				*/
 			}
 		}
 
@@ -93,12 +106,12 @@ namespace ProjectMTG
 				var testing = from i in model.GRN.cards
 					select i.name;
 
-				foreach (String i in testing)
+				
+				foreach (var i in testing)
 				{
 					Console.WriteLine(i);
-					Console.WriteLine(i);
 				}
-
+				
 				var hopeless = from x in model.M19.cards
 					select x.name;
 
