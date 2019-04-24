@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMTG.Console", "ProjectMTG.Console\ProjectMTG.Console.csproj", "{D3B330B7-72CF-4850-A588-1C62AA731272}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectMTG.Console", "ProjectMTG.Console\ProjectMTG.Console.csproj", "{D3B330B7-72CF-4850-A588-1C62AA731272}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMTG.Model", "ProjectMTG.Model\ProjectMTG.Model.csproj", "{CE9062E7-934E-4918-9B60-BE3C087245A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectMTG.Model", "ProjectMTG.Model\ProjectMTG.Model.csproj", "{CE9062E7-934E-4918-9B60-BE3C087245A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMTG.DataAccess", "ProjectMTG.DataAccess\ProjectMTG.DataAccess.csproj", "{756807FD-D1FE-4C66-960A-D954B97FAFFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CE9062E7-934E-4918-9B60-BE3C087245A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE9062E7-934E-4918-9B60-BE3C087245A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE9062E7-934E-4918-9B60-BE3C087245A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{756807FD-D1FE-4C66-960A-D954B97FAFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{756807FD-D1FE-4C66-960A-D954B97FAFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{756807FD-D1FE-4C66-960A-D954B97FAFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{756807FD-D1FE-4C66-960A-D954B97FAFFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

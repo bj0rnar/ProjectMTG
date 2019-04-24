@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectMTG.DataAccess\ProjectMTG.DataAccess.csproj" />
     <ProjectReference Include="..\ProjectMTG.Model\ProjectMTG.Model.csproj" />
   </ItemGroup>
 
