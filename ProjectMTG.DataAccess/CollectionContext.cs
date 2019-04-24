@@ -46,6 +46,30 @@ namespace ProjectMTG.DataAccess
 				.WithOne(u => u.User)
 				.IsRequired();
 
+			modelBuilder.Entity<Card>()
+				.Property(e => e.colors)
+				.HasConversion(
+					v => string.Join(";", v),
+					v => v.Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries));
+
+			modelBuilder.Entity<Card>()
+				.Property(e => e.subtype)
+				.HasConversion(
+					v => string.Join(";", v),
+					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+			modelBuilder.Entity<Card>()
+				.Property(e => e.supertype)
+				.HasConversion(
+					v => string.Join(";", v),
+					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+			modelBuilder.Entity<Card>()
+				.Property(e => e.types)
+				.HasConversion(
+					v => string.Join(";", v),
+					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
 		}
 
 	}

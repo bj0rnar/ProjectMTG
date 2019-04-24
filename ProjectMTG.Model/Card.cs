@@ -46,6 +46,7 @@ namespace ProjectMTG.Model
 			public int CardId { get; set; }
 
 			public string artist { get; set; }
+
 			public string[] colors { get; set; }
 
 
@@ -68,10 +69,8 @@ namespace ProjectMTG.Model
 			public string manaCost { get; set; }
 			public int multiverseId { get; set; }
 			public string name { get; set; }
-			public object[] names { get; set; }
 			public string number { get; set; }
 			public string rarity { get; set; }
-			public Ruling[] rulings { get; set; }
 			public string scryfallId { get; set; }
 			public string scryfallIllustrationId { get; set; }
 			public string scryfallOracleId { get; set; }
@@ -90,39 +89,6 @@ namespace ProjectMTG.Model
 			public ICollection<DeckCardsDir> InCollection { get; set; } = new List<DeckCardsDir>();
 
 		}
-
-		public class ColorIdentity
-		{
-			public string colorIdentity { get; set; }
-		}
-
-		public class Colors
-		{
-			public string colors { get; set; }
-		}
-
-		public class Subtypes
-		{
-			public string subtypes { get; set; }
-		}
-
-		public class Supertypes
-		{
-			public string supertypes { get; set; }
-		}
-
-		public class Types
-		{
-			public string types { get; set; }
-		}
-
-
-		public class Ruling
-		{
-			public string date { get; set; }
-			public string text { get; set; }
-		}
-
 	
 
 		public class GRN
