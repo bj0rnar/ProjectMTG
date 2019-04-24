@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectMTG.Console", "Proje
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectMTG.Model", "ProjectMTG.Model\ProjectMTG.Model.csproj", "{CE9062E7-934E-4918-9B60-BE3C087245A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMTG.DataAccess", "ProjectMTG.DataAccess\ProjectMTG.DataAccess.csproj", "{756807FD-D1FE-4C66-960A-D954B97FAFFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectMTG.DataAccess", "ProjectMTG.DataAccess\ProjectMTG.DataAccess.csproj", "{756807FD-D1FE-4C66-960A-D954B97FAFFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMTG.Api", "ProjectMTG.Api\ProjectMTG.Api.csproj", "{574E0B91-B00F-4F46-AB5A-D6C9F48D0A30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{756807FD-D1FE-4C66-960A-D954B97FAFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{756807FD-D1FE-4C66-960A-D954B97FAFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{756807FD-D1FE-4C66-960A-D954B97FAFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{574E0B91-B00F-4F46-AB5A-D6C9F48D0A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{574E0B91-B00F-4F46-AB5A-D6C9F48D0A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{574E0B91-B00F-4F46-AB5A-D6C9F48D0A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{574E0B91-B00F-4F46-AB5A-D6C9F48D0A30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
