@@ -32,26 +32,153 @@ namespace ProjectMTG
 			//CheckAllCards();
 			//wat();
 			//demotest();
-			ImportJsonFromMtgJson();
+			//ImportJsonFromMtgJson();
+			//teststuff();
+			//addToDb();
+			CreateDeck();
+		}
+
+		public static void CreateDeck()
+		{
+			using(var db = new CollectionContext())
+			{
+				User demoUser = new User() {UserName = "DemoUser"};
+				Deck demoDeck = new Deck() {DeckName = "Testdeck", User = demoUser};
+				db.Users.Add(demoUser);
+				db.Decks.Add(demoDeck);
+				db.SaveChanges();
+			}
+		}
+
+		public static void teststuff()
+		{
+			using (var db = new CollectionContext())
+			{
+				using (var r = new StreamReader("Standard.json"))
+				{
+
+					var json = r.ReadToEnd();
+					var model = JsonConvert.DeserializeObject<Carddata>(json);
+
+					var data = from x in model.DOM.cards
+						select x;
+
+					foreach (var q in data)
+					{
+
+						db.Cards.Add(new Card()
+						{
+							name = q.name,
+							artist = q.artist,
+							colors = q.colors,
+							convertedManaCost = q.convertedManaCost,
+							manaCost = q.manaCost,
+							multiverseId = q.multiverseId,
+							loyalty = q.loyalty,
+							number = q.number,
+							rarity = q.rarity,
+							scryfallId = q.scryfallId,
+							scryfallIllustrationId = q.scryfallIllustrationId,
+							scryfallOracleId = q.scryfallOracleId,
+							subtype = q.subtype,
+							supertype = q.supertype,
+							text = q.text,
+							type = q.type,
+							types = q.types,
+							uuid = q.uuid,
+							uuidV421 = q.uuidV421,
+							power = q.power,
+							toughness = q.toughness
+
+
+						});
+
+					}
+					
+					db.SaveChanges();
+				}
+			}
+		}
+
+		public static void addToDb()
+		{
+			using (var db = new CollectionContext())
+			{
+				using (var httpclient = new WebClient())
+				{
+					var jsonData = httpclient.DownloadString("https://mtgjson.com/json/Standard.json");
+					var model = JsonConvert.DeserializeObject<Carddata>(jsonData);
+
+					var data = from i in model.GRN.cards
+						select i;
+
+					foreach (var q in data)
+					{
+
+						db.Cards.Add(new Card()
+						{
+							name = q.name,
+							artist = q.artist,
+							colors = q.colors,
+							convertedManaCost = q.convertedManaCost,
+							manaCost = q.manaCost,
+							multiverseId = q.multiverseId,
+							loyalty = q.loyalty,
+							number = q.number,
+							rarity = q.rarity,
+							scryfallId = q.scryfallId,
+							scryfallIllustrationId = q.scryfallIllustrationId,
+							scryfallOracleId = q.scryfallOracleId,
+							subtype = q.subtype,
+							supertype = q.supertype,
+							text = q.text,
+							type = q.type,
+							types = q.types,
+							uuid = q.uuid,
+							uuidV421 = q.uuidV421,
+							power = q.power,
+							toughness = q.toughness
+
+
+						});
+						
+						db.SaveChanges();
+
+					}
+				}
+			}
 		}
 
 		public static async Task ImportJsonFromMtgJson()
 		{
 
-			using (var httpclient = new WebClient())
+			using (var r = new StreamReader("Standard.json"))
 			{
-				var jsonData = httpclient.DownloadString("https://mtgjson.com/json/Standard.json");
-				var data = JsonConvert.DeserializeObject<Carddata>(jsonData);
-
-				var query = from i in data.DOM.cards
-					select i.name;
-
-				foreach (var card in query)
+				using (var db = new CollectionContext())
 				{
-					Console.WriteLine(card);
-				}
 
-				Console.ReadKey();
+					//var jsonData = httpclient.DownloadString("https://mtgjson.com/json/Standard.json");
+
+					//var data = JsonConvert.DeserializeObject<Carddata>(jsonData);
+
+					var json = r.ReadToEnd();
+					var model = JsonConvert.DeserializeObject<Carddata>(json);
+
+					var data = from x in model.DOM.cards
+						select x;
+
+							//var query = from i in data.DOM.cards
+						//select i;
+
+					foreach (var card in data)
+					{
+						db.Cards.Add(card);
+						Console.WriteLine("Adding: " + card.name  + " ... ");
+					}
+
+					Console.ReadKey();
+					db.SaveChanges();
+				}
 
 			}
 
