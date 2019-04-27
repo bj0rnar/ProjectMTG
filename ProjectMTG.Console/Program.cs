@@ -7,6 +7,8 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using ProjectMTG.Model;
 using Newtonsoft.Json.Linq;
@@ -16,6 +18,10 @@ namespace ProjectMTG
 {
 	public class Program
 	{
+		static readonly HttpClient httpClient = new HttpClient();
+		static Uri cardUri = new Uri("https://mtgjson.com/json/Standard.json");
+
+
 		static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
@@ -23,9 +29,49 @@ namespace ProjectMTG
 			//LoadJson();
 			//AddTest();
 			//UserTest();
-			CheckAllCards();
+			//CheckAllCards();
 			//wat();
 			//demotest();
+			ImportJsonFromMtgJson();
+		}
+
+		public static async Task ImportJsonFromMtgJson()
+		{
+
+			using (var httpclient = new WebClient())
+			{
+				var jsonData = httpclient.DownloadString("https://mtgjson.com/json/Standard.json");
+				var data = JsonConvert.DeserializeObject<Carddata>(jsonData);
+
+				var query = from i in data.DOM.cards
+					select i.name;
+
+				foreach (var card in query)
+				{
+					Console.WriteLine(card);
+				}
+
+				Console.ReadKey();
+
+			}
+
+
+			/*
+			using (var db = new CollectionContext())
+			{
+				HttpResponseMessage result = await httpClient.GetAsync(cardUri);
+				string json = await result.Content.ReadAsStringAsync();
+				Carddata data = JsonConvert.DeserializeObject<Carddata>(json);
+
+				var query = from i in data.DOM.cards
+					select i.name;
+
+				foreach (var card in query)
+				{
+					Console.WriteLine(card);
+				}
+			}
+			*/
 		}
 
 		private static void demotest()

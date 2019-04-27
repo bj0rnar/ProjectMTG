@@ -30,6 +30,9 @@ namespace ProjectMTG.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			//wat?
+			modelBuilder.Entity<User>().HasData(new User() {UserId = 1, UserName = "Jell", Decks = null});
+
 			modelBuilder.Entity<DeckCardsDir>().HasKey(dc => new {dc.CardId, dc.DeckId});
 
 			modelBuilder.Entity<DeckCardsDir>()
