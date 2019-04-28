@@ -40,7 +40,8 @@
 
 			<Image Name="ImageBox" HorizontalAlignment="Left" Height="340" Margin="575,262,0,0" VerticalAlignment="Top" Width="240"/>
 			<TextBlock HorizontalAlignment="Left" Margin="659,235,0,0" Text="Card Image" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.095,-0.053"/>
-			<Button Content="Save decklist" HorizontalAlignment="Left" Margin="985,683,0,0" VerticalAlignment="Top" Height="59" Width="153"/>
+			<Button Content="Save decklist" HorizontalAlignment="Left" Margin="986,713,0,0" VerticalAlignment="Top" Height="59" Width="153" Command="{x:Bind ViewModel.SaveDeckList}" CommandParameter="{Binding ElementName=DeckListName, Path=Text}"/>
+			<TextBox HorizontalAlignment="Left" Margin="962,647,0,0" VerticalAlignment="Top" Width="200" Header="Deck name" PlaceholderText="Type your deck name here" x:Name="DeckListName"/>
 			<!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
 		</Grid>

@@ -14,5 +14,11 @@ namespace ProjectMTG.App.Views
         {
             InitializeComponent();
         }
+
+
+        private void DeckLW_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            //
+        }
     }
 }

@@ -205,6 +205,10 @@
       <Project>{14DE0A32-FC99-4096-8206-4D16C88CD617}</Project>
       <Name>ProjectMTG.App.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ProjectMTG.DataAccess\ProjectMTG.DataAccess.csproj">
+      <Project>{756807FD-D1FE-4C66-960A-D954B97FAFFA}</Project>
+      <Name>ProjectMTG.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectMTG.Model\ProjectMTG.Model.csproj">
       <Project>{CE9062E7-934E-4918-9B60-BE3C087245A6}</Project>
       <Name>ProjectMTG.Model</Name>

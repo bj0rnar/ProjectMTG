@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Newtonsoft.Json;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
+using ProjectMTG.DataAccess;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.ViewModels
@@ -31,6 +32,7 @@ namespace ProjectMTG.App.ViewModels
         //Command
         public ICommand AddCardToDeck { get; set; }
         public ICommand RemoveCardFromDeck { get; set; }
+        public ICommand SaveDeckList { get; set; }
 
         public MainViewModel()
         {
@@ -49,6 +51,23 @@ namespace ProjectMTG.App.ViewModels
                     GetObservableDeck.Remove(param);
                 }
             }, card => card != null );
+
+            SaveDeckList = new RelayCommand<string>(param =>
+            {
+                //Not saving directly to DB yet, this is just proof of concept for beta. Wanna fix user login before starting with this.
+                //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
+
+                Deck deck = new Deck() {DeckName = param, User = DemoUser};
+
+                foreach (Card card in GetObservableDeck)
+                {
+                    deck.Cards.Add(card);
+                    Debug.WriteLine(card.name);
+                }
+
+                DemoUser.Decks.Add(deck);
+
+            }, s => !string.IsNullOrEmpty(s));
         }
 
 

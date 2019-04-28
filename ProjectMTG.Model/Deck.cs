@@ -12,7 +12,8 @@ namespace ProjectMTG.Model
 		public string DeckName { get; set; }
 		public User User { get; set; }
 		
-		//public ICollection<Card> Cards { get; set; } = new List<Card>();
+		//For beta purposes. Remove after
+		public ICollection<Card> Cards { get; set; } = new List<Card>();
 		public ICollection<DeckCardsDir> Contains { get; set; } = new List<DeckCardsDir>();
 	}
 }
