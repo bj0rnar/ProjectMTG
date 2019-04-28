@@ -16,8 +16,6 @@ namespace ProjectMTG.App.Views
         {
             InitializeComponent();
 
-            //DeckListView.ItemsSource = 
-
             Loaded += MainPage_Loaded;
         }
 
@@ -27,7 +25,7 @@ namespace ProjectMTG.App.Views
         }
 
 
-
+        /*
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             /*
@@ -36,8 +34,8 @@ namespace ProjectMTG.App.Views
                 DeckListView.Items.Add((ListViewItem)selectedCard);
             }
             */
-        }
-
+        //}
+        
         /*
         private static void AddCardsToDeck(ListView cardView, ListView deckView)
         {

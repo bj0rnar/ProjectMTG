@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Newtonsoft.Json;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
@@ -11,22 +13,36 @@ namespace ProjectMTG.App.ViewModels
 {
     public class MainViewModel : Observable
     {
+        //Static demo user
+        public static User DemoUser = new User() {UserName = "DemoUser"};
+
+        //Collections with getters
         private ObservableCollection<Card> ObservableCards = new ObservableCollection<Card>();
         public ObservableCollection<Card> GetObservableCards => this.ObservableCards;
-
         private ObservableCollection<Card> ObservableDeck = new ObservableCollection<Card>();
         public ObservableCollection<Card> GetObservableDeck => this.ObservableDeck;
+
+        //Filtered out database.
         private Cards cardsDataAccess = new Cards();
+
+        //Command
+        public ICommand AddCardToDeck { get; set; }
 
         public MainViewModel()
         {
-            this.ObservableCards.Add(new Card() { name = "CardTest"});
+            
+
+            AddCardToDeck = new RelayCommand<Card>( param =>
+            {
+                if (param != null)
+                {
+                    GetObservableDeck.Add(param);
+                    //Debug.WriteLine(param.name);
+                }
+            }, card => card != null );
         }
 
 
-
-
-        //Denna metoda funke ikkje, spør um hjelp.
         internal async Task LoadCardsAsync()
         {
             var cards = await cardsDataAccess.GetCardsAsync();
