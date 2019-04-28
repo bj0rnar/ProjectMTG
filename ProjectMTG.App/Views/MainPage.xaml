@@ -4,15 +4,43 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:ProjectMTG.Model"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Grid
+	<Grid
         x:Name="ContentArea"
         Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid
+		<Grid
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
+
+			<ListView Name="CardListView" HorizontalAlignment="Left" Height="393" Margin="189,235,0,0" IsItemClickEnabled="False"
+                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="289" SelectionMode="Single"
+                      ItemsSource="{x:Bind ViewModel.GetObservableCards}">
+				<ListView.ItemTemplate>
+					<DataTemplate x:DataType="model:Card">
+						<TextBlock Text="{x:Bind name}"/>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<ListView Name ="DeckListView" HorizontalAlignment="Left" Height="393" Margin="917,235,0,0"
+                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="289"
+                      ItemsSource="{x:Bind ViewModel.GetObservableDeck}">
+				<ListView.ItemTemplate>
+					<DataTemplate x:DataType="model:Deck">
+						<TextBlock Text="{x:Bind DeckName}"/>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+			<TextBlock HorizontalAlignment="Left" Margin="306,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="55"><Run Text="All Cards"/><LineBreak/><Run/></TextBlock>
+			<TextBlock HorizontalAlignment="Left" Margin="1046,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" ><Run Text="Deck"/><LineBreak/><Run/></TextBlock>
+
+			<Button Content="Add card to deck" HorizontalAlignment="Left" Margin="597,593,0,0" VerticalAlignment="Top" Height="59" Width="153" Click="Button_Click"/>
+			<Button Content="Remove from deck" HorizontalAlignment="Left" Margin="597,668,0,0" VerticalAlignment="Top" Width="153" Height="59" RenderTransformOrigin="0.748,0.153"/>
+
+			<Image HorizontalAlignment="Left" Height="197" Margin="588,235,0,0" VerticalAlignment="Top" Width="162"/>
+			<!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
-        </Grid>
-    </Grid>
+		</Grid>
+	</Grid>
 </Page>
