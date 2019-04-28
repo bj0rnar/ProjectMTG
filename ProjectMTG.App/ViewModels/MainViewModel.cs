@@ -15,6 +15,8 @@ namespace ProjectMTG.App.ViewModels
     {
         //Static demo user
         public static User DemoUser = new User() {UserName = "DemoUser"};
+        
+
 
         //Collections with getters
         private ObservableCollection<Card> ObservableCards = new ObservableCollection<Card>();
@@ -25,9 +27,12 @@ namespace ProjectMTG.App.ViewModels
         //Filtered out database.
         private Cards cardsDataAccess = new Cards();
 
+        
+
         //Command
         public ICommand AddCardToDeck { get; set; }
         public ICommand RemoveCardFromDeck { get; set; }
+        public ICommand ShowPicture { get; set; }
 
         public MainViewModel()
         {
