@@ -27,17 +27,23 @@ namespace ProjectMTG.App.ViewModels
 
         //Command
         public ICommand AddCardToDeck { get; set; }
+        public ICommand RemoveCardFromDeck { get; set; }
 
         public MainViewModel()
         {
-            
-
             AddCardToDeck = new RelayCommand<Card>( param =>
             {
                 if (param != null)
                 {
                     GetObservableDeck.Add(param);
-                    //Debug.WriteLine(param.name);
+                }
+            }, card => card != null );
+
+            RemoveCardFromDeck = new RelayCommand<Card>(param =>
+            {
+                if (param != null)
+                {
+                    GetObservableDeck.Remove(param);
                 }
             }, card => card != null );
         }
