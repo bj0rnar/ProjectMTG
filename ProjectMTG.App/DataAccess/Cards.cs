@@ -23,7 +23,5 @@ namespace ProjectMTG.App.DataAccess
             return cards;
         }
 
-
-
     }
 }

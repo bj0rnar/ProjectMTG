@@ -33,6 +33,8 @@ namespace ProjectMTG.App.ViewModels
 
         public async Task LoadImages(Deck selectedDeck)
         {
+            GetObservableImage.Clear();
+
             var query = from card in selectedDeck.Cards
                         select card;
 
