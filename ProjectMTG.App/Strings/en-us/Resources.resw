@@ -129,4 +129,8 @@
     <value>Main</value>
     <comment>Navigation view item name for Main</comment>
   </data>
+  <data name="Shell_DeckViewer.Content" xml:space="preserve">
+    <value>DeckViewer</value>
+    <comment>Navigation view item name for DeckViewer</comment>
+  </data>
 </root>

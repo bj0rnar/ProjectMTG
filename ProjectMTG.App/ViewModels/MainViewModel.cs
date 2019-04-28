@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Newtonsoft.Json;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
@@ -14,7 +15,7 @@ namespace ProjectMTG.App.ViewModels
     public class MainViewModel : Observable
     {
         //Static demo user
-        public static User DemoUser = new User() {UserName = "DemoUser"};
+        public static User DemoUser { get; set; } = new User() {UserName = "DemoUser"};
         
 
 
@@ -27,12 +28,9 @@ namespace ProjectMTG.App.ViewModels
         //Filtered out database.
         private Cards cardsDataAccess = new Cards();
 
-        
-
         //Command
         public ICommand AddCardToDeck { get; set; }
         public ICommand RemoveCardFromDeck { get; set; }
-        public ICommand ShowPicture { get; set; }
 
         public MainViewModel()
         {
