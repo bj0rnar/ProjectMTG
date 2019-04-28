@@ -1,18 +1,20 @@
 ﻿using System;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
 using Microsoft.EntityFrameworkCore.Query.Expressions;
-using ProjectMTG.Model;
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using ProjectMTG.DataAccess;
+using ProjectMTG.Model;
 
 namespace ProjectMTG
 {
@@ -35,7 +37,7 @@ namespace ProjectMTG
 			//ImportJsonFromMtgJson();
 			//teststuff();
 			//addToDb();
-			CreateDeck();
+			//CreateDeck();
 		}
 
 		public static void CreateDeck()

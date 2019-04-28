@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.SqlClient;
+
 using Microsoft.EntityFrameworkCore;
+
 using ProjectMTG.Model;
 
 namespace ProjectMTG.DataAccess
