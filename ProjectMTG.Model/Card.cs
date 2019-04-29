@@ -86,6 +86,7 @@ namespace ProjectMTG.Model
 			public string power { get; set; }
 			public string toughness { get; set; }
 
+			public Deck deck { get; set; }
 			public ICollection<DeckCardsDir> InCollection { get; set; } = new List<DeckCardsDir>();
 
 		}

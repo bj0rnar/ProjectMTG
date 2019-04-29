@@ -56,6 +56,7 @@ namespace ProjectMTG.App.ViewModels
             {
                 //Not saving directly to DB yet, this is just proof of concept for beta. Wanna fix user login before starting with this.
                 //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
+                //Verify input.
 
                 Deck deck = new Deck() {DeckName = param, User = DemoUser};
 
@@ -66,6 +67,7 @@ namespace ProjectMTG.App.ViewModels
                 }
 
                 DemoUser.Decks.Add(deck);
+                
 
             }, s => !string.IsNullOrEmpty(s));
         }

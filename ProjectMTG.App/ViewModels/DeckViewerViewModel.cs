@@ -33,6 +33,7 @@ namespace ProjectMTG.App.ViewModels
 
         public async Task LoadImages(Deck selectedDeck)
         {
+            
             GetObservableImage.Clear();
 
             var query = from card in selectedDeck.Cards
@@ -47,6 +48,7 @@ namespace ProjectMTG.App.ViewModels
                 var bitmapImage = new BitmapImage { UriSource = scryUri };
                 GetObservableImage.Add(bitmapImage);
             }
+            
         }
 
         

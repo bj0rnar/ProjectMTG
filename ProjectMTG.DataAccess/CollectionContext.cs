@@ -47,6 +47,10 @@ namespace ProjectMTG.DataAccess
 				.WithMany(r => r.InCollection)
 				.HasForeignKey(r => r.CardId);
 
+			modelBuilder.Entity<Deck>()
+				.HasMany(c => c.Cards)
+				.WithOne(d => d.deck);
+
 			modelBuilder.Entity<User>()
 				.HasMany(d => d.Decks)
 				.WithOne(u => u.User)

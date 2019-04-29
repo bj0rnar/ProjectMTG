@@ -31,8 +31,6 @@ namespace ProjectMTG.App.Views
         {
             var selectedIndex = (Card) e.ClickedItem;
             ImageBox.Source = getBitmapImage(selectedIndex);
-
-
         }
 
         private void DeckListView_OnItemClick(object sender, ItemClickEventArgs e)
