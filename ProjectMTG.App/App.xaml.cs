@@ -4,6 +4,8 @@ using ProjectMTG.App.Services;
 
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using ProjectMTG.App.Views;
 
 namespace ProjectMTG.App
 {
@@ -26,6 +28,22 @@ namespace ProjectMTG.App
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame == null)
+            {
+                rootFrame = new Frame();
+            }
+
+            Window.Current.Content = rootFrame;
+
+            if (rootFrame.Content == null)
+            {
+                rootFrame.Navigate(typeof(LoginPage), args.Arguments);
+            }
+
+            Window.Current.Activate();
+
             if (!args.PrelaunchActivated)
             {
                 await ActivationService.ActivateAsync(args);
