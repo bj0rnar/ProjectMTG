@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="ProjectMTG.App.Views.DeckViewerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:ProjectMTG.Model"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Grid
+        x:Name="ContentArea"
+        Margin="{StaticResource MediumLeftRightMargin}">
+        <Grid
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <ListView Name ="DeckListView" HorizontalAlignment="Left" Height="291" Margin="87,318,0,0" IsItemClickEnabled="True"
+                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="201" SelectionMode="None"
+                      ItemClick="DeckLW_OnItemClick" ItemsSource="{x:Bind ViewModel.GetObservableDeckList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Deck">
+                        <TextBlock Text="{x:Bind DeckName}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <TextBlock HorizontalAlignment="Left" Margin="169,294,0,0" Text="Decks" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <GridView x:Name ="ImageList" HorizontalAlignment="Left" Height="939" Margin="399,32,0,0" IsItemClickEnabled="False"
+                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="1043" SelectionMode="None"
+                      ItemsSource="{x:Bind ViewModel.GetObservableImage}">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}" Width="256" Height="256" Margin="0,0,0,0"/>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+
+
+            <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
+                Place your content here.-->
+        </Grid>
+    </Grid>
+</Page>
