@@ -21,7 +21,7 @@ namespace ProjectMTG.App.ViewModels
         }
 
 
-        public async Task<bool> ValidateUser(string username, string password)
+        public async Task<User> ValidateUser(string username, string password)
         {
             var allUsers = await usersDataAccess.GetUsersAsync().ConfigureAwait(false);
 
@@ -33,18 +33,18 @@ namespace ProjectMTG.App.ViewModels
             {
                 if (checkUser.Password == password)
                 {
-                    return true;
+                    return checkUser;
                 }
                 else
                 {
                     Debug.WriteLine("Wrong password");
-                    return false;
+                    return null;
                 }
             }
             else
             {
                 Debug.WriteLine("No user by that username");
-                return false;
+                return null;
             }
             
         }

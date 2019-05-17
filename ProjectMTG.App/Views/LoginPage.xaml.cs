@@ -31,9 +31,9 @@ namespace ProjectMTG.App.Views
             //ConfigureAwait blokkere UI tråden her!!!!!!!
             var userExists = await ViewModel.ValidateUser(UsernameBox.Text, PasswordBox.Password);
 
-            if (userExists)
+            if (userExists != null)
             {
-                NavigationService.Navigate(typeof(ShellPage));
+                NavigationService.Navigate(typeof(ShellPage), userExists);
             }
             else
             {
