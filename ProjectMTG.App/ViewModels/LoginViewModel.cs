@@ -8,6 +8,7 @@ namespace ProjectMTG.App.ViewModels
     {
         public LoginViewModel()
         {
+
         }
     }
 }

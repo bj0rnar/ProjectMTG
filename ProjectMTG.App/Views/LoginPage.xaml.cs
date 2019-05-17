@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using ProjectMTG.App.ViewModels;
 
 using Windows.UI.Xaml.Controls;
+using ProjectMTG.App.Services;
 
 namespace ProjectMTG.App.Views
 {
@@ -16,10 +17,6 @@ namespace ProjectMTG.App.Views
         {
             InitializeComponent();
 
-            //Force application window size
-            ApplicationView.PreferredLaunchViewSize = new Size(500, 320);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-
         }
 
         private void NewUser_OnClick(object sender, RoutedEventArgs e)
@@ -29,7 +26,7 @@ namespace ProjectMTG.App.Views
 
         private void Login_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            NavigationService.Navigate(typeof(ShellPage));
         }
     }
 }

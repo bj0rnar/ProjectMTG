@@ -15,11 +15,11 @@
 				<RowDefinition Height="13*"/>
 				<RowDefinition Height="978*"/>
 			</Grid.RowDefinitions>
-			<TextBox HorizontalAlignment="Left" Header="Username" Margin="172,93,0,0" VerticalAlignment="Top" Width="160" Grid.Row="1"/>
-			<PasswordBox HorizontalAlignment="Left" Margin="172,148,0,0" Header="Password"  VerticalAlignment="Top" Width="160" Grid.Row="1"/>
-			<TextBlock HorizontalAlignment="Left" Text="ProjectMTG" FontSize="32" TextWrapping="Wrap" VerticalAlignment="Top" Margin="168,45,0,0" Height="47" Width="164" Grid.Row="1"/>
-			<HyperlinkButton Content="New user? Click here" Click="NewUser_OnClick" HorizontalAlignment="Left" Margin="173,261,0,0" VerticalAlignment="Top" Height="34" Width="160" Grid.Row="1"/>
-			<Button Content="Login" HorizontalAlignment="Left" Margin="225,224,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.097,0.406" Click="Login_OnClick" Grid.Row="1"/>
+			<TextBox HorizontalAlignment="Left" Header="Username" Margin="669,321,0,0" VerticalAlignment="Top" Width="160" Grid.Row="1"/>
+			<PasswordBox HorizontalAlignment="Left" Margin="669,381,0,0" Header="Password"  VerticalAlignment="Top" Width="160" Grid.Row="1"/>
+			<TextBlock HorizontalAlignment="Center" Text="ProjectMTG" FontSize="32" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,278,0,0" Height="47" Width="164" Grid.Row="1"/>
+			<HyperlinkButton Content="New user? Click here" Click="NewUser_OnClick" HorizontalAlignment="Left" Margin="670,521,0,0" VerticalAlignment="Top" Height="34" Width="160" Grid.Row="1"/>
+			<Button Content="Login" HorizontalAlignment="Left" Margin="722,459,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.097,0.406" Click="Login_OnClick" Grid.Row="1"/>
 		</Grid>
 	</Grid>
 </Page>
