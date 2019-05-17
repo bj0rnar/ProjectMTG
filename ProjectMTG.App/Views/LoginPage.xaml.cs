@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -24,7 +26,22 @@ namespace ProjectMTG.App.Views
             throw new NotImplementedException();
         }
 
-        private void Login_OnClick(object sender, RoutedEventArgs e)
+        private async void Login_OnClick(object sender, RoutedEventArgs e)
+        {
+            //ConfigureAwait blokkere UI tråden her!!!!!!!
+            var userExists = await ViewModel.ValidateUser(UsernameBox.Text, PasswordBox.Password);
+
+            if (userExists)
+            {
+                NavigationService.Navigate(typeof(ShellPage));
+            }
+            else
+            {
+                Debug.WriteLine("X returned false");
+            }
+        }
+
+        private void NavigateToMain()
         {
             NavigationService.Navigate(typeof(ShellPage));
         }
