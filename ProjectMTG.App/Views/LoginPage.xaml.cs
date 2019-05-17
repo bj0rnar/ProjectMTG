@@ -29,11 +29,11 @@ namespace ProjectMTG.App.Views
         private async void Login_OnClick(object sender, RoutedEventArgs e)
         {
             //ConfigureAwait blokkere UI tråden her!!!!!!!
-            var userExists = await ViewModel.ValidateUser(UsernameBox.Text, PasswordBox.Password);
+            var loginUser = await ViewModel.ValidateUser(UsernameBox.Text, PasswordBox.Password);
 
-            if (userExists != null)
+            if (loginUser != null)
             {
-                NavigationService.Navigate(typeof(ShellPage), userExists);
+                NavigationService.Navigate(typeof(ShellPage), loginUser);
             }
             else
             {

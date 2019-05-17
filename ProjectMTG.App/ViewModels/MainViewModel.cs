@@ -16,7 +16,7 @@ namespace ProjectMTG.App.ViewModels
     public class MainViewModel : Observable
     {
         //Static demo user
-        public static User DemoUser { get; set; } = new User() {UserName = "DemoUser"};
+        public User user = ShellViewModel.LoggedInUser;
         
 
 
@@ -58,7 +58,7 @@ namespace ProjectMTG.App.ViewModels
                 //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
                 //Verify input.
 
-                Deck deck = new Deck() {DeckName = param, User = DemoUser};
+                Deck deck = new Deck() {DeckName = param, User = user};
 
                 foreach (Card card in GetObservableDeck)
                 {
@@ -66,7 +66,7 @@ namespace ProjectMTG.App.ViewModels
                     Debug.WriteLine(card.name);
                 }
 
-                DemoUser.Decks.Add(deck);
+                user.Decks.Add(deck);
                 
 
             }, s => !string.IsNullOrEmpty(s));

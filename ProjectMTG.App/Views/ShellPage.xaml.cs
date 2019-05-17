@@ -3,8 +3,10 @@ using System.Windows.Input;
 using ProjectMTG.App.ViewModels;
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 using ProjectMTG.App.Helpers;
 using ProjectMTG.App.Services;
+using ProjectMTG.Model;
 
 namespace ProjectMTG.App.Views
 {
@@ -22,14 +24,21 @@ namespace ProjectMTG.App.Views
             ViewModel.Initialize(shellFrame, navigationView, KeyboardAccelerators);
 
             StartCommand = new RelayCommand(OnStart);
+            
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            User x = (User) e.Parameter;
+            ShellViewModel.LoggedInUser = x;
         }
 
         private void OnStart()
         {
-            //Navigating to a ShellPage, this will replaces NavigationService frame for an inner frame to change navigation handling.
             NavigationService.Navigate<Views.ShellPage>();
-
-            //Navigating now to a HomePage, this will be the first navigation on a NavigationPane menu
+            
             NavigationService.Navigate<Views.MainPage>();
         }
     }

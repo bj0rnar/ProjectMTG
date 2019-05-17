@@ -11,7 +11,7 @@ using Windows.System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-
+using User = ProjectMTG.Model.User;
 using WinUI = Microsoft.UI.Xaml.Controls;
 
 namespace ProjectMTG.App.ViewModels
@@ -20,6 +20,8 @@ namespace ProjectMTG.App.ViewModels
     {
         private readonly KeyboardAccelerator _altLeftKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu);
         private readonly KeyboardAccelerator _backKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.GoBack);
+
+        public static User LoggedInUser { get; set; }
 
         private bool _isBackEnabled;
         private IList<KeyboardAccelerator> _keyboardAccelerators;

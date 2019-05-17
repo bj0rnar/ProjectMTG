@@ -13,7 +13,7 @@ namespace ProjectMTG.App.ViewModels
     public class DeckViewerViewModel : Observable
     {
         //Static user from MainViewModel, remove later
-        private User User = MainViewModel.DemoUser;
+        private User User = ShellViewModel.LoggedInUser;
 
         private ObservableCollection<Deck> ObservableDeckList = new ObservableCollection<Deck>();
         public ObservableCollection<Deck> GetObservableDeckList => this.ObservableDeckList;
