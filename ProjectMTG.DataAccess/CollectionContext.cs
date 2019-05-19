@@ -12,7 +12,6 @@ namespace ProjectMTG.DataAccess
 		public DbSet<Card> Cards { get; set; }
 		public DbSet<Deck> Decks { get; set; }
 		public DbSet<User> Users { get; set; }
-		public DbSet<DeckCardsDir> DeckCardsDirs { get; set; }
 
 		public CollectionContext(DbContextOptions<CollectionContext> options) : base(options) { }
 
@@ -23,7 +22,7 @@ namespace ProjectMTG.DataAccess
 			SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
 			{
 				DataSource = "(localdb)\\MSSQLLocalDB",
-				InitialCatalog = "ProjectMTGDemo",
+				InitialCatalog = "ProjectMTGDemo2",
 				IntegratedSecurity = true
 			};
 
@@ -32,20 +31,6 @@ namespace ProjectMTG.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			//wat?
-			modelBuilder.Entity<User>().HasData(new User() {UserId = 1, UserName = "Jell", Decks = null});
-
-			modelBuilder.Entity<DeckCardsDir>().HasKey(dc => new {dc.CardId, dc.DeckId});
-
-			modelBuilder.Entity<DeckCardsDir>()
-				.HasOne<Deck>(d => d.Deck)
-				.WithMany(s => s.Contains)
-				.HasForeignKey(c => c.DeckId);
-
-			modelBuilder.Entity<DeckCardsDir>()
-				.HasOne<Card>(c => c.Card)
-				.WithMany(r => r.InCollection)
-				.HasForeignKey(r => r.CardId);
 
 			modelBuilder.Entity<Deck>()
 				.HasMany(c => c.Cards)

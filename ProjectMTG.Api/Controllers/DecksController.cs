@@ -87,7 +87,7 @@ namespace ProjectMTG.Api.Controllers
         // POST: api/Decks
         [HttpPost]
         public async Task<IActionResult> PostDeck([FromBody] Deck deck)
-        {
+			{
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

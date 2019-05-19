@@ -68,7 +68,7 @@ namespace ProjectMTG.App.ViewModels
                     Debug.WriteLine(card.name);
                 }
 
-                if (await usersDataAccess.AddDeckToUser(deck, user.UserId))
+                if (await usersDataAccess.AddDeckToUser(deck))
                 {
                     user.Decks.Add(deck);
                 }

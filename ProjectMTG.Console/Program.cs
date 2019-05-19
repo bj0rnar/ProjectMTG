@@ -35,7 +35,7 @@ namespace ProjectMTG
 		{
 			using (var db = new CollectionContext())
 			{
-				User demoUser = new User() {UserName = "DemoUser"};
+				User demoUser = new User() {UserName = "MeinUser", Password = "123"};
 				Deck demoDeck = new Deck() {DeckName = "Testdeck", User = demoUser};
 				db.Users.Add(demoUser);
 				db.Decks.Add(demoDeck);
