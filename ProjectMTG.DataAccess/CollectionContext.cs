@@ -36,10 +36,10 @@ namespace ProjectMTG.DataAccess
 				.HasMany(c => c.Cards)
 				.WithOne(d => d.deck);
 
-			modelBuilder.Entity<User>()
-				.HasMany(d => d.Decks)
-				.WithOne(u => u.User)
-				.IsRequired();
+			modelBuilder.Entity<Deck>()
+				.HasOne(c => c.User)
+				.WithMany(d => d.Decks)
+				.HasForeignKey(x => x.UserId);
 
 			modelBuilder.Entity<Card>()
 				.Property(e => e.colors)

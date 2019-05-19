@@ -23,7 +23,7 @@ namespace ProjectMTG.App.Views
 
         private void NewUser_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            NavigationService.Navigate(typeof(RegisterUserPage));
         }
 
         private async void Login_OnClick(object sender, RoutedEventArgs e)

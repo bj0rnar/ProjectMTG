@@ -13,7 +13,6 @@ namespace ProjectMTG.Model
 		public int UserId { get; set; }
 		public User User { get; set; }
 		
-		//For beta purposes. Remove after
 		public ICollection<Card> Cards { get; set; } = new List<Card>();
 	}
 }

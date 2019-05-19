@@ -25,7 +25,10 @@ namespace ProjectMTG.App.ViewModels
 
         public DeckViewerViewModel()
         {
-            
+            foreach (Deck deck in User.Decks)
+            {
+                ObservableDeckList.Add(deck);
+            }
         }
 
         //Load decks from user

@@ -13,7 +13,5 @@ namespace ProjectMTG.Model
 		public string Password { get; set; }
 		
 		public ICollection<Deck> Decks { get; set; } = new List<Deck>();
-		
-		//public ICollection<Card> Cards = new List<Card>();
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -93,7 +94,38 @@ namespace ProjectMTG.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Decks.Add(deck);
+			/*
+            var user = _context.Users.FirstOrDefault(u => u.UserId == deck.UserId);
+
+            if (user != null)
+            {
+				
+            }
+			*/
+
+
+			if (_context.Users.FirstOrDefault(u => u.UserId == deck.UserId) != null)
+			{
+				try
+				{
+					/*
+					var user = (from i in _context.Users
+						where deck.UserId == i.UserId
+						select i).FirstOrDefault();
+
+					user.Decks.Add(deck);
+					*/
+
+					 _context.Users.FirstOrDefault(u => u.UserId == deck.UserId).Decks.Add(deck);
+				}
+				catch (NullReferenceException e)
+				{
+					Debug.WriteLine(e.Message);
+				}
+
+			}
+
+			_context.Decks.Add(deck);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDeck", new { id = deck.DeckId }, deck);

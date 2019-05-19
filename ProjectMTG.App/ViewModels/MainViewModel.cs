@@ -68,11 +68,14 @@ namespace ProjectMTG.App.ViewModels
                     Debug.WriteLine(card.name);
                 }
 
-                if (await usersDataAccess.AddDeckToUser(deck))
+                user.Decks.Add(deck);
+
+                /*  FIX LATER
+                if (await decksDataAccess.AddDeckAsync(deck))
                 {
-                    user.Decks.Add(deck);
+                    Debug.WriteLine("Success!");
                 }
-           
+                */
 
             }, s => !string.IsNullOrEmpty(s));
         }

@@ -23,19 +23,13 @@ namespace ProjectMTG.App.DataAccess
             return users;
         }
 
-        internal async Task<bool> AddDeckToUser(Deck deck)
+        internal async Task<bool> AddUser(User user)
         {
-            string json = JsonConvert.SerializeObject(deck);
+            string json = JsonConvert.SerializeObject(user);
             HttpResponseMessage result = await _httpClient.PostAsync(UserUri, new StringContent(json, Encoding.UTF8, "application/json"));
 
             if (result.IsSuccessStatusCode)
             {
-                /*
-                json = await result.Content.ReadAsStringAsync();
-                var returnedDeck = JsonConvert.DeserializeObject<Deck>(json);
-                deck.DeckId = returnedDeck.DeckId;*/
-                
-
                 return true;
 
             }
