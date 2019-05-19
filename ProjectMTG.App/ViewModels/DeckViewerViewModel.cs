@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
+using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
 using ProjectMTG.Model;
 using Remotion.Linq.Clauses;
@@ -14,6 +15,7 @@ namespace ProjectMTG.App.ViewModels
     {
         //Static user from MainViewModel, remove later
         private User User = ShellViewModel.LoggedInUser;
+        private Decks decksDataAccess = new Decks();
 
         private ObservableCollection<Deck> ObservableDeckList = new ObservableCollection<Deck>();
         public ObservableCollection<Deck> GetObservableDeckList => this.ObservableDeckList;
@@ -23,14 +25,21 @@ namespace ProjectMTG.App.ViewModels
 
         public DeckViewerViewModel()
         {
-            Debug.WriteLine(User.UserName);
+            
+        }
 
-            foreach (Deck deck in User.Decks)
+        //Load decks from user
+        internal async Task GetUserDecks()
+        {
+            var decks = await decksDataAccess.GetUserDecksAsync(User.UserId);
+            foreach (Deck deck in decks)
             {
                 ObservableDeckList.Add(deck);
             }
         }
 
+
+        //Load images from decks.
         public async Task LoadImages(Deck selectedDeck)
         {
             

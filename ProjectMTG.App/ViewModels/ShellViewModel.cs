@@ -21,6 +21,7 @@ namespace ProjectMTG.App.ViewModels
         private readonly KeyboardAccelerator _altLeftKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu);
         private readonly KeyboardAccelerator _backKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.GoBack);
 
+        //Logged in user
         public static User LoggedInUser { get; set; }
 
         private bool _isBackEnabled;

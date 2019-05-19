@@ -14,6 +14,13 @@ namespace ProjectMTG.App.Views
         public DeckViewerPage()
         {
             InitializeComponent();
+
+            Loaded += DeckViewerPage_Loaded;
+        }
+
+        private async void DeckViewerPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            await ViewModel.GetUserDecks();
         }
 
 

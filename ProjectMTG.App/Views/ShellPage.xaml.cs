@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using ProjectMTG.App.ViewModels;
 
@@ -32,6 +33,7 @@ namespace ProjectMTG.App.Views
             base.OnNavigatedTo(e);
 
             User x = (User) e.Parameter;
+            //Cheesy?
             ShellViewModel.LoggedInUser = x;
         }
 

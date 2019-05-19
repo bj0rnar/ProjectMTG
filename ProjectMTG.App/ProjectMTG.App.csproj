@@ -116,6 +116,7 @@
     <Compile Include="Behaviors\NavigationViewHeaderBehavior.cs" />
     <Compile Include="Behaviors\NavigationViewHeaderMode.cs" />
     <Compile Include="DataAccess\Cards.cs" />
+    <Compile Include="DataAccess\Decks.cs" />
     <Compile Include="DataAccess\Users.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\Observable.cs" />

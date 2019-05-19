@@ -17,8 +17,6 @@ namespace ProjectMTG.App.ViewModels
     {
         //Static demo user
         public User user = ShellViewModel.LoggedInUser;
-        
-
 
         //Collections with getters
         private ObservableCollection<Card> ObservableCards = new ObservableCollection<Card>();
@@ -28,6 +26,8 @@ namespace ProjectMTG.App.ViewModels
 
         //Filtered out database.
         private Cards cardsDataAccess = new Cards();
+        private Decks decksDataAccess = new Decks();
+        private Users usersDataAccess = new Users();
 
         //Command
         public ICommand AddCardToDeck { get; set; }
@@ -36,6 +36,8 @@ namespace ProjectMTG.App.ViewModels
 
         public MainViewModel()
         {
+            Debug.WriteLine(user.UserName);
+
             AddCardToDeck = new RelayCommand<Card>( param =>
             {
                 if (param != null)
@@ -52,12 +54,12 @@ namespace ProjectMTG.App.ViewModels
                 }
             }, card => card != null );
 
-            SaveDeckList = new RelayCommand<string>(param =>
+            SaveDeckList = new RelayCommand<string>(async param =>
             {
                 //Not saving directly to DB yet, this is just proof of concept for beta. Wanna fix user login before starting with this.
                 //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
                 //Verify input.
-
+           
                 Deck deck = new Deck() {DeckName = param, User = user};
 
                 foreach (Card card in GetObservableDeck)
@@ -66,8 +68,11 @@ namespace ProjectMTG.App.ViewModels
                     Debug.WriteLine(card.name);
                 }
 
-                user.Decks.Add(deck);
-                
+                if (await usersDataAccess.AddDeckToUser(deck, user.UserId))
+                {
+                    user.Decks.Add(deck);
+                }
+           
 
             }, s => !string.IsNullOrEmpty(s));
         }
