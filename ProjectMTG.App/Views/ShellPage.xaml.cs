@@ -43,5 +43,6 @@ namespace ProjectMTG.App.Views
             
             NavigationService.Navigate<Views.MainPage>();
         }
+
     }
 }

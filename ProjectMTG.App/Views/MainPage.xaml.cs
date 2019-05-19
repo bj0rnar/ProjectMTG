@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using Windows.UI.Xaml;
 using ProjectMTG.App.ViewModels;
@@ -47,6 +49,48 @@ namespace ProjectMTG.App.Views
             var bitmapImage = new BitmapImage { UriSource = scryUri };
             return bitmapImage;
         }
-      
+
+
+        private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+
+            //var blue = ViewModel.GetObservableCards.Where(x => x.colors.Contains("U")).ToList();
+            /*
+            if (blue != null)
+            {
+                ViewModel.GetObservableCards.Clear();
+
+                foreach (var card in blue)
+                {
+                    ViewModel.GetObservableCards.Add(card);
+                }
+            }
+
+            /*var justblue = from i in ViewModel.GetObservableCards
+                where i.colors.Contains("U")
+                select i;
+                */
+
+            /*
+            ViewModel.GetObservableCards.Clear();
+
+            foreach (var card in blue)
+            {
+                ViewModel.GetObservableCards.Add(card);
+            }
+            
+            foreach (var card in justblue)
+            {
+                ViewModel.GetObservableCards.Add(card);
+            }
+            */
+        }
+
+
+        private void ToggleButton_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

@@ -13,7 +13,7 @@
 		<Grid
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 
-			<ListView Name="CardListView" HorizontalAlignment="Left" Height="393" Margin="189,235,0,0" IsItemClickEnabled="True"
+			<ListView Name="CardListView" HorizontalAlignment="Left" Height="756" Margin="306,99,0,0" IsItemClickEnabled="True"
                       BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="289" SelectionMode="Single"
                       ItemClick="CardListView_OnItemClick"  ItemsSource="{x:Bind ViewModel.GetObservableCards}">
 				<ListView.ItemTemplate>
@@ -22,7 +22,7 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-			<ListView Name ="DeckListView" HorizontalAlignment="Left" Height="393" Margin="917,235,0,0" IsItemClickEnabled="True"
+			<ListView Name ="DeckListView" HorizontalAlignment="Left" Height="783" Margin="1132,80,0,0" IsItemClickEnabled="True"
                       BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="289" SelectionMode="Single"
                       ItemClick="DeckListView_OnItemClick" ItemsSource="{x:Bind ViewModel.GetObservableDeck}">
 				<ListView.ItemTemplate>
@@ -32,17 +32,24 @@
 				</ListView.ItemTemplate>
 			</ListView>
 
-			<TextBlock HorizontalAlignment="Left" Margin="306,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="55"><Run Text="All Cards"/><LineBreak/><Run/></TextBlock>
-			<TextBlock HorizontalAlignment="Left" Margin="1046,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" ><Run Text="Deck"/><LineBreak/><Run/></TextBlock>
+			<TextBlock HorizontalAlignment="Left" Margin="306,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="44" Width="55"><Run Text="All Cards"/><LineBreak/><Run/></TextBlock>
+			<TextBlock HorizontalAlignment="Left" Margin="1261,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" ><Run Text="Deck"/><LineBreak/><Run/></TextBlock>
 
-			<Button Content="Add card to deck" HorizontalAlignment="Left" Margin="597,683,0,0" VerticalAlignment="Top" Height="59" Width="153" Command="{x:Bind ViewModel.AddCardToDeck}" CommandParameter="{Binding ElementName=CardListView, Path=SelectedItem}"/>
-			<Button Content="Remove from deck" HorizontalAlignment="Left" Margin="597,771,0,0" VerticalAlignment="Top" Width="153" Height="59" RenderTransformOrigin="0.748,0.153" Command="{x:Bind ViewModel.RemoveCardFromDeck}" CommandParameter="{Binding ElementName=DeckListView, Path=SelectedItem}"/>
+			<Button Content="Add card to deck" HorizontalAlignment="Left" Margin="674,668,0,0" VerticalAlignment="Top" Height="59" Width="153" Command="{x:Bind ViewModel.AddCardToDeck}" CommandParameter="{Binding ElementName=CardListView, Path=SelectedItem}"/>
+			<Button Content="Remove from deck" HorizontalAlignment="Left" Margin="674,766,0,0" VerticalAlignment="Top" Width="153" Height="59" RenderTransformOrigin="0.748,0.153" Command="{x:Bind ViewModel.RemoveCardFromDeck}" CommandParameter="{Binding ElementName=DeckListView, Path=SelectedItem}"/>
 
-			<Image Name="ImageBox" HorizontalAlignment="Left" Height="340" Margin="575,262,0,0" VerticalAlignment="Top" Width="240"/>
-			<TextBlock HorizontalAlignment="Left" Margin="659,235,0,0" Text="Card Image" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.095,-0.053"/>
-			<Button Content="Save decklist" HorizontalAlignment="Left" Margin="986,713,0,0" VerticalAlignment="Top" Height="59" Width="153" Command="{x:Bind ViewModel.SaveDeckList}" CommandParameter="{Binding ElementName=DeckListName, Path=Text}"/>
-			<TextBox HorizontalAlignment="Left" Margin="962,647,0,0" VerticalAlignment="Top" Width="200" Header="Deck name" PlaceholderText="Type your deck name here" x:Name="DeckListName"/>
-			<!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
+			<Image Name="ImageBox" HorizontalAlignment="Left" Height="340" Margin="638,271,0,0" VerticalAlignment="Top" Width="240"/>
+			<TextBlock HorizontalAlignment="Left" Margin="715,234,0,0" Text="Card Image" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.095,-0.053"/>
+			<Button Content="Save decklist" HorizontalAlignment="Left" Margin="951,766,0,0" VerticalAlignment="Top" Height="59" Width="153" Command="{x:Bind ViewModel.SaveDeckList}" CommandParameter="{Binding ElementName=DeckListName, Path=Text}" RenderTransformOrigin="0.389,0.873"/>
+			<TextBox HorizontalAlignment="Left" Margin="927,698,0,0" VerticalAlignment="Top" Width="200" Header="Deck name" PlaceholderText="Type your deck name here" x:Name="DeckListName"/>
+			<TextBox HorizontalAlignment="Left" Margin="10,99,0,0" Text="Color:" VerticalAlignment="Top"/>
+			<CheckBox Content="Blue" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+			<CheckBox Content="Red" HorizontalAlignment="Left" Margin="83,136,0,0" VerticalAlignment="Top"/>
+			<CheckBox Content="White" HorizontalAlignment="Left" Margin="160,136,0,0" VerticalAlignment="Top"/>
+			<CheckBox Content="Black" HorizontalAlignment="Left" Margin="10,173,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.396,0.234"/>
+			<CheckBox Content="Green" HorizontalAlignment="Left" Margin="83,173,0,0" VerticalAlignment="Top"/>
+            <CheckBox Content="Colorless" HorizontalAlignment="Left" Margin="160,173,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.529,0.141"/>
+            <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
 		</Grid>
 	</Grid>

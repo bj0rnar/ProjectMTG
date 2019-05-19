@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
+using Windows.UI.Xaml.Data;
 using Newtonsoft.Json;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
@@ -34,15 +36,30 @@ namespace ProjectMTG.App.ViewModels
         public ICommand RemoveCardFromDeck { get; set; }
         public ICommand SaveDeckList { get; set; }
 
+        
+        public int CardCounter => GetObservableDeck.Count;
+
         public MainViewModel()
         {
+
             Debug.WriteLine(user.UserName);
 
             AddCardToDeck = new RelayCommand<Card>( param =>
             {
                 if (param != null)
                 {
-                    GetObservableDeck.Add(param);
+                    //Check for equal cards
+                    var checkForEqualCards = GetObservableDeck.Where(u => u.Equals(param));
+                    var equalCardCounter = checkForEqualCards.Count();
+
+                    if (equalCardCounter < 4)
+                    {
+                        GetObservableDeck.Add(param);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Faggot");
+                    }
                 }
             }, card => card != null );
 
@@ -67,8 +84,16 @@ namespace ProjectMTG.App.ViewModels
                     deck.Cards.Add(card);
                     Debug.WriteLine(card.name);
                 }
-
+                //Cheap method
                 user.Decks.Add(deck);
+
+                GetObservableDeck.Clear();
+
+                /*
+                if (await decksDataAccess.AddDeckAsync(deck))
+                {
+                    Debug.WriteLine("Success");
+                }
 
                 /*  FIX LATER
                 if (await decksDataAccess.AddDeckAsync(deck))
@@ -78,8 +103,12 @@ namespace ProjectMTG.App.ViewModels
                 */
 
             }, s => !string.IsNullOrEmpty(s));
-        }
 
+            
+
+        }
+        
+ 
 
         internal async Task LoadCardsAsync()
         {

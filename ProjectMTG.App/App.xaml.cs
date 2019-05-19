@@ -44,8 +44,7 @@ namespace ProjectMTG.App
 
         private ActivationService CreateActivationService()
         {
-            //return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
-
+            //Har endra på detta hær
             return new ActivationService(this, typeof(Views.LoginPage));
         }
 

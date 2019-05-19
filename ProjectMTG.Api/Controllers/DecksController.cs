@@ -102,19 +102,19 @@ namespace ProjectMTG.Api.Controllers
 				
             }
 			*/
-
-
+			
+			/*
 			if (_context.Users.FirstOrDefault(u => u.UserId == deck.UserId) != null)
 			{
 				try
 				{
-					/*
+				
 					var user = (from i in _context.Users
 						where deck.UserId == i.UserId
 						select i).FirstOrDefault();
 
 					user.Decks.Add(deck);
-					*/
+				
 
 					 _context.Users.FirstOrDefault(u => u.UserId == deck.UserId).Decks.Add(deck);
 				}
@@ -124,7 +124,9 @@ namespace ProjectMTG.Api.Controllers
 				}
 
 			}
-
+			*/
+			//Ka faen
+			_context.Users.FirstOrDefault(u => u.UserId == deck.UserId).Decks.Add(deck);
 			_context.Decks.Add(deck);
             await _context.SaveChangesAsync();
 
