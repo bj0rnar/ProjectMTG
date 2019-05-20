@@ -52,7 +52,8 @@ namespace ProjectMTG.App.ViewModels
                     var checkForEqualCards = GetObservableDeck.Where(u => u.Equals(param));
                     var equalCardCounter = checkForEqualCards.Count();
 
-                    if (equalCardCounter < 4)
+                    //If duplicate cards are more than 4 or card is a Land type.
+                    if (equalCardCounter < 4 || param.types.Contains("Land"))
                     {
                         GetObservableDeck.Add(param);
                     }
