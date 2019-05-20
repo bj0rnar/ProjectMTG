@@ -14,5 +14,6 @@ namespace ProjectMTG.Model
 		public User User { get; set; }
 		
 		public ICollection<Card> Cards { get; set; } = new List<Card>();
+		public ICollection<DeckCardsDir> DeckCards { get; set; } = new List<DeckCardsDir>();
 	}
 }

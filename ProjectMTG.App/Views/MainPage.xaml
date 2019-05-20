@@ -15,7 +15,7 @@
 
 			<ListView Name="CardListView" HorizontalAlignment="Left" Height="756" Margin="306,99,0,0" IsItemClickEnabled="True"
                       BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="289" SelectionMode="Single"
-                      ItemClick="CardListView_OnItemClick"  ItemsSource="{x:Bind ViewModel.GetObservableCards}">
+                      ItemClick="CardListView_OnItemClick"  ItemsSource="{x:Bind ViewModel.FilteredCards}">
 				<ListView.ItemTemplate>
 					<DataTemplate x:DataType="model:Card">
 						<TextBlock Text="{x:Bind name}"/>
@@ -43,13 +43,14 @@
 			<Button Content="Save decklist" HorizontalAlignment="Left" Margin="951,766,0,0" VerticalAlignment="Top" Height="59" Width="153" Command="{x:Bind ViewModel.SaveDeckList}" CommandParameter="{Binding ElementName=DeckListName, Path=Text}" RenderTransformOrigin="0.389,0.873"/>
 			<TextBox HorizontalAlignment="Left" Margin="927,698,0,0" VerticalAlignment="Top" Width="200" Header="Deck name" PlaceholderText="Type your deck name here" x:Name="DeckListName"/>
 			<TextBox HorizontalAlignment="Left" Margin="10,99,0,0" Text="Color:" VerticalAlignment="Top"/>
-			<CheckBox Content="Blue" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+            <CheckBox Content="Blue" x:Name="Scooli" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top"/>
 			<CheckBox Content="Red" HorizontalAlignment="Left" Margin="83,136,0,0" VerticalAlignment="Top"/>
 			<CheckBox Content="White" HorizontalAlignment="Left" Margin="160,136,0,0" VerticalAlignment="Top"/>
 			<CheckBox Content="Black" HorizontalAlignment="Left" Margin="10,173,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.396,0.234"/>
 			<CheckBox Content="Green" HorizontalAlignment="Left" Margin="83,173,0,0" VerticalAlignment="Top"/>
-            <CheckBox Content="Colorless" HorizontalAlignment="Left" Margin="160,173,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.529,0.141"/>
-            <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
+			<CheckBox Content="Colorless" HorizontalAlignment="Left" Margin="160,173,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.529,0.141"/>
+			
+			<!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
 		</Grid>
 	</Grid>

@@ -125,8 +125,11 @@ namespace ProjectMTG.Api.Controllers
 
 			}
 			*/
-			//Ka faen
-			_context.Users.FirstOrDefault(u => u.UserId == deck.UserId).Decks.Add(deck);
+			//           **Egentle dæ som ska skje. Detta funke obviously ikkje**
+			//   _context.Users.FirstOrDefault(u => u.UserId == deck.UserId).Decks.Add(deck);
+
+
+
 			_context.Decks.Add(deck);
             await _context.SaveChangesAsync();
 

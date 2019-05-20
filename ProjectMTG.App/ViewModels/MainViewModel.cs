@@ -22,9 +22,12 @@ namespace ProjectMTG.App.ViewModels
 
         //Collections with getters
         private ObservableCollection<Card> ObservableCards = new ObservableCollection<Card>();
-        public ObservableCollection<Card> GetObservableCards => this.ObservableCards;
+        public ObservableCollection<Card> GetObservableCards => ObservableCards;
         private ObservableCollection<Card> ObservableDeck = new ObservableCollection<Card>();
         public ObservableCollection<Card> GetObservableDeck => this.ObservableDeck;
+
+        //Filtered data
+        public ObservableCollection<Card> FilteredCards { get; set; }
 
         //Filtered out database.
         private Cards cardsDataAccess = new Cards();
@@ -35,15 +38,17 @@ namespace ProjectMTG.App.ViewModels
         public ICommand AddCardToDeck { get; set; }
         public ICommand RemoveCardFromDeck { get; set; }
         public ICommand SaveDeckList { get; set; }
+        public ICommand FilteredBlueCommand { get; set; }
 
         
         public int CardCounter => GetObservableDeck.Count;
 
         public MainViewModel()
         {
+            //Set filteredcards to be observablecards.
+            FilteredCards = GetObservableCards;
 
-            Debug.WriteLine(user.UserName);
-
+            
             AddCardToDeck = new RelayCommand<Card>( param =>
             {
                 if (param != null)
@@ -78,16 +83,23 @@ namespace ProjectMTG.App.ViewModels
                 //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
                 //Verify input.
            
-                Deck deck = new Deck() {DeckName = param, User = user};
+                Deck deck = new Deck() {DeckName = param, User = user, UserId = user.UserId};
+
 
                 foreach (Card card in GetObservableDeck)
                 {
                     deck.Cards.Add(card);
-                    Debug.WriteLine(card.name);
                 }
-                //Cheap method
-                user.Decks.Add(deck);
 
+                //Doesn't save to database.
+                //user.Decks.Add(deck);
+                
+                if (await decksDataAccess.AddDeckAsync(deck))
+                {
+                    Debug.WriteLine("Success");
+                    user.Decks.Add(deck);
+                }
+                
                 GetObservableDeck.Clear();
 
                 /*
@@ -105,11 +117,25 @@ namespace ProjectMTG.App.ViewModels
 
             }, s => !string.IsNullOrEmpty(s));
 
-            
 
+            /*
+            FilteredBlueCommand = new RelayCommand<bool>(param =>
+            {
+                if (param)
+                {
+                    var query = ObservableCards.Where(u => u.name == "Mountain").ToList();
+                    FilteredCards = new ObservableCollection<Card>(query);
+                }
+                else
+                {
+                    FilteredCards = ObservableCards;
+                }
+
+            });
+            */
         }
-        
- 
+
+       
 
         internal async Task LoadCardsAsync()
         {

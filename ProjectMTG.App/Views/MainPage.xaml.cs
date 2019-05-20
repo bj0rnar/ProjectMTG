@@ -53,9 +53,21 @@ namespace ProjectMTG.App.Views
 
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
+            
 
-            //var blue = ViewModel.GetObservableCards.Where(x => x.colors.Contains("U")).ToList();
-            /*
+            //ViewModel.FilteredCards.Clear();
+
+            //var blue = ViewModel.GetObservableCards.Where(u => u.colors.Contains("U"));
+
+            //ObservableCollection<Card> x = ViewModel.GetObservableCards;
+
+            //var result = x.Where(u => u.colors.Contains("U"));
+
+            //ViewModel.FilteredCards = new ObservableCollection<Card>(result);
+
+
+            var blue = ViewModel.GetObservableCards.Where(x => x.colors.Contains("U")).ToList();
+            
             if (blue != null)
             {
                 ViewModel.GetObservableCards.Clear();
@@ -92,5 +104,6 @@ namespace ProjectMTG.App.Views
             throw new NotImplementedException();
         }
 
+      
     }
 }

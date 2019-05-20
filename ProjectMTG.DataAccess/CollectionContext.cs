@@ -12,6 +12,7 @@ namespace ProjectMTG.DataAccess
 		public DbSet<Card> Cards { get; set; }
 		public DbSet<Deck> Decks { get; set; }
 		public DbSet<User> Users { get; set; }
+		public DbSet<DeckCardsDir> DeckCards { get; set; }
 
 		public CollectionContext(DbContextOptions<CollectionContext> options) : base(options) { }
 
@@ -31,7 +32,7 @@ namespace ProjectMTG.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
+			/* Ska ikkje trenge detta
 			modelBuilder.Entity<Deck>()
 				.HasMany(c => c.Cards)
 				.WithOne(d => d.deck);
@@ -40,6 +41,21 @@ namespace ProjectMTG.DataAccess
 				.HasOne(c => c.User)
 				.WithMany(d => d.Decks)
 				.HasForeignKey(x => x.UserId);
+
+			*/
+
+			modelBuilder.Entity<DeckCardsDir>().HasKey(dc => new {dc.CardId, dc.DeckID});
+
+			modelBuilder.Entity<DeckCardsDir>()
+				.HasOne<Deck>(d => d.Deck)
+				.WithMany(r => r.DeckCards)
+				.HasForeignKey(c => c.DeckID);
+
+			modelBuilder.Entity<DeckCardsDir>()
+				.HasOne<Card>(c => c.Card)
+				.WithMany(r => r.DeckCards)
+				.HasForeignKey(x => x.CardId);
+
 
 			modelBuilder.Entity<Card>()
 				.Property(e => e.colors)
