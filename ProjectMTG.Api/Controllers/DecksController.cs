@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 using ProjectMTG.DataAccess;
 using ProjectMTG.Model;
+using Remotion.Linq.Clauses;
 
 namespace ProjectMTG.Api.Controllers
 {
@@ -94,6 +95,31 @@ namespace ProjectMTG.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            var dbUser = (from i in _context.Users
+	            where i.UserId == deck.UserId
+	            select i).FirstOrDefault();
+
+            Deck dbDeck = new Deck() {User = dbUser};
+
+            foreach (var card in deck.Cards)
+            {
+	            if (card != null)
+	            {
+		            var dbCard = (from i in _context.Cards
+			            where i.CardId == card.CardId
+			            select i).FirstOrDefault();
+
+		            if (dbCard != null)
+		            {
+			            _context.Entry(dbCard).State = EntityState.Unchanged;
+			            dbDeck.Cards.Add(dbCard);
+		            }
+	            }
+            }
+
+            
+
+
 			/*
             var user = _context.Users.FirstOrDefault(u => u.UserId == deck.UserId);
 
@@ -102,7 +128,7 @@ namespace ProjectMTG.Api.Controllers
 				
             }
 			*/
-			
+
 			/*
 			if (_context.Users.FirstOrDefault(u => u.UserId == deck.UserId) != null)
 			{
@@ -130,7 +156,7 @@ namespace ProjectMTG.Api.Controllers
 
 
 
-			_context.Decks.Add(deck);
+			_context.Decks.Add(dbDeck);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDeck", new { id = deck.DeckId }, deck);
