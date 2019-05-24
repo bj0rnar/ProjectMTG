@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -27,8 +28,8 @@ namespace ProjectMTG
 		static void Main(string[] args)
 		{
 			//If DB is empty, use these to populate. 
-			addToDb();
-			CreateDeck();
+			//addToDb();
+			//CreateDeck();
 		}
 
 		public static void CreateDeck()
@@ -42,6 +43,7 @@ namespace ProjectMTG
 				db.SaveChanges();
 			}
 		}
+		
 
 		public static void addToDb()
 		{

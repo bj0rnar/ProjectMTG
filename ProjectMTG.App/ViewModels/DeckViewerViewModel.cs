@@ -34,7 +34,7 @@ namespace ProjectMTG.App.ViewModels
         //Load decks from user
         internal async Task GetUserDecks()
         {
-            var decks = await decksDataAccess.GetUserDecksAsync(User.UserId);
+            var decks = await decksDataAccess.GetUserDecksAsync(User.UserId).ConfigureAwait(false);
             foreach (Deck deck in decks)
             {
                 ObservableDeckList.Add(deck);

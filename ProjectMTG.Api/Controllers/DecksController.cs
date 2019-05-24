@@ -95,6 +95,17 @@ namespace ProjectMTG.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            _context.Entry(deck.User).State = EntityState.Modified;
+
+
+
+            foreach (var card in deck.Cards)
+            {
+	            _context.Entry(card).State = EntityState.Modified;
+            }
+
+
+			/*
             var dbUser = (from i in _context.Users
 	            where i.UserId == deck.UserId
 	            select i).FirstOrDefault();
@@ -155,8 +166,8 @@ namespace ProjectMTG.Api.Controllers
 			//   _context.Users.FirstOrDefault(u => u.UserId == deck.UserId).Decks.Add(deck);
 
 
-
-			_context.Decks.Add(dbDeck);
+			//_context.Entry(deck).State = EntityState.Modified;
+			_context.Decks.Add(deck);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDeck", new { id = deck.DeckId }, deck);
