@@ -27,18 +27,48 @@ namespace ProjectMTG
 		static void Main(string[] args)
 		{
 			//If DB is empty, use these to populate. 
-			addToDb();
-			CreateDeck();
+			//addToDb();
+			//CreateDeck();
+			checker();
+		}
+
+		public static void checker()
+		{
+			using (var db = new CollectionContext())
+			{
+				var user = db.Users.FirstOrDefault(x => x.UserName == "Kjellemann");
+
+				var card = db.Cards.FirstOrDefault(z => z.name == "Arclight Phoenix");
+
+				var deck = new Deck() {User = user};
+
+				deck.Cards.Add(card);
+				deck.Cards.Add(card);
+
+				user.Decks.Add(deck);
+
+
+				Console.WriteLine(user.Decks.Count);
+
+				foreach (var userdeck in user.Decks)
+				{
+					foreach (var usercard in userdeck.Cards)
+					{
+						Console.WriteLine(usercard.name);
+					}
+				}
+
+							 Console.ReadKey();
+
+			}
 		}
 
 		public static void CreateDeck()
 		{
 			using (var db = new CollectionContext())
 			{
-				User demoUser = new User() {UserName = "MeinUser", Password = "123"};
-				Deck demoDeck = new Deck() {DeckName = "Testdeck", User = demoUser};
+				User demoUser = new User() {UserName = "Kjellemann", Password = "123"};
 				db.Users.Add(demoUser);
-				db.Decks.Add(demoDeck);
 				db.SaveChanges();
 			}
 		}

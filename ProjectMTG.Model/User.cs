@@ -6,7 +6,7 @@ using System.Text;
 namespace ProjectMTG.Model
 {
 	public class User
-	{
+	{	
 		[Key]
 		public int UserId { get; set; }
 		public string UserName { get; set; }

@@ -10,8 +10,8 @@ using ProjectMTG.DataAccess;
 namespace ProjectMTG.DataAccess.Migrations
 {
     [DbContext(typeof(CollectionContext))]
-    [Migration("20190520101951_EditDatabase")]
-    partial class EditDatabase
+    [Migration("20190524033652_OneToMany")]
+    partial class OneToMany
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,7 +90,7 @@ namespace ProjectMTG.DataAccess.Migrations
 
                     b.Property<string>("DeckName");
 
-                    b.Property<int>("UserId");
+                    b.Property<int?>("UserId");
 
                     b.HasKey("DeckId");
 
@@ -125,8 +125,7 @@ namespace ProjectMTG.DataAccess.Migrations
                 {
                     b.HasOne("ProjectMTG.Model.User", "User")
                         .WithMany("Decks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

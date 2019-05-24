@@ -83,14 +83,23 @@ namespace ProjectMTG.App.ViewModels
                 //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
                 //Verify input.
            
-                Deck deck = new Deck() {DeckName = param, User = user, UserId = user.UserId};
+                Deck deck = new Deck() {DeckName = param};
 
-
+                //Add duplicates to dictionary
+               /* var duplicateCheck = GetObservableDeck.GroupBy(x => x)
+                    .Where(z => z.Count() > 1)
+                    .ToDictionary(x => x.Key, y => y.Count());
+                
+                */
+               
                 foreach (Card card in GetObservableDeck)
                 {
+                    //Only add unique cards.
+                    //if(GetObservableDeck.Any(p => p.CardId == card.CardId) == false) deck.Cards.Add(card);
                     deck.Cards.Add(card);
                 }
 
+                
                 //Doesn't save to database.
                 //user.Decks.Add(deck);
                 

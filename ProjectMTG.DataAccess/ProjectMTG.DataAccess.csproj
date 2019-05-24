@@ -6,6 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190424034106_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190519020501_DatabaseChanges2.cs" />
+    <Compile Remove="Migrations\20190519110305_DatabaseChanges3.cs" />
+    <Compile Remove="Migrations\20190520101951_EditDatabase.cs" />
+    <Compile Remove="Migrations\20190520143553_ManyToMany.cs" />
+    <Compile Remove="Migrations\20190524022718_AnotherOne.cs" />
+    <Compile Remove="Migrations\20190524032812_OneToMany.cs" />
+    <Compile Remove="Migrations\20190524033101_OneToManyTwo.cs" />
   </ItemGroup>
 
   <ItemGroup>

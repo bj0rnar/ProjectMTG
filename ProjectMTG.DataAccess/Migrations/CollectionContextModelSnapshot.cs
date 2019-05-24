@@ -88,26 +88,13 @@ namespace ProjectMTG.DataAccess.Migrations
 
                     b.Property<string>("DeckName");
 
-                    b.Property<int>("UserId");
+                    b.Property<int?>("UserId");
 
                     b.HasKey("DeckId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Decks");
-                });
-
-            modelBuilder.Entity("ProjectMTG.Model.DeckCardsDir", b =>
-                {
-                    b.Property<int>("CardId");
-
-                    b.Property<int>("DeckID");
-
-                    b.HasKey("CardId", "DeckID");
-
-                    b.HasIndex("DeckID");
-
-                    b.ToTable("DeckCards");
                 });
 
             modelBuilder.Entity("ProjectMTG.Model.User", b =>
@@ -127,7 +114,7 @@ namespace ProjectMTG.DataAccess.Migrations
 
             modelBuilder.Entity("ProjectMTG.Model.Card", b =>
                 {
-                    b.HasOne("ProjectMTG.Model.Deck")
+                    b.HasOne("ProjectMTG.Model.Deck", "deck")
                         .WithMany("Cards")
                         .HasForeignKey("DeckId");
                 });
@@ -136,21 +123,7 @@ namespace ProjectMTG.DataAccess.Migrations
                 {
                     b.HasOne("ProjectMTG.Model.User", "User")
                         .WithMany("Decks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ProjectMTG.Model.DeckCardsDir", b =>
-                {
-                    b.HasOne("ProjectMTG.Model.Card", "Card")
-                        .WithMany("DeckCards")
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ProjectMTG.Model.Deck", "Deck")
-                        .WithMany("DeckCards")
-                        .HasForeignKey("DeckID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
