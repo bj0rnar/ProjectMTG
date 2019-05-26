@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectMTG.DataAccess;
 
 namespace ProjectMTG.DataAccess.Migrations
 {
     [DbContext(typeof(CollectionContext))]
-    partial class CollectionContextModelSnapshot : ModelSnapshot
+    [Migration("20190524062843_PikachuEvolving")]
+    partial class PikachuEvolving
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,11 +86,7 @@ namespace ProjectMTG.DataAccess.Migrations
 
                     b.Property<string>("DeckName");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("DeckId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Decks");
                 });
@@ -99,9 +97,15 @@ namespace ProjectMTG.DataAccess.Migrations
 
                     b.Property<int>("DeckID");
 
+                    b.Property<int>("DeckCardsDirId");
+
+                    b.Property<int?>("UserId");
+
                     b.HasKey("CardId", "DeckID");
 
                     b.HasIndex("DeckID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("DeckCards");
                 });
@@ -121,13 +125,6 @@ namespace ProjectMTG.DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ProjectMTG.Model.Deck", b =>
-                {
-                    b.HasOne("ProjectMTG.Model.User", "user")
-                        .WithMany("UserDecks")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("ProjectMTG.Model.DeckCardsDir", b =>
                 {
                     b.HasOne("ProjectMTG.Model.Card", "Card")
@@ -139,6 +136,10 @@ namespace ProjectMTG.DataAccess.Migrations
                         .WithMany("Cards")
                         .HasForeignKey("DeckID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectMTG.Model.User", "user")
+                        .WithMany("UserDecks")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

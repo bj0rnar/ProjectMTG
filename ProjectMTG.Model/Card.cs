@@ -42,7 +42,6 @@ namespace ProjectMTG.Model
 
 		public class Card
 		{
-			[Key]
 			public int CardId { get; set; }
 
 			public string artist { get; set; }
@@ -72,7 +71,7 @@ namespace ProjectMTG.Model
 			public string toughness { get; set; }
 		
 			//public Deck deck { get; set; }
-			public ICollection<DeckCardsDir> DeckCards { get; set; } = new List<DeckCardsDir>();
+			public virtual ICollection<DeckCardsDir> Decks { get; set; } = new List<DeckCardsDir>();
 		}
 	
 

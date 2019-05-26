@@ -48,12 +48,12 @@ namespace ProjectMTG.DataAccess
 
 			modelBuilder.Entity<DeckCardsDir>()
 				.HasOne<Deck>(d => d.Deck)
-				.WithMany(r => r.DeckCards)
+				.WithMany(r => r.Cards)
 				.HasForeignKey(c => c.DeckID);
 
 			modelBuilder.Entity<DeckCardsDir>()
 				.HasOne<Card>(c => c.Card)
-				.WithMany(r => r.DeckCards)
+				.WithMany(r => r.Decks)
 				.HasForeignKey(x => x.CardId);
 
 

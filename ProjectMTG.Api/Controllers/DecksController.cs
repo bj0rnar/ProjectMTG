@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 using ProjectMTG.DataAccess;
 using ProjectMTG.Model;
-using Remotion.Linq.Clauses;
 
 namespace ProjectMTG.Api.Controllers
 {
@@ -89,85 +85,22 @@ namespace ProjectMTG.Api.Controllers
         // POST: api/Decks
         [HttpPost]
         public async Task<IActionResult> PostDeck([FromBody] Deck deck)
-			{
+        {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Entry(deck.User).State = EntityState.Modified;
-
-
-
-            foreach (var card in deck.Cards)
+            foreach (DeckCardsDir dir in deck.Cards)
             {
-	            _context.Entry(card).State = EntityState.Modified;
+	            _context.Entry(dir.Card).State = EntityState.Modified;
             }
 
+            _context.Entry(deck.user).State = EntityState.Modified;
 
-			/*
-            var dbUser = (from i in _context.Users
-	            where i.UserId == deck.UserId
-	            select i).FirstOrDefault();
-
-            Deck dbDeck = new Deck() {User = dbUser};
-
-            foreach (var card in deck.Cards)
-            {
-	            if (card != null)
-	            {
-		            var dbCard = (from i in _context.Cards
-			            where i.CardId == card.CardId
-			            select i).FirstOrDefault();
-
-		            if (dbCard != null)
-		            {
-			            _context.Entry(dbCard).State = EntityState.Unchanged;
-			            dbDeck.Cards.Add(dbCard);
-		            }
-	            }
-            }
-
-            
-
-
-			/*
-            var user = _context.Users.FirstOrDefault(u => u.UserId == deck.UserId);
-
-            if (user != null)
-            {
-				
-            }
-			*/
-
-			/*
-			if (_context.Users.FirstOrDefault(u => u.UserId == deck.UserId) != null)
-			{
-				try
-				{
-				
-					var user = (from i in _context.Users
-						where deck.UserId == i.UserId
-						select i).FirstOrDefault();
-
-					user.Decks.Add(deck);
-				
-
-					 _context.Users.FirstOrDefault(u => u.UserId == deck.UserId).Decks.Add(deck);
-				}
-				catch (NullReferenceException e)
-				{
-					Debug.WriteLine(e.Message);
-				}
-
-			}
-			*/
-			//           **Egentle dæ som ska skje. Detta funke obviously ikkje**
-			//   _context.Users.FirstOrDefault(u => u.UserId == deck.UserId).Decks.Add(deck);
-
-
-			//_context.Entry(deck).State = EntityState.Modified;
 			_context.Decks.Add(deck);
+			
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDeck", new { id = deck.DeckId }, deck);

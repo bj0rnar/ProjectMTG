@@ -20,10 +20,6 @@ namespace ProjectMTG.App.DataAccess
 
             if (result.IsSuccessStatusCode)
             {
-                json = await result.Content.ReadAsStringAsync();
-                var returnedDeck = JsonConvert.DeserializeObject<Deck>(json);
-                deck.DeckId = returnedDeck.DeckId;
-
                 return true;
             }
             else
@@ -40,12 +36,12 @@ namespace ProjectMTG.App.DataAccess
 
             var jsonData = await clientResult.Content.ReadAsStringAsync();
             Deck[] decks = JsonConvert.DeserializeObject<Deck[]>(jsonData);
-
+            /*
             if (decks.Any(deck => deck.User.UserId.Equals(userId)))
             {
                 return decks;
             }
-
+            */
             return null;
         }
 

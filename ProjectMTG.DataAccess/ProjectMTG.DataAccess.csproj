@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190424034106_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190526191807_PKinDeckCardsDir.cs" />
   </ItemGroup>
 
   <ItemGroup>

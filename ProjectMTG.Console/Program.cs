@@ -32,14 +32,16 @@ namespace ProjectMTG
 			//CreateDeck();
 		}
 
+		
+
 		public static void CreateDeck()
 		{
 			using (var db = new CollectionContext())
 			{
-				User demoUser = new User() {UserName = "MeinUser", Password = "123"};
-				Deck demoDeck = new Deck() {DeckName = "Testdeck", User = demoUser};
-				db.Users.Add(demoUser);
-				db.Decks.Add(demoDeck);
+				User demoUser = new User() {UserName = "Jaggu", Password = "123"};
+				Deck deck = new Deck() {DeckName = "Jauda"};
+				var card = db.Cards.FirstOrDefault(w => w.name == "Arclight Phoenix");
+				
 				db.SaveChanges();
 			}
 		}

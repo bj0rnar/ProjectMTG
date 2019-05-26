@@ -25,20 +25,25 @@ namespace ProjectMTG.App.ViewModels
 
         public DeckViewerViewModel()
         {
+            /*
             foreach (Deck deck in User.Decks)
             {
                 ObservableDeckList.Add(deck);
             }
+            */
         }
 
         //Load decks from user
         internal async Task GetUserDecks()
         {
+
+            /*
             var decks = await decksDataAccess.GetUserDecksAsync(User.UserId).ConfigureAwait(false);
             foreach (Deck deck in decks)
             {
                 ObservableDeckList.Add(deck);
             }
+            */
         }
 
 
@@ -50,7 +55,7 @@ namespace ProjectMTG.App.ViewModels
 
             var query = from card in selectedDeck.Cards
                         select card;
-
+            /*
             foreach (var card in query)
             {
                 await Task.Delay(150);
@@ -60,6 +65,7 @@ namespace ProjectMTG.App.ViewModels
                 var bitmapImage = new BitmapImage { UriSource = scryUri };
                 GetObservableImage.Add(bitmapImage);
             }
+            */
             
         }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -10,7 +12,6 @@ using Windows.UI.Xaml.Data;
 using Newtonsoft.Json;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
-using ProjectMTG.DataAccess;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.ViewModels
@@ -31,8 +32,10 @@ namespace ProjectMTG.App.ViewModels
 
         //Filtered out database.
         private Cards cardsDataAccess = new Cards();
+        
         private Decks decksDataAccess = new Decks();
         private Users usersDataAccess = new Users();
+        private DeckCardsDirectorycs deckCardsDirectoryDataAccess = new DeckCardsDirectorycs();
 
         //Command
         public ICommand AddCardToDeck { get; set; }
@@ -82,7 +85,29 @@ namespace ProjectMTG.App.ViewModels
                 //Not saving directly to DB yet, this is just proof of concept for beta. Wanna fix user login before starting with this.
                 //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
                 //Verify input.
-           
+
+                var deck = new Deck() {DeckName = param, user = user};
+
+
+                foreach (var card in GetObservableDeck)
+                {
+                    var deckWithCards = new DeckCardsDir() { Card = card};
+
+                    deck.Cards.Add(deckWithCards);
+                }
+
+                if (await decksDataAccess.AddDeckAsync(deck))
+                {
+                    Debug.WriteLine("Success");
+                }
+
+                /*
+                if (await deckCardsDirectoryDataAccess.AddDeckWithCardsAsync(deck))
+                {
+                    Debug.WriteLine("Success");
+                }
+
+                /*
                 Deck deck = new Deck() {DeckName = param, User = user, UserId = user.UserId};
 
 
