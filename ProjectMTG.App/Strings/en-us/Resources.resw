@@ -141,4 +141,8 @@
     <value>RegisterUser</value>
     <comment>Navigation view item name for RegisterUser</comment>
   </data>
+  <data name="Shell_Simulation.Content" xml:space="preserve">
+    <value>Simulation</value>
+    <comment>Navigation view item name for Simulation</comment>
+  </data>
 </root>

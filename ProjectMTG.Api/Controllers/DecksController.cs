@@ -96,15 +96,49 @@ namespace ProjectMTG.Api.Controllers
             }
 
 
-            //Modify user
-            //_context.Entry(deck.User).State = EntityState.Modified;
+			//Modify user
+			//_context.Entry(deck.User).State = EntityState.Modified;
 
-			//Detta burde værra pisslett.
+			
+			var dbUser = _context.Users.FirstOrDefault(x => x == deck.User);
 
-			//var dbUser = _context.Users.FirstOrDefault(x => x.UserId )
-
-
-			_context.Decks.Add(deck);
+			if (dbUser != null)
+			{
+				var newDeck = new Deck() {User = dbUser, DeckName = deck.DeckName};
+				_context.Entry(dbUser).State = EntityState.Modified;
+				
+				_context.Decks.Add(newDeck);
+			}
+			
+			/*
+			foreach (var q in deck.Cards)
+			{
+				newDeck.Cards.Add(new Card()
+				{
+					name = q.name,
+					artist = q.artist,
+					colors = q.colors,
+					convertedManaCost = q.convertedManaCost,
+					manaCost = q.manaCost,
+					multiverseId = q.multiverseId,
+					loyalty = q.loyalty,
+					number = q.number,
+					rarity = q.rarity,
+					scryfallId = q.scryfallId,
+					scryfallIllustrationId = q.scryfallIllustrationId,
+					scryfallOracleId = q.scryfallOracleId,
+					subtype = q.subtype,
+					supertype = q.supertype,
+					text = q.text,
+					type = q.type,
+					types = q.types,
+					uuid = q.uuid,
+					uuidV421 = q.uuidV421,
+					power = q.power,
+					toughness = q.toughness
+				});
+			}
+			*/
 
 			/*
             var userFromDb = (from i in _context.Users

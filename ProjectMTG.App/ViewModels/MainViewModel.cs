@@ -35,7 +35,6 @@ namespace ProjectMTG.App.ViewModels
         //Filtered out database.
         private Cards cardsDataAccess = new Cards();
         private Decks decksDataAccess = new Decks();
-        private Users usersDataAccess = new Users();
 
         //Command
         public ICommand AddCardToDeck { get; set; }
@@ -83,7 +82,7 @@ namespace ProjectMTG.App.ViewModels
                 //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
                 //Verify input.
            
-                Deck deck = new Deck() {DeckName = param};
+                Deck deck = new Deck() {DeckName = param, User = user};
 
                 //Add duplicates to dictionary
                /* var duplicateCheck = GetObservableDeck.GroupBy(x => x)
@@ -91,24 +90,24 @@ namespace ProjectMTG.App.ViewModels
                     .ToDictionary(x => x.Key, y => y.Count());
                 
                 */
-               
+               /*
                 foreach (Card card in GetObservableDeck)
                 {
                     //Only add unique cards.
                     //if(GetObservableDeck.Any(p => p.CardId == card.CardId) == false) deck.Cards.Add(card);
                     deck.Cards.Add(card);
                 }
-
+                */
                 
                 //Doesn't save to database.
-                user.Decks.Add(deck);
-                /*
+                //user.Decks.Add(deck);
+                
                 if (await decksDataAccess.AddDeckAsync(deck))
                 {
                     Debug.WriteLine("Success");
                     user.Decks.Add(deck);
                 }
-                */
+                
                 GetObservableDeck.Clear();
                 
                 /*

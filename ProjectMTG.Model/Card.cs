@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ProjectMTG.Model
 	{
@@ -44,7 +41,6 @@ namespace ProjectMTG.Model
 		{
 			[Key]
 			public int CardId { get; set; }
-			//public int Duplicates { get; set; }
 			public Deck deck { get; set; }
 
 			public string artist { get; set; }
