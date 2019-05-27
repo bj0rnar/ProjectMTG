@@ -82,7 +82,7 @@ namespace ProjectMTG.App.ViewModels
                 //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
                 //Verify input.
            
-                Deck deck = new Deck() {DeckName = param, User = user};
+                Deck deck = new Deck() {DeckName = param, UserId = user.UserId};
 
                 //Add duplicates to dictionary
                /* var duplicateCheck = GetObservableDeck.GroupBy(x => x)
@@ -97,6 +97,7 @@ namespace ProjectMTG.App.ViewModels
                     //if(GetObservableDeck.Any(p => p.CardId == card.CardId) == false) deck.Cards.Add(card);
                     deck.Cards.Add(new DeckCards()
                     {
+                        DeckId = deck.DeckId,
                         name = card.name,
                         artist = card.artist,
                         colors = card.colors,

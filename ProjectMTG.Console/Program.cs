@@ -27,8 +27,8 @@ namespace ProjectMTG
 		static void Main(string[] args)
 		{
 			//If DB is empty, use these to populate. 
-			//addToDb();
-			//CreateDeck();
+			addToDb();
+			CreateDeck();
 			//checker();
 		}
 

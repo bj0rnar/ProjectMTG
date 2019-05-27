@@ -11,9 +11,8 @@ namespace ProjectMTG.Model
 	{
 		[Key]
 		public int DeckCardId { get; set; }
-		public Deck deck { get; set; }
-		/*[ForeignKey("DeckId")]
-		public int DeckId { get; set; }*/
+		[ForeignKey("DeckId")]
+		public int DeckId { get; set; }
 
 		public string artist { get; set; }
 		public string[] colors { get; set; }

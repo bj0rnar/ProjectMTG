@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectMTG.DataAccess.Migrations
 {
-    public partial class Database_Test : Migration
+    public partial class Database_rework : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,15 +60,17 @@ namespace ProjectMTG.DataAccess.Migrations
                 name: "Decks",
                 columns: table => new
                 {
-                    DeckId = table.Column<int>(nullable: false),
-                    DeckName = table.Column<string>(nullable: true)
+                    DeckId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DeckName = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Decks", x => x.DeckId);
                     table.ForeignKey(
-                        name: "FK_Decks_Users_DeckId",
-                        column: x => x.DeckId,
+                        name: "FK_Decks_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -78,7 +80,9 @@ namespace ProjectMTG.DataAccess.Migrations
                 name: "DeckCard",
                 columns: table => new
                 {
-                    DeckCardId = table.Column<int>(nullable: false),
+                    DeckCardId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DeckId = table.Column<int>(nullable: false),
                     artist = table.Column<string>(nullable: true),
                     colors = table.Column<string>(nullable: true),
                     convertedManaCost = table.Column<float>(nullable: false),
@@ -107,12 +111,22 @@ namespace ProjectMTG.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_DeckCard", x => x.DeckCardId);
                     table.ForeignKey(
-                        name: "FK_DeckCard_Decks_DeckCardId",
-                        column: x => x.DeckCardId,
+                        name: "FK_DeckCard_Decks_DeckId",
+                        column: x => x.DeckId,
                         principalTable: "Decks",
                         principalColumn: "DeckId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeckCard_DeckId",
+                table: "DeckCard",
+                column: "DeckId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Decks_UserId",
+                table: "Decks",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -91,7 +91,7 @@ namespace ProjectMTG.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Decks.Add(deck);
+			_context.Decks.Add(deck);
             try
             {
                 await _context.SaveChangesAsync();
