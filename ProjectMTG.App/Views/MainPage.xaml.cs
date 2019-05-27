@@ -55,7 +55,7 @@ namespace ProjectMTG.App.Views
         {
             
 
-            //ViewModel.FilteredCards.Clear();
+            //ViewModel.DisplayCards.Clear();
 
             //var blue = ViewModel.GetObservableCards.Where(u => u.colors.Contains("U"));
 
@@ -63,7 +63,7 @@ namespace ProjectMTG.App.Views
 
             //var result = x.Where(u => u.colors.Contains("U"));
 
-            //ViewModel.FilteredCards = new ObservableCollection<Card>(result);
+            //ViewModel.DisplayCards = new ObservableCollection<Card>(result);
 
 
             var blue = ViewModel.GetObservableCards.Where(x => x.colors.Contains("U")).ToList();

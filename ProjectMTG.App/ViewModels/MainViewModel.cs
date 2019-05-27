@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -26,8 +28,9 @@ namespace ProjectMTG.App.ViewModels
         private ObservableCollection<Card> ObservableDeck = new ObservableCollection<Card>();
         public ObservableCollection<Card> GetObservableDeck => this.ObservableDeck;
 
+
         //Filtered data
-        public ObservableCollection<Card> FilteredCards { get; set; }
+        public ObservableCollection<Card> DisplayCards { get; set; }  = new ObservableCollection<Card>();
 
         //Filtered out database.
         private Cards cardsDataAccess = new Cards();
@@ -38,17 +41,14 @@ namespace ProjectMTG.App.ViewModels
         public ICommand AddCardToDeck { get; set; }
         public ICommand RemoveCardFromDeck { get; set; }
         public ICommand SaveDeckList { get; set; }
-        public ICommand FilteredBlueCommand { get; set; }
+        private ICommand searchText;
 
-        
-        public int CardCounter => GetObservableDeck.Count;
+        //DataStream (needed for filtering)
+        public Card[] CompleteList;
 
         public MainViewModel()
         {
-            //Set filteredcards to be observablecards.
-            FilteredCards = GetObservableCards;
 
-            
             AddCardToDeck = new RelayCommand<Card>( param =>
             {
                 if (param != null)
@@ -101,16 +101,16 @@ namespace ProjectMTG.App.ViewModels
 
                 
                 //Doesn't save to database.
-                //user.Decks.Add(deck);
-                
+                user.Decks.Add(deck);
+                /*
                 if (await decksDataAccess.AddDeckAsync(deck))
                 {
                     Debug.WriteLine("Success");
                     user.Decks.Add(deck);
                 }
-                
+                */
                 GetObservableDeck.Clear();
-
+                
                 /*
                 if (await decksDataAccess.AddDeckAsync(deck))
                 {
@@ -133,25 +133,59 @@ namespace ProjectMTG.App.ViewModels
                 if (param)
                 {
                     var query = ObservableCards.Where(u => u.name == "Mountain").ToList();
-                    FilteredCards = new ObservableCollection<Card>(query);
+                    DisplayCards = new ObservableCollection<Card>(query);
                 }
                 else
                 {
-                    FilteredCards = ObservableCards;
+                    DisplayCards = ObservableCards;
                 }
 
             });
             */
         }
 
-       
+        //AutoSuggestBox dynamic search
+        public ICommand SearchText
+        {
+            get
+            {
+                if (searchText == null)
+                {
+
+                    searchText = new RelayCommand<string>(param =>
+                    {
+                        if (!string.IsNullOrEmpty(param))
+                        {
+                            var temp = new ObservableCollection<Card>(GetObservableCards.Where(x => x.name.ToLower().StartsWith(param.ToLower())));
+                            DisplayCards.Clear();
+                            foreach (var card in temp)
+                            {
+                                DisplayCards.Add(card);
+                            }
+                        }
+                        else
+                        {
+                            DisplayCards.Clear();
+                            foreach (var card in GetObservableCards)
+                            {
+                                DisplayCards.Add(card);
+                            }
+                            Debug.WriteLine("Its empty!");
+                        }
+                    });
+                }
+               return searchText;
+            }
+        }
+
 
         internal async Task LoadCardsAsync()
         {
-            var cards = await cardsDataAccess.GetCardsAsync();
-            foreach (Card card in cards)
+            CompleteList = await cardsDataAccess.GetCardsAsync();
+            foreach (Card card in CompleteList)
             {
                 ObservableCards.Add(card);
+                DisplayCards.Add(card);
             }
         }
     }
