@@ -41,12 +41,9 @@ namespace ProjectMTG.Model
 		{
 			[Key]
 			public int CardId { get; set; }
-			public Deck deck { get; set; }
-
 			public string artist { get; set; }
 
 			public string[] colors { get; set; }
-
 			public float convertedManaCost { get; set; }
 			public string loyalty { get; set; }
 			public string manaCost { get; set; }
@@ -69,7 +66,6 @@ namespace ProjectMTG.Model
 			public string power { get; set; }
 			public string toughness { get; set; }
 		
-			//public virtual ICollection<DeckWithCards> DeckCards { get; set; } = new List<DeckWithCards>();
 		}
 	
 

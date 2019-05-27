@@ -29,13 +29,14 @@ namespace ProjectMTG
 			//If DB is empty, use these to populate. 
 			//addToDb();
 			//CreateDeck();
-			checker();
+			//checker();
 		}
 
 		public static void checker()
 		{
-			using (var db = new CollectionContext())
+			/*using (var db = new CollectionContext())
 			{
+				/*
 				var user = db.Users.FirstOrDefault(x => x.UserName == "Kjellemann");
 
 				var card = db.Cards.FirstOrDefault(z => z.name == "Arclight Phoenix");
@@ -60,7 +61,7 @@ namespace ProjectMTG
 
 							 Console.ReadKey();
 
-			}
+			}*/
 		}
 
 		public static void CreateDeck()

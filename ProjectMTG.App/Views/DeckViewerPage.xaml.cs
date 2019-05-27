@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Diagnostics;
 using ProjectMTG.App.ViewModels;
 
 using Windows.UI.Xaml.Controls;
@@ -27,6 +27,7 @@ namespace ProjectMTG.App.Views
         private async void DeckLW_OnItemClick(object sender, ItemClickEventArgs e)
         {
             var selectedDeck = (Deck) e.ClickedItem;
+            Debug.WriteLine(selectedDeck.Cards.Count);
             await ViewModel.LoadImages(selectedDeck);
         }
     }

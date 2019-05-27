@@ -13,6 +13,7 @@
     <Compile Remove="Migrations\20190524022718_AnotherOne.cs" />
     <Compile Remove="Migrations\20190524032812_OneToMany.cs" />
     <Compile Remove="Migrations\20190524033101_OneToManyTwo.cs" />
+    <Compile Remove="Migrations\20190527151438_BrokenBuild4.cs" />
   </ItemGroup>
 
   <ItemGroup>

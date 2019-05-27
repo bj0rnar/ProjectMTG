@@ -90,14 +90,37 @@ namespace ProjectMTG.App.ViewModels
                     .ToDictionary(x => x.Key, y => y.Count());
                 
                 */
-               /*
+               
                 foreach (Card card in GetObservableDeck)
                 {
                     //Only add unique cards.
                     //if(GetObservableDeck.Any(p => p.CardId == card.CardId) == false) deck.Cards.Add(card);
-                    deck.Cards.Add(card);
+                    deck.Cards.Add(new DeckCards()
+                    {
+                        name = card.name,
+                        artist = card.artist,
+                        colors = card.colors,
+                        convertedManaCost = card.convertedManaCost,
+                        manaCost = card.manaCost,
+                        multiverseId = card.multiverseId,
+                        loyalty = card.loyalty,
+                        number = card.number,
+                        rarity = card.rarity,
+                        scryfallId = card.scryfallId,
+                        scryfallIllustrationId = card.scryfallIllustrationId,
+                        scryfallOracleId = card.scryfallOracleId,
+                        subtype = card.subtype,
+                        supertype = card.supertype,
+                        text = card.text,
+                        type = card.type,
+                        types = card.types,
+                        uuid = card.uuid,
+                        uuidV421 = card.uuidV421,
+                        power = card.power,
+                        toughness = card.toughness
+                    });
                 }
-                */
+                
                 
                 //Doesn't save to database.
                 //user.Decks.Add(deck);
