@@ -156,7 +156,7 @@ namespace ProjectMTG.App.ViewModels
                     {
                         if (!string.IsNullOrEmpty(param))
                         {
-                            var temp = new ObservableCollection<Card>(GetObservableCards.Where(x => x.name.ToLower().StartsWith(param.ToLower())));
+                            var temp = new ObservableCollection<Card>(DisplayCards.Where(x => x.name.ToLower().StartsWith(param.ToLower())));
                             DisplayCards.Clear();
                             foreach (var card in temp)
                             {
@@ -168,9 +168,9 @@ namespace ProjectMTG.App.ViewModels
                             DisplayCards.Clear();
                             foreach (var card in GetObservableCards)
                             {
+                                //Finn anna løsning. Hvis du tømme autosuggestbox mens du har på filter reset'e lista heilt uansett ka filter som æ på
                                 DisplayCards.Add(card);
                             }
-                            Debug.WriteLine("Its empty!");
                         }
                     });
                 }

@@ -50,60 +50,80 @@ namespace ProjectMTG.App.Views
             return bitmapImage;
         }
 
-
-        private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        /* Manuell måte å gjerra dæ på.
+        private void BlueCheckbox_OnChecked(object sender, RoutedEventArgs e)
         {
-            
+            var blue = ViewModel.GetObservableCards.Where(x => x.colors.Contains("U"));
 
-            //ViewModel.DisplayCards.Clear();
-
-            //var blue = ViewModel.GetObservableCards.Where(u => u.colors.Contains("U"));
-
-            //ObservableCollection<Card> x = ViewModel.GetObservableCards;
-
-            //var result = x.Where(u => u.colors.Contains("U"));
-
-            //ViewModel.DisplayCards = new ObservableCollection<Card>(result);
-
-
-            var blue = ViewModel.GetObservableCards.Where(x => x.colors.Contains("U")).ToList();
-            
-            if (blue != null)
-            {
-                ViewModel.GetObservableCards.Clear();
-
-                foreach (var card in blue)
-                {
-                    ViewModel.GetObservableCards.Add(card);
-                }
-            }
-
-            /*var justblue = from i in ViewModel.GetObservableCards
-                where i.colors.Contains("U")
-                select i;
-                */
-
-            /*
-            ViewModel.GetObservableCards.Clear();
+            ViewModel.DisplayCards.Clear();
 
             foreach (var card in blue)
             {
-                ViewModel.GetObservableCards.Add(card);
+                ViewModel.DisplayCards.Add(card);
             }
-            
-            foreach (var card in justblue)
-            {
-                ViewModel.GetObservableCards.Add(card);
-            }
-            */
         }
 
-
-        private void ToggleButton_OnUnchecked(object sender, RoutedEventArgs e)
+        private void BlueCheckbox_OnUnchecked(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-        }
+            ViewModel.DisplayCards.Clear();
 
-      
+            foreach (var card in ViewModel.GetObservableCards)
+            {
+                ViewModel.DisplayCards.Add(card);
+            }
+
+        }
+        */
+
+        private void CheckBox_OnClick(object sender, RoutedEventArgs e)
+        {
+            CheckBox[] checkboxes = new CheckBox[] {BlueCheckbox, BlackCheckBox, GreenCheckBox, ColorlessCheckBox, RedCheckBox, WhiteCheckBox, ColorlessCheckBox};
+            int falseCount = 0;
+
+            ViewModel.DisplayCards.Clear();
+
+            foreach (CheckBox checkbox in checkboxes)
+            {
+                if (checkbox.IsChecked == true)
+                {
+                    falseCount++;
+                    switch (checkbox.Name)
+                    {
+                        case "BlueCheckBox":
+                            var blue = ViewModel.GetObservableCards.Where(x => x.colors.Contains("U"));
+                            foreach (var card in blue){ ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "RedCheckBox":
+                            var red = ViewModel.GetObservableCards.Where(x => x.colors.Contains("R"));
+                            foreach (var card in red) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "BlackCheckBox":
+                            var black = ViewModel.GetObservableCards.Where(x => x.colors.Contains("B"));
+                            foreach (var card in black) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "WhiteCheckBox":
+                            var white = ViewModel.GetObservableCards.Where(x => x.colors.Contains("W"));
+                            foreach (var card in white) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "GreenCheckBox":
+                            var green = ViewModel.GetObservableCards.Where(x => x.colors.Contains("G"));
+                            foreach (var card in green) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "ColorlessCheckBox":
+                            var colorless = ViewModel.GetObservableCards.Where(x => x.colors.Length == 0);
+                            foreach (var card in colorless) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                    }
+                }
+            }
+
+            if (falseCount == 0)
+            {
+                foreach (var card in ViewModel.GetObservableCards)
+                {
+                    ViewModel.DisplayCards.Add(card);
+                }
+            }
+        }
     }
 }
