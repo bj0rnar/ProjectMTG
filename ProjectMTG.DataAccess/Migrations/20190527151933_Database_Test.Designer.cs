@@ -9,8 +9,8 @@ using ProjectMTG.DataAccess;
 namespace ProjectMTG.DataAccess.Migrations
 {
     [DbContext(typeof(CollectionContext))]
-    [Migration("20190527151721_NewDBTest")]
-    partial class NewDBTest
+    [Migration("20190527151933_Database_Test")]
+    partial class Database_Test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

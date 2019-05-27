@@ -23,7 +23,7 @@ namespace ProjectMTG.DataAccess
 			SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
 			{
 				DataSource = "(localdb)\\MSSQLLocalDB",
-				InitialCatalog = "ProjectMTGDemoOneToManyVersionTwo",
+				InitialCatalog = "ProjectMTGDemoWAT",
 				IntegratedSecurity = true
 			};
 
@@ -42,7 +42,7 @@ namespace ProjectMTG.DataAccess
 				.WithMany(d => d.Decks)
 				.HasForeignKey(x => x.UserId);
 			*/
-
+			/*
 			modelBuilder.Entity<Deck>()
 				.HasOne(c => c.User)
 				.WithMany(x => x.Decks)
@@ -52,7 +52,7 @@ namespace ProjectMTG.DataAccess
 				.HasMany(x => x.Cards)
 				.WithOne(z => z.deck)
 				.HasForeignKey(x => x.DeckCardId);
-
+				*/
 
 			//Støttemodell
 			modelBuilder.Entity<DeckCards>()

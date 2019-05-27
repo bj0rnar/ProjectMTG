@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectMTG.DataAccess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Database_Test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,7 +48,8 @@ namespace ProjectMTG.DataAccess.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserName = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,64 +60,68 @@ namespace ProjectMTG.DataAccess.Migrations
                 name: "Decks",
                 columns: table => new
                 {
-                    DeckId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DeckName = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false)
+                    DeckId = table.Column<int>(nullable: false),
+                    DeckName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Decks", x => x.DeckId);
                     table.ForeignKey(
-                        name: "FK_Decks_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Decks_Users_DeckId",
+                        column: x => x.DeckId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeckCardsDirs",
+                name: "DeckCard",
                 columns: table => new
                 {
-                    DeckId = table.Column<int>(nullable: false),
-                    CardId = table.Column<int>(nullable: false)
+                    DeckCardId = table.Column<int>(nullable: false),
+                    artist = table.Column<string>(nullable: true),
+                    colors = table.Column<string>(nullable: true),
+                    convertedManaCost = table.Column<float>(nullable: false),
+                    loyalty = table.Column<string>(nullable: true),
+                    manaCost = table.Column<string>(nullable: true),
+                    multiverseId = table.Column<int>(nullable: false),
+                    name = table.Column<string>(nullable: true),
+                    number = table.Column<string>(nullable: true),
+                    rarity = table.Column<string>(nullable: true),
+                    scryfallId = table.Column<string>(nullable: true),
+                    scryfallIllustrationId = table.Column<string>(nullable: true),
+                    scryfallOracleId = table.Column<string>(nullable: true),
+                    subtype = table.Column<string>(nullable: true),
+                    supertype = table.Column<string>(nullable: true),
+                    tcgplayerProductId = table.Column<int>(nullable: false),
+                    tcgplayerPurchaseUrl = table.Column<string>(nullable: true),
+                    text = table.Column<string>(nullable: true),
+                    type = table.Column<string>(nullable: true),
+                    types = table.Column<string>(nullable: true),
+                    uuid = table.Column<string>(nullable: true),
+                    uuidV421 = table.Column<string>(nullable: true),
+                    power = table.Column<string>(nullable: true),
+                    toughness = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeckCardsDirs", x => new { x.CardId, x.DeckId });
+                    table.PrimaryKey("PK_DeckCard", x => x.DeckCardId);
                     table.ForeignKey(
-                        name: "FK_DeckCardsDirs_Cards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cards",
-                        principalColumn: "CardId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DeckCardsDirs_Decks_DeckId",
-                        column: x => x.DeckId,
+                        name: "FK_DeckCard_Decks_DeckCardId",
+                        column: x => x.DeckCardId,
                         principalTable: "Decks",
                         principalColumn: "DeckId",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DeckCardsDirs_DeckId",
-                table: "DeckCardsDirs",
-                column: "DeckId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Decks_UserId",
-                table: "Decks",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DeckCardsDirs");
+                name: "Cards");
 
             migrationBuilder.DropTable(
-                name: "Cards");
+                name: "DeckCard");
 
             migrationBuilder.DropTable(
                 name: "Decks");

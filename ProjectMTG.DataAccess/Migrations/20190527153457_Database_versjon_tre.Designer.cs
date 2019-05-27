@@ -10,8 +10,8 @@ using ProjectMTG.DataAccess;
 namespace ProjectMTG.DataAccess.Migrations
 {
     [DbContext(typeof(CollectionContext))]
-    [Migration("20190527140444_BrokenBuild")]
-    partial class BrokenBuild
+    [Migration("20190527153457_Database_versjon_tre")]
+    partial class Database_versjon_tre
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,7 +97,7 @@ namespace ProjectMTG.DataAccess.Migrations
 
             modelBuilder.Entity("ProjectMTG.Model.DeckCards", b =>
                 {
-                    b.Property<int>("CardId")
+                    b.Property<int>("DeckCardId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -149,11 +149,11 @@ namespace ProjectMTG.DataAccess.Migrations
 
                     b.Property<string>("uuidV421");
 
-                    b.HasKey("CardId");
+                    b.HasKey("DeckCardId");
 
                     b.HasIndex("DeckId");
 
-                    b.ToTable("DeckCards");
+                    b.ToTable("DeckCard");
                 });
 
             modelBuilder.Entity("ProjectMTG.Model.User", b =>

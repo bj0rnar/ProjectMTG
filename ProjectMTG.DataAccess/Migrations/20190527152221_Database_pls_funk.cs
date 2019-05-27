@@ -2,7 +2,7 @@
 
 namespace ProjectMTG.DataAccess.Migrations
 {
-    public partial class BrokenBuild2 : Migration
+    public partial class Database_pls_funk : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
