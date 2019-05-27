@@ -123,9 +123,6 @@ namespace ProjectMTG.App.ViewModels
                 }
                 
                 
-                //Doesn't save to database.
-                //user.Decks.Add(deck);
-                
                 if (await decksDataAccess.AddDeckAsync(deck))
                 {
                     Debug.WriteLine("Success");
@@ -134,18 +131,7 @@ namespace ProjectMTG.App.ViewModels
                 
                 GetObservableDeck.Clear();
                 
-                /*
-                if (await decksDataAccess.AddDeckAsync(deck))
-                {
-                    Debug.WriteLine("Success");
-                }
-
-                /*  FIX LATER
-                if (await decksDataAccess.AddDeckAsync(deck))
-                {
-                    Debug.WriteLine("Success!");
-                }
-                */
+                
 
             }, s => !string.IsNullOrEmpty(s));
 
