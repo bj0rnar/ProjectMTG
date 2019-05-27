@@ -120,6 +120,7 @@
     <Compile Include="DataAccess\Users.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\Observable.cs" />
+    <Compile Include="Helpers\RandomPicker.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultLaunchActivationHandler.cs" />

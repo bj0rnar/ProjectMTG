@@ -39,12 +39,12 @@ namespace ProjectMTG.App.DataAccess
             var jsonData = await clientResult.Content.ReadAsStringAsync();
             Deck[] decks = JsonConvert.DeserializeObject<Deck[]>(jsonData);
 
-            /*if (decks.Any(deck => deck.User.UserId.Equals(userId)))
+            if (decks.Any(deck => deck.UserId == userId))
             {
                 return decks;
-            }*/
+            }
 
-            return decks;
+            return null;
         }
 
     }

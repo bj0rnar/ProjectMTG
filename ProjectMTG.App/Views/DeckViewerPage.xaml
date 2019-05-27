@@ -23,12 +23,12 @@
             </ListView>
             <TextBlock HorizontalAlignment="Left" Margin="169,294,0,0" Text="Decks" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
-            <GridView x:Name ="ImageList" HorizontalAlignment="Left" Height="939" Margin="399,32,0,0" IsItemClickEnabled="False"
-                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="1043" SelectionMode="None"
+            <GridView x:Name ="ImageList" HorizontalAlignment="Stretch" Height="939" Margin="399,32,0,0" IsItemClickEnabled="False"
+                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Width="1043" SelectionMode="None"
                       ItemsSource="{x:Bind ViewModel.GetObservableImage}">
                 <GridView.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding}" Width="256" Height="256" Margin="0,0,0,0"/>
+                        <Image Source="{Binding}" Height="280" Width="200" Stretch="UniformToFill"/>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>

@@ -13,6 +13,23 @@
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
 			<ComboBox Header="Select deck" x:Name="DeckComboBox" HorizontalAlignment="Left" Margin="79,94,0,0" VerticalAlignment="Top"
                       ItemsSource="{x:Bind ViewModel.GetComboBoxDecks}" DisplayMemberPath="DeckName" SelectionChanged="DeckComboBox_OnSelectionChanged" Width="155"/>
+
+			<GridView ItemsSource="{x:Bind ViewModel.GetDisplayImages}" Margin="40,415,40,44" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+				<GridView.ItemTemplate>
+					<DataTemplate x:Name="CardDisplayer">
+						<Image Source="{Binding}" Height="280" Width="200" Stretch="UniformToFill"/>
+					</DataTemplate>
+				</GridView.ItemTemplate>
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid MaximumRowsOrColumns="7" Orientation="Horizontal"/>
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+			</GridView>
+			<Button x:Name="DrawButton" Content="Draw new hand" HorizontalAlignment="Left" Margin="452,308,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.281,0.269" Click="DrawNewHand_OnClick"/>
+
+
+
 			<!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
 		</Grid>

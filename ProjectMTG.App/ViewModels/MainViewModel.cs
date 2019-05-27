@@ -63,7 +63,7 @@ namespace ProjectMTG.App.ViewModels
                     }
                     else
                     {
-                        Debug.WriteLine("Faggot");
+                        //Legg te feilhåndtering?
                     }
                 }
             }, card => card != null );
