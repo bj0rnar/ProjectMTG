@@ -27,37 +27,38 @@
 				</GridView.ItemsPanel>
 			</GridView>
 			<Button x:Name="DrawButton" Content="Draw new hand" HorizontalAlignment="Left" Margin="306,479,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.281,0.269" Click="DrawNewHand_OnClick"/>
-            <Button Content="Mulligan" HorizontalAlignment="Left" Margin="470,479,0,0" VerticalAlignment="Top" Width="104" Click="Mulligan_OnClick"/>
+			<Button Content="Mulligan" HorizontalAlignment="Left" Margin="470,479,0,0" VerticalAlignment="Top" Width="104" Click="Mulligan_OnClick"/>
 			<GridView Margin="1169,64,145,676">
 				<StackPanel HorizontalAlignment="Stretch">
-					<TextBox Text="0 land"/>
-					<TextBox Text="1 land"/>
-					<TextBox Text="2 land"/>
-					<TextBox Text="3 land"/>
-					<TextBox Text="4 land"/>
-					<TextBox Text="5 land"/>
-					<TextBox Text="6 land"/>
-					<TextBox Text="7 land"/>
+					<TextBlock Text="0 land"/>
+					<TextBlock Text="1 land"/>
+                    <TextBlock Text="2 land"/>
+                    <TextBlock Text="3 land"/>
+                    <TextBlock Text="4 land"/>
+                    <TextBlock Text="5 land"/>
+                    <TextBlock Text="6 land"/>
+                    <TextBlock Text="7 land"/>
 				</StackPanel>
 				<StackPanel>
-					<TextBox Text="0"/>
-					<TextBox Text="0"/>
-					<TextBox Text="0"/>
-					<TextBox Text="0"/>
-					<TextBox Text="0"/>
-					<TextBox Text="0"/>
-					<TextBox Text="0"/>
-					<TextBox Text="0"/>
+                    <TextBlock Text="{x:Bind ViewModel.ZeroLand, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.OneLand, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.TwoLand, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.ThreeLand, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.FourLand, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.FiveLand, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.SixLand, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.SevenLand, Mode=OneWay}"/>
 				</StackPanel>
 			</GridView>
-			<TextBox HorizontalAlignment="Left" Margin="1104,27,0,0" Text="Land average in hand" VerticalAlignment="Top"/>
-			<Button Content="Simulate draws" HorizontalAlignment="Left" Margin="930,173,0,0" VerticalAlignment="Top"/>
-			<ComboBox HorizontalAlignment="Left" Margin="1049,173,0,0" VerticalAlignment="Top">
+			<TextBlock HorizontalAlignment="Left" Margin="1104,27,0,0" Text="Land average in hand" VerticalAlignment="Top"/>
+			<Button Content="Simulate 100 draws" HorizontalAlignment="Left" Margin="957,178,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.SimulateDrawCommand}" CommandParameter="{Binding ElementName=DeckComboBox, Path=SelectedItem}" />
+
+			<!--<ComboBox HorizontalAlignment="Left" Margin="1049,173,0,0" VerticalAlignment="Top" Name="SimulateComboBox" SelectedItem="{x:Bind ViewModel.SelectedValue}">
 				<x:Int32>10</x:Int32>
 				<x:Int32>100</x:Int32>
 				<x:Int32>1000</x:Int32>
-			</ComboBox>
-			
+			</ComboBox>-->
+
 
 
 
