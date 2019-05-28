@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
@@ -29,6 +30,7 @@ namespace ProjectMTG.App.ViewModels
         private ObservableCollection<BitmapImage> DisplayImages = new ObservableCollection<BitmapImage>();
         public ObservableCollection<BitmapImage> GetDisplayImages => this.DisplayImages;
 
+
         public SimulationViewModel()
         {
             
@@ -44,13 +46,12 @@ namespace ProjectMTG.App.ViewModels
             }
         }
 
-        
-        public async void DrawNewHand(Deck selectedDeck)
+        public async void DrawNewHand(Deck selectedDeck, int draw)
         {
             GetDisplayCards.Clear();
             GetDisplayImages.Clear();
 
-            var randomList = selectedDeck.Cards.TakeRandom(7);
+            var randomList = selectedDeck.Cards.TakeRandom(draw);
 
             foreach (var card in randomList)
             {

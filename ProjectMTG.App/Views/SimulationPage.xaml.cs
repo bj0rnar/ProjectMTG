@@ -31,21 +31,33 @@ namespace ProjectMTG.App.Views
 
         private void DeckComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedDeck = DeckComboBox.Items[DeckComboBox.SelectedIndex] as Deck;
-            ViewModel.DrawNewHand(selectedDeck);
+            if (DeckComboBox.Items != null)
+            {
+                var selectedDeck = DeckComboBox.Items[DeckComboBox.SelectedIndex] as Deck;
+                ViewModel.DrawNewHand(selectedDeck, 7);
+            }
         }
 
         private void DrawNewHand_OnClick(object sender, RoutedEventArgs e)
         {
-            if (DeckComboBox.SelectedIndex != -1)
+            if (DeckComboBox.Items != null)
             {
                 var currentDeck = DeckComboBox.Items[DeckComboBox.SelectedIndex] as Deck;
-                ViewModel.DrawNewHand(currentDeck);
+                ViewModel.DrawNewHand(currentDeck, 7);
             }
-            else
+        }
+
+        private void Mulligan_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.GetDisplayCards.Count > 0)
             {
-                //Timer?
+                if (DeckComboBox.Items != null)
+                {
+                    var currentDeck = DeckComboBox.Items[DeckComboBox.SelectedIndex] as Deck;
+                    ViewModel.DrawNewHand(currentDeck, ViewModel.GetDisplayCards.Count - 1);
+                }
             }
+
         }
     }
 }
