@@ -32,6 +32,12 @@ namespace ProjectMTG.App.DataAccess
             }
         }
 
+        internal async Task<bool> DeleteDeckAsync(Deck deck)
+        {
+            HttpResponseMessage result = await _httpClient.DeleteAsync(new Uri(DeckUri, "decks/" + deck.DeckId));
+            return result.IsSuccessStatusCode;
+        }
+
 
         public async Task<Deck[]> GetUserDecksAsync(int userId)
         {

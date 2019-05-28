@@ -2,7 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
@@ -23,9 +25,11 @@ namespace ProjectMTG.App.ViewModels
         private ObservableCollection<BitmapImage> ObservableImage = new ObservableCollection<BitmapImage>();
         public ObservableCollection<BitmapImage> GetObservableImage => this.ObservableImage;
 
+        public ICommand DeleteDeckCommand;
+
         public DeckViewerViewModel()
         {
-            
+            DeleteDeckCommand = new RelayCommand<Deck>(DeleteDeck);
         }
 
         //Load decks from user
@@ -36,6 +40,17 @@ namespace ProjectMTG.App.ViewModels
             {
                 ObservableDeckList.Add(deck);
             }
+        }
+
+        //Delete deck
+        private async void DeleteDeck(Deck deck)
+        {
+            if (await decksDataAccess.DeleteDeckAsync(deck))
+            {
+                GetObservableDeckList.Remove(deck);
+                GetObservableImage.Clear();
+            }
+           
         }
 
 

@@ -135,22 +135,6 @@ namespace ProjectMTG.App.ViewModels
 
             }, s => !string.IsNullOrEmpty(s));
 
-
-            /*
-            FilteredBlueCommand = new RelayCommand<bool>(param =>
-            {
-                if (param)
-                {
-                    var query = ObservableCards.Where(u => u.name == "Mountain").ToList();
-                    DisplayCards = new ObservableCollection<Card>(query);
-                }
-                else
-                {
-                    DisplayCards = ObservableCards;
-                }
-
-            });
-            */
         }
 
         //AutoSuggestBox dynamic search
@@ -177,7 +161,7 @@ namespace ProjectMTG.App.ViewModels
                             DisplayCards.Clear();
                             foreach (var card in GetObservableCards)
                             {
-                                //Finn anna løsning. Hvis du tømme autosuggestbox mens du har på filter reset'e lista heilt uansett ka filter som æ på
+                                //TODO Detta skjit te filteren, finn ut no anna lurt
                                 DisplayCards.Add(card);
                             }
                         }

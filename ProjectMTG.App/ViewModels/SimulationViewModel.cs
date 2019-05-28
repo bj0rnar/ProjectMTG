@@ -108,7 +108,7 @@ namespace ProjectMTG.App.ViewModels
                     case 7:
                         SevenLand++;
                         break;
-                    default: //Default means more than seven
+                    default: //Default means more than seven, which in this case just means 7.
                         SevenLand++;
                         break;
                 }
@@ -116,6 +116,8 @@ namespace ProjectMTG.App.ViewModels
                 landPerDraw = 0;
 
             }
+
+            //TODO: Bind detta te tallen i UI.
 
             Debug.WriteLine("Zeroland" + ZeroLand);
             Debug.WriteLine("Oneland % " + OneLand);
@@ -125,8 +127,6 @@ namespace ProjectMTG.App.ViewModels
             Debug.WriteLine("Fiveland % " + FiveLand);
             Debug.WriteLine("Sixland % " + SixLand);
             Debug.WriteLine("Sevenland % " + SevenLand);
-
-
 
         }
 
