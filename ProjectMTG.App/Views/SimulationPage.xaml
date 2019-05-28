@@ -28,7 +28,7 @@
 			</GridView>
 			<Button x:Name="DrawButton" Content="Draw new hand" HorizontalAlignment="Left" Margin="306,479,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.281,0.269" Click="DrawNewHand_OnClick"/>
 			<Button Content="Mulligan" HorizontalAlignment="Left" Margin="470,479,0,0" VerticalAlignment="Top" Width="104" Click="Mulligan_OnClick"/>
-			<GridView Margin="1169,64,145,676">
+			<GridView Margin="1169,64,164,769">
 				<StackPanel HorizontalAlignment="Stretch">
 					<TextBlock Text="0 land"/>
 					<TextBlock Text="1 land"/>
@@ -39,7 +39,7 @@
                     <TextBlock Text="6 land"/>
                     <TextBlock Text="7 land"/>
 				</StackPanel>
-				<StackPanel>
+				<StackPanel HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
                     <TextBlock Text="{x:Bind ViewModel.ZeroLand, Mode=OneWay}"/>
                     <TextBlock Text="{x:Bind ViewModel.OneLand, Mode=OneWay}"/>
                     <TextBlock Text="{x:Bind ViewModel.TwoLand, Mode=OneWay}"/>

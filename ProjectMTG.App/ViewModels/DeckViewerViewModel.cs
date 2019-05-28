@@ -57,13 +57,11 @@ namespace ProjectMTG.App.ViewModels
         //Load images from decks.
         public async Task LoadImages(Deck selectedDeck)
         {
-            
-            GetObservableImage.Clear();
+            //TODO: Get
 
-            var query = from card in selectedDeck.Cards
-                        select card;
+            ObservableImage.Clear();
 
-            foreach (var card in query)
+            foreach (var card in selectedDeck.Cards)
             {
                 await Task.Delay(150);
                 Uri baseUri = new Uri("https://api.scryfall.com/cards/)");

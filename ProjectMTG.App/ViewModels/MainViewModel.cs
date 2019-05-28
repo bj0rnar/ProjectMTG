@@ -78,23 +78,14 @@ namespace ProjectMTG.App.ViewModels
 
             SaveDeckList = new RelayCommand<string>(async param =>
             {
-                //Not saving directly to DB yet, this is just proof of concept for beta. Wanna fix user login before starting with this.
-                //Rework this into method like GetCardsAsync, but with Serialize(deck) to json and upload.
-                //Verify input.
+                //Create new deck
            
                 Deck deck = new Deck() {DeckName = param, UserId = user.UserId};
 
-                //Add duplicates to dictionary
-               /* var duplicateCheck = GetObservableDeck.GroupBy(x => x)
-                    .Where(z => z.Count() > 1)
-                    .ToDictionary(x => x.Key, y => y.Count());
-                
-                */
                
                 foreach (Card card in GetObservableDeck)
                 {
-                    //Only add unique cards.
-                    //if(GetObservableDeck.Any(p => p.CardId == card.CardId) == false) deck.Cards.Add(card);
+                    //Add cards in acceptable database format
                     deck.Cards.Add(new DeckCards()
                     {
                         DeckId = deck.DeckId,
