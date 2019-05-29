@@ -12,6 +12,7 @@ namespace ProjectMTG.App.ViewModels
 
         public RegisterUserViewModel()
         {
+
         }
 
 

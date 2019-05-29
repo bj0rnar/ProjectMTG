@@ -13,7 +13,7 @@ namespace ProjectMTG.App.ViewModels
     public class LoginViewModel : Observable
     {
         //Get users
-        Users usersDataAccess = new Users();
+        Users _usersDataAccess = new Users();
 
         public LoginViewModel()
         {
@@ -23,7 +23,7 @@ namespace ProjectMTG.App.ViewModels
 
         public async Task<User> ValidateUser(string username, string password)
         {
-            var allUsers = await usersDataAccess.GetUsersAsync().ConfigureAwait(false);
+            var allUsers = await _usersDataAccess.GetUsersAsync().ConfigureAwait(false);
 
             var checkUser = (from x in allUsers
                 where x.UserName == username

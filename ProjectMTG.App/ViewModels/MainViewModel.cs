@@ -33,14 +33,14 @@ namespace ProjectMTG.App.ViewModels
         public ObservableCollection<Card> DisplayCards { get; set; }  = new ObservableCollection<Card>();
 
         //Filtered out database.
-        private Cards cardsDataAccess = new Cards();
-        private Decks decksDataAccess = new Decks();
+        private Cards _cardsDataAccess = new Cards();
+        private Decks _decksDataAccess = new Decks();
 
         //Command
         public ICommand AddCardToDeck { get; set; }
         public ICommand RemoveCardFromDeck { get; set; }
         public ICommand SaveDeckList { get; set; }
-        private ICommand searchText;
+        private ICommand _searchText;
 
         //DataStream (needed for filtering)
         public Card[] CompleteList;
@@ -114,7 +114,7 @@ namespace ProjectMTG.App.ViewModels
                 }
                 
                 
-                if (await decksDataAccess.AddDeckAsync(deck))
+                if (await _decksDataAccess.AddDeckAsync(deck))
                 {
                     Debug.WriteLine("Success");
                     user.Decks.Add(deck);
@@ -133,10 +133,10 @@ namespace ProjectMTG.App.ViewModels
         {
             get
             {
-                if (searchText == null)
+                if (_searchText == null)
                 {
 
-                    searchText = new RelayCommand<string>(param =>
+                    _searchText = new RelayCommand<string>(param =>
                     {
                         if (!string.IsNullOrEmpty(param))
                         {
@@ -158,14 +158,14 @@ namespace ProjectMTG.App.ViewModels
                         }
                     });
                 }
-               return searchText;
+               return _searchText;
             }
         }
 
 
         internal async Task LoadCardsAsync()
         {
-            CompleteList = await cardsDataAccess.GetCardsAsync();
+            CompleteList = await _cardsDataAccess.GetCardsAsync();
             foreach (Card card in CompleteList)
             {
                 ObservableCards.Add(card);

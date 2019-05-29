@@ -28,19 +28,7 @@ namespace ProjectMTG.App.DataAccess
             string json = JsonConvert.SerializeObject(user);
             HttpResponseMessage result = await _httpClient.PostAsync(UserUri, new StringContent(json, Encoding.UTF8, "application/json"));
 
-            if (result.IsSuccessStatusCode)
-            {
-                return true;
-
-            }
-            else
-            {
-                return false;
-            }
+            return result.IsSuccessStatusCode;
         }
-
     }
-
-
-
 }

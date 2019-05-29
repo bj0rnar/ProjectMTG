@@ -13,7 +13,7 @@ using ProjectMTG.Model;
 
 namespace ProjectMTG.App.ViewModels
 {
-    public class SimulationViewModel : Observable, INotifyPropertyChanged
+    public class SimulationViewModel : Observable
     {
 
         private User user = ShellViewModel.LoggedInUser;
@@ -29,14 +29,22 @@ namespace ProjectMTG.App.ViewModels
         private ObservableCollection<BitmapImage> DisplayImages = new ObservableCollection<BitmapImage>();
         public ObservableCollection<BitmapImage> GetDisplayImages => this.DisplayImages;
 
-        public double ZeroLand { get; set; }
-        public double OneLand { get; set; }
-        public double TwoLand { get; set; }
-        public double ThreeLand { get; set; }
-        public double FourLand { get; set; }
-        public double FiveLand { get; set; }
-        public double SixLand { get; set; }
-        public double SevenLand { get; set; }
+        private double _zeroLand;
+        public double ZeroLand{ get => _zeroLand; set => Set(ref _zeroLand, value); }
+        private double _oneLand;
+        public double OneLand { get => _oneLand; set => Set(ref _oneLand, value); }
+        private double _twoLand;
+        public double TwoLand { get => _twoLand; set => Set(ref _twoLand, value); }
+        private double _threeLand;
+        public double ThreeLand { get => _threeLand; set => Set(ref _threeLand, value); }
+        private double _fourLand;
+        public double FourLand { get => _fourLand; set => Set(ref _fourLand, value); }
+        private double _fiveLand;
+        public double FiveLand { get => _fiveLand;set => Set(ref _fiveLand, value); }
+        private double _sixLand;
+        public double SixLand { get => _sixLand; set => Set(ref _sixLand, value); }
+        private double _sevenLand;
+        public double SevenLand { get => _sevenLand; set => Set(ref _sevenLand, value); }
 
 
         public ICommand SimulateDrawCommand { get; }
@@ -116,17 +124,6 @@ namespace ProjectMTG.App.ViewModels
                 landPerDraw = 0;
 
             }
-
-            //TODO: Bind detta te tallen i UI.
-
-            Debug.WriteLine("Zeroland" + ZeroLand);
-            Debug.WriteLine("Oneland % " + OneLand);
-            Debug.WriteLine("Twoland % " + TwoLand);
-            Debug.WriteLine("Threeland % " + ThreeLand);
-            Debug.WriteLine("Fourland % " + FourLand);
-            Debug.WriteLine("Fiveland % " + FiveLand);
-            Debug.WriteLine("Sixland % " + SixLand);
-            Debug.WriteLine("Sevenland % " + SevenLand);
 
         }
 

@@ -16,50 +16,62 @@ namespace ProjectMTG.App.ViewModels
     public class DeckViewerViewModel : Observable
     {
         //Static user from MainViewModel, remove later
-        private User User = ShellViewModel.LoggedInUser;
-        private Decks decksDataAccess = new Decks();
+        private User _user = ShellViewModel.LoggedInUser;
+        private Decks _decksDataAccess = new Decks();
 
-        private ObservableCollection<Deck> ObservableDeckList = new ObservableCollection<Deck>();
-        public ObservableCollection<Deck> GetObservableDeckList => this.ObservableDeckList;
+        private ObservableCollection<Deck> _observableDeckList = new ObservableCollection<Deck>();
+        public ObservableCollection<Deck> GetObservableDeckList => this._observableDeckList;
 
-        private ObservableCollection<BitmapImage> ObservableImage = new ObservableCollection<BitmapImage>();
-        public ObservableCollection<BitmapImage> GetObservableImage => this.ObservableImage;
+        private ObservableCollection<BitmapImage> _observableImage = new ObservableCollection<BitmapImage>();
+        public ObservableCollection<BitmapImage> GetObservableImage => this._observableImage;
 
-        public ICommand DeleteDeckCommand;
+        public ICommand DeleteDeckCommand { get; }
+        public ICommand EditDeckNameCommand { get; }
 
         public DeckViewerViewModel()
         {
             DeleteDeckCommand = new RelayCommand<Deck>(DeleteDeck);
+            EditDeckNameCommand = new RelayCommand<Deck>(EditDeckName);
         }
 
         //Load decks from user
         internal async Task GetUserDecks()
         {
-            var decks = await decksDataAccess.GetUserDecksAsync(User.UserId);
+            var decks = await _decksDataAccess.GetUserDecksAsync(_user.UserId);
             foreach (Deck deck in decks)
             {
-                ObservableDeckList.Add(deck);
+                _observableDeckList.Add(deck);
             }
         }
 
         //Delete deck
         private async void DeleteDeck(Deck deck)
         {
-            if (await decksDataAccess.DeleteDeckAsync(deck))
+            if (await _decksDataAccess.DeleteDeckAsync(deck))
             {
-                GetObservableDeckList.Remove(deck);
-                GetObservableImage.Clear();
+                _observableDeckList.Remove(deck);
+                _observableImage.Clear();
             }
-           
+        }
+
+        private async void EditDeckName(Deck deck)
+        {
+            deck.DeckName = "EDIT";
+
+            if (await _decksDataAccess.EditDeckNameAsync(deck))
+            {
+                _observableDeckList.Remove(deck);
+                _observableDeckList.Add(deck);
+            }
         }
 
 
         //Load images from decks.
         public async Task LoadImages(Deck selectedDeck)
         {
-            //TODO: Get
+            //TODO: If you switch decks too fast the images stick. Wtf 
 
-            ObservableImage.Clear();
+            _observableImage.Clear();
 
             foreach (var card in selectedDeck.Cards)
             {

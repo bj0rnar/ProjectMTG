@@ -32,7 +32,8 @@
 					</DataTemplate>
 				</GridView.ItemTemplate>
 			</GridView>
-			<Button Content="Delete deck" HorizontalAlignment="Left" Margin="156,688,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.DeleteDeckCommand}" CommandParameter="{Binding ElementName=DeckListView, Path=SelectedItem}"/>
+			<Button Content="Delete deck" HorizontalAlignment="Left" Margin="141,738,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.DeleteDeckCommand}" CommandParameter="{Binding ElementName=DeckListView, Path=SelectedItem}"/>
+			<Button Content="Change deckname" HorizontalAlignment="Left" Margin="120,674,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.EditDeckNameCommand}" CommandParameter="{Binding ElementName=DeckListView, Path=SelectedItem}"/>
 
 
 			<!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
