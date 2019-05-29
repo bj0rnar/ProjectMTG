@@ -118,6 +118,7 @@
     <Compile Include="DataAccess\Cards.cs" />
     <Compile Include="DataAccess\Decks.cs" />
     <Compile Include="DataAccess\Users.cs" />
+    <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\RandomPicker.cs" />
@@ -132,6 +133,9 @@
     <Compile Include="ViewModels\RegisterUserViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SimulationViewModel.cs" />
+    <Compile Include="Views\ContentDialog1.xaml.cs">
+      <DependentUpon>ContentDialog1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeckViewerPage.xaml.cs">
       <DependentUpon>DeckViewerPage.xaml</DependentUpon>
     </Compile>
@@ -178,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ContentDialog1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

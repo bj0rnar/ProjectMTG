@@ -20,8 +20,14 @@ namespace ProjectMTG.App.Views
         public MainPage()
         {
             InitializeComponent();
-            
+            Loaded += LoadUserDecks;
             Loaded += MainPage_Loaded;
+            ShowSelectDialog(ViewModel.ContentDialogDecks);
+        }
+
+        private async void LoadUserDecks(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.GetUserDecks();
         }
 
         private async void MainPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -29,18 +35,59 @@ namespace ProjectMTG.App.Views
             await ViewModel.LoadCardsAsync();
         }
 
+        private async void ShowSelectDialog(ObservableCollection<Deck> userDeckList)
+        {
+            ContentDialog1 startUpDialog = new ContentDialog1(userDeckList);
+            await startUpDialog.ShowAsync();
+
+            //User selected edit in popup window, load cards in deck and set in editormode
+            if (startUpDialog.choice == UserChoice.Edit)
+            {
+                Debug.WriteLine("Edit clicked");
+
+                if (startUpDialog.Content != null)
+                {
+                    Deck deck = (Deck) startUpDialog.Content;
+                    ViewModel.LoadDeckCards(deck);
+                    ViewModel.EditorMode = true;
+                    SaveDecklistButton.Visibility = Visibility.Collapsed;
+                    //DeckListName.Visibility = Visibility.Collapsed;
+                    SaveChangesButton.Visibility = Visibility.Visible;
+                    ViewModel.EditDeck = deck;
+                }
+                else
+                {
+                    startUpDialog.choice = UserChoice.Create;
+                }
+            }
+
+            //User selected create in popup window, show default window settings.
+            if (startUpDialog.choice == UserChoice.Create)
+            {
+                Debug.WriteLine("Create clicked");
+                ViewModel.EditorMode = false;
+                SaveChangesButton.Visibility = Visibility.Collapsed;
+                SaveDecklistButton.Visibility = Visibility.Visible;
+                //DeckListName.Visibility = Visibility.Visible;
+            }
+
+        }
+
+        //Load image for clicked card
         private void CardListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             var selectedIndex = (Card) e.ClickedItem;
             ImageBox.Source = getBitmapImage(selectedIndex);
         }
 
+        //Load image for clicked card
         private void DeckListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             var selectedIndex = (Card)e.ClickedItem;
             ImageBox.Source = getBitmapImage(selectedIndex);
         }
 
+        //Get image from Scryfall
         private BitmapImage getBitmapImage(Card selectedIndex)
         {
             Uri baseUri = new Uri("https://api.scryfall.com/cards/)");
@@ -50,31 +97,7 @@ namespace ProjectMTG.App.Views
             return bitmapImage;
         }
 
-        /* Manuell måte å gjerra dæ på.
-        private void BlueCheckbox_OnChecked(object sender, RoutedEventArgs e)
-        {
-            var blue = ViewModel.GetObservableCards.Where(x => x.colors.Contains("U"));
-
-            ViewModel.DisplayCards.Clear();
-
-            foreach (var card in blue)
-            {
-                ViewModel.DisplayCards.Add(card);
-            }
-        }
-
-        private void BlueCheckbox_OnUnchecked(object sender, RoutedEventArgs e)
-        {
-            ViewModel.DisplayCards.Clear();
-
-            foreach (var card in ViewModel.GetObservableCards)
-            {
-                ViewModel.DisplayCards.Add(card);
-            }
-
-        }
-        */
-
+        //Filter based on checkbox isChecked name
         private void CheckBox_OnClick(object sender, RoutedEventArgs e)
         {
             CheckBox[] checkboxes = new CheckBox[] {BlueCheckbox, BlackCheckBox, GreenCheckBox, ColorlessCheckBox, RedCheckBox, WhiteCheckBox, ColorlessCheckBox};

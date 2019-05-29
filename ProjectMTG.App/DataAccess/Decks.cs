@@ -38,7 +38,7 @@ namespace ProjectMTG.App.DataAccess
             return result.IsSuccessStatusCode;
         }
 
-        internal async Task<bool> EditDeckNameAsync(Deck deck)
+        internal async Task<bool> EditDeckAsync(Deck deck)
         {
             var json = JsonConvert.SerializeObject(deck);
             HttpResponseMessage result = await _httpClient.PutAsync(new Uri(DeckUri, "decks/" + deck.DeckId), new StringContent(json, Encoding.UTF8, "application/json"));

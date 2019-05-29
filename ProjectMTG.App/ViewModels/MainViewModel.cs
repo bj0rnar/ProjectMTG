@@ -20,7 +20,7 @@ namespace ProjectMTG.App.ViewModels
     public class MainViewModel : Observable
     {
         //Static demo user
-        public User user = ShellViewModel.LoggedInUser;
+        private User _user = ShellViewModel.LoggedInUser;
 
         //Collections with getters
         private ObservableCollection<Card> ObservableCards = new ObservableCollection<Card>();
@@ -28,9 +28,15 @@ namespace ProjectMTG.App.ViewModels
         private ObservableCollection<Card> ObservableDeck = new ObservableCollection<Card>();
         public ObservableCollection<Card> GetObservableDeck => this.ObservableDeck;
 
+        //See if user is edit mode
+        public bool EditorMode { get; set; }
+        public Deck EditDeck { get; set; }
 
         //Filtered data
         public ObservableCollection<Card> DisplayCards { get; set; }  = new ObservableCollection<Card>();
+
+        //ContentDialog Decks
+        public ObservableCollection<Deck> ContentDialogDecks { get; set; } = new ObservableCollection<Deck>();
 
         //Filtered out database.
         private Cards _cardsDataAccess = new Cards();
@@ -41,6 +47,7 @@ namespace ProjectMTG.App.ViewModels
         public ICommand RemoveCardFromDeck { get; set; }
         public ICommand SaveDeckList { get; set; }
         private ICommand _searchText;
+        public ICommand SaveChanges { get; set; }
 
         //DataStream (needed for filtering)
         public Card[] CompleteList;
@@ -140,10 +147,15 @@ namespace ProjectMTG.App.ViewModels
             SaveDeckList = new RelayCommand<string>(async param =>
             {
                 //Create new deck
-           
-                Deck deck = new Deck() {DeckName = param, UserId = user.UserId};
 
-               
+                Deck deck = Converter.ConvertToDatabaseDeck(GetObservableDeck);
+               // Deck rere = new Deck() {DeckName = param, UserId = user.UserId};
+
+                deck.UserId = _user.UserId;
+                deck.DeckName = param;
+                /*
+                Converter.ConvertToDatabaseDeck(GetObservableDeck);
+                /*
                 foreach (Card card in GetObservableDeck)
                 {
                     //Add cards in acceptable database format
@@ -173,17 +185,41 @@ namespace ProjectMTG.App.ViewModels
                         toughness = card.toughness
                     });
                 }
-                
+                */
                 
                 if (await _decksDataAccess.AddDeckAsync(deck))
                 {
                     Debug.WriteLine("Success");
-                    user.Decks.Add(deck);
+                    _user.Decks.Add(deck);
                 }
                 
                 GetObservableDeck.Clear();
                 
                 
+
+            }, s => !string.IsNullOrEmpty(s));
+
+            SaveChanges = new RelayCommand<string>(async param =>
+            {
+                var deckWithEditedCards = Converter.ConvertToEditableDeck(GetObservableDeck, EditDeck);
+
+                foreach (var card in deckWithEditedCards.Cards)
+                {
+                    if (!EditDeck.Cards.Contains(card))
+                    {
+
+                    }
+                }
+
+
+                deckWithEditedCards.DeckName = param;
+               
+                if (await _decksDataAccess.EditDeckAsync(deckWithEditedCards))
+                {
+                    Debug.WriteLine("Edit cards success!");
+                }
+
+                GetObservableDeck.Clear();
 
             }, s => !string.IsNullOrEmpty(s));
 
@@ -232,6 +268,25 @@ namespace ProjectMTG.App.ViewModels
                 ObservableCards.Add(card);
                 DisplayCards.Add(card);
             }
+        }
+
+        internal async Task GetUserDecks()
+        {
+            var decks = await _decksDataAccess.GetUserDecksAsync(_user.UserId);
+            foreach (Deck deck in decks)
+            {
+                ContentDialogDecks.Add(deck);
+            }
+        }
+
+        public void LoadDeckCards(Deck deck)
+        {
+            var cardList = Converter.ConvertToLocalCards(deck);
+            foreach (var card in cardList)
+            {
+                ObservableDeck.Add(card);
+            }
+
         }
     }
 }

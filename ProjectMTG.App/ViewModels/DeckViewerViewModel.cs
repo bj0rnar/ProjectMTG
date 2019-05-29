@@ -65,7 +65,7 @@ namespace ProjectMTG.App.ViewModels
 
             if (!string.IsNullOrEmpty(deck.DeckName))
             {
-                if (await _decksDataAccess.EditDeckNameAsync(deck))
+                if (await _decksDataAccess.EditDeckAsync(deck))
                 {
                     _observableDeckList.Remove(deck);
                     _observableDeckList.Add(deck);
