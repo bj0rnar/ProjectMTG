@@ -45,6 +45,23 @@ namespace ProjectMTG.App.ViewModels
         //DataStream (needed for filtering)
         public Card[] CompleteList;
 
+
+        private int _creatures;
+        public int Creatures { get => _creatures; set => Set(ref _creatures, value); }
+        private int _land;
+        public int Land { get => _land; set => Set(ref _land, value); }
+        private int _instantSorcery;
+        public int InstantSorcery { get => _instantSorcery; set => Set(ref _instantSorcery, value); }
+        private int _planeswalker;
+        public int Planeswalker { get => _planeswalker; set => Set(ref _planeswalker, value); }
+        private int _totalCardCount;
+        public int TotalCardCount { get => _totalCardCount; set => Set(ref _totalCardCount, value); }
+        private int _artifact;
+        public int Artifact { get => _artifact; set => Set(ref _artifact, value); }
+
+
+
+
         public MainViewModel()
         {
 
@@ -59,6 +76,28 @@ namespace ProjectMTG.App.ViewModels
                     //If duplicate cards are more than 4 or card is a Land type.
                     if (equalCardCounter < 4 || param.types.Contains("Land"))
                     {
+                        if (param.types.Contains("Land"))
+                        {
+                            Land++;
+                        }
+                        else if (param.types.Contains("Instant") || param.types.Contains("Sorcery"))
+                        {
+                            InstantSorcery++;
+                        }
+                        else if (param.types.Contains("PlanesWalker"))
+                        {
+                            Planeswalker++;
+                        }
+                        else if (param.types.Contains("Creature"))
+                        {
+                            Creatures++;
+                        }
+                        else
+                        {
+                            Artifact++;
+                        }
+
+                        TotalCardCount++;
                         GetObservableDeck.Add(param);
                     }
                     else
@@ -72,6 +111,28 @@ namespace ProjectMTG.App.ViewModels
             {
                 if (param != null)
                 {
+                    if (param.types.Contains("Land"))
+                    {
+                        Land--;
+                    }
+                    else if (param.types.Contains("Instant") || param.types.Contains("Sorcery"))
+                    {
+                        InstantSorcery--;
+                    }
+                    else if (param.types.Contains("PlanesWalker"))
+                    {
+                        Planeswalker--;
+                    }
+                    else if (param.types.Contains("Creature"))
+                    {
+                        Creatures--;
+                    }
+                    else
+                    {
+                        Artifact--;
+                    }
+
+                    TotalCardCount--;
                     GetObservableDeck.Remove(param);
                 }
             }, card => card != null );
