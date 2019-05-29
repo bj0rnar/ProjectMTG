@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -28,6 +29,9 @@ namespace ProjectMTG.App.ViewModels
         public ICommand DeleteDeckCommand { get; }
         public ICommand EditDeckNameCommand { get; }
 
+        private string _deckName;
+        public string DeckName{ get => _deckName; set => Set(ref _deckName, value); }
+
         public DeckViewerViewModel()
         {
             DeleteDeckCommand = new RelayCommand<Deck>(DeleteDeck);
@@ -54,23 +58,26 @@ namespace ProjectMTG.App.ViewModels
             }
         }
 
+        //Edit deckname
         private async void EditDeckName(Deck deck)
         {
-            deck.DeckName = "EDIT";
+            deck.DeckName = DeckName;
 
-            if (await _decksDataAccess.EditDeckNameAsync(deck))
+            if (!string.IsNullOrEmpty(deck.DeckName))
             {
-                _observableDeckList.Remove(deck);
-                _observableDeckList.Add(deck);
+                if (await _decksDataAccess.EditDeckNameAsync(deck))
+                {
+                    _observableDeckList.Remove(deck);
+                    _observableDeckList.Add(deck);
+                }
             }
+            
         }
 
 
         //Load images from decks.
         public async Task LoadImages(Deck selectedDeck)
         {
-            //TODO: If you switch decks too fast the images stick. Wtf 
-
             _observableImage.Clear();
 
             foreach (var card in selectedDeck.Cards)
