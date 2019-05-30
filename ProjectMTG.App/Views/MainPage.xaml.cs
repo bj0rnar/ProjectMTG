@@ -130,10 +130,10 @@ namespace ProjectMTG.App.Views
             return bitmapImage;
         }
 
-        //Filter based on checkbox isChecked name
+        //Filter based on color
         private void CheckBox_OnClick(object sender, RoutedEventArgs e)
         {
-            CheckBox[] checkboxes = new CheckBox[] {BlueCheckbox, BlackCheckBox, GreenCheckBox, ColorlessCheckBox, RedCheckBox, WhiteCheckBox, ColorlessCheckBox};
+            CheckBox[] checkboxes = new CheckBox[] {BlueCheckBox, BlackCheckBox, GreenCheckBox, ColorlessCheckBox, RedCheckBox, WhiteCheckBox, ColorlessCheckBox};
             int falseCount = 0;
 
             ViewModel.DisplayCards.Clear();
@@ -173,6 +173,57 @@ namespace ProjectMTG.App.Views
                 }
             }
 
+            if (falseCount == 0)
+            {
+                foreach (var card in ViewModel.GetObservableCards)
+                {
+                    ViewModel.DisplayCards.Add(card);
+                }
+            }
+        }
+
+        //Filter checkbox based on type
+        private void Typebox_Onclick(object sender, RoutedEventArgs e)
+        {
+            CheckBox[] checkboxes = new CheckBox[] { LandCheckBox, CreatureCheckBox, PlaneswalkerCheckBox, ArtifactCheckBox, InstantCheckBox, SorceryCheckBox };
+            ViewModel.DisplayCards.Clear();
+
+            int falseCount = 0;
+
+            foreach (CheckBox checkbox in checkboxes)
+            {
+                if (checkbox.IsChecked == true)
+                {
+                    falseCount++;
+                    switch (checkbox.Name)
+                    {
+                        case "LandCheckBox":
+                            var land = ViewModel.GetObservableCards.Where(x => x.types.Contains("Land"));
+                            foreach (var card in land) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "CreatureCheckBox":
+                            var creature = ViewModel.GetObservableCards.Where(x => x.types.Contains("Creature"));
+                            foreach (var card in creature) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "PlaneswalkerCheckBox":
+                            var planeswalker = ViewModel.GetObservableCards.Where(x => x.types.Contains("Planeswalker"));
+                            foreach (var card in planeswalker) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "ArtifactCheckBox":
+                            var artifact = ViewModel.GetObservableCards.Where(x => x.types.Contains("Artifact"));
+                            foreach (var card in artifact) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "InstantCheckBox":
+                            var instant = ViewModel.GetObservableCards.Where(x => x.types.Contains("Instant"));
+                            foreach (var card in instant) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                        case "SorceryCheckBox":
+                            var sorcery = ViewModel.GetObservableCards.Where(x => x.types.Contains("Land"));
+                            foreach (var card in sorcery) { ViewModel.DisplayCards.Add(card); }
+                            break;
+                    }
+                }
+            }
             if (falseCount == 0)
             {
                 foreach (var card in ViewModel.GetObservableCards)
