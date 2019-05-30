@@ -16,16 +16,36 @@ namespace ProjectMTG.App.DataAccess
 
         internal async Task<bool> AddDeckCardAsync(DeckCard card)
         {
-            string json = JsonConvert.SerializeObject(card);
-            HttpResponseMessage result = await _httpClient.PostAsync(_deckcardUri, new StringContent(json, Encoding.UTF8, "application/json"));
+            try
+            {
+                string json = JsonConvert.SerializeObject(card);
+                HttpResponseMessage result = await _httpClient.PostAsync(_deckcardUri, new StringContent(json, Encoding.UTF8, "application/json"));
 
-            return result.IsSuccessStatusCode;
+                return result.IsSuccessStatusCode;
+
+
+
+            }
+            catch (HttpRequestException ex)
+            {
+                return false;
+                //Logg
+            }
+
         }
 
         internal async Task<bool> DeleteDeckCardAsync(DeckCard card)
         {
-            HttpResponseMessage result = await _httpClient.DeleteAsync(new Uri(_deckcardUri, "deckcards/" + card.DeckCardId));
-            return result.IsSuccessStatusCode;
+            try
+            {
+                HttpResponseMessage result = await _httpClient.DeleteAsync(new Uri(_deckcardUri, "deckcards/" + card.DeckCardId));
+                return result.IsSuccessStatusCode;
+            }
+            catch (HttpRequestException ex)
+            {
+                return false;
+                //Logg
+            }
         }
     }
 }

@@ -134,17 +134,26 @@ namespace ProjectMTG.App.ViewModels
 
             var randomList = selectedDeck.Cards.TakeRandom(draw);
 
-            foreach (var card in randomList)
+            if (randomList != null)
             {
-                await Task.Delay(150);
-                var baseUri = new Uri("https://api.scryfall.com/cards/)");
-                var indexUri = new Uri(baseUri, card.scryfallId);
-                var scryUri = new Uri(indexUri, "?format=image");
-                var bitmapImage = new BitmapImage { UriSource = scryUri };
-                GetDisplayImages.Add(bitmapImage);
-                GetDisplayCards.Add(card);
+
+                foreach (var card in randomList)
+                {
+                    await Task.Delay(150);
+                    var baseUri = new Uri("https://api.scryfall.com/cards/)");
+                    var indexUri = new Uri(baseUri, card.scryfallId);
+                    var scryUri = new Uri(indexUri, "?format=image");
+                    var bitmapImage = new BitmapImage {UriSource = scryUri};
+                    GetDisplayImages.Add(bitmapImage);
+                    GetDisplayCards.Add(card);
+                }
+
             }
-          
+            else
+            {
+                //Throw exception?
+            }
+
         }
         
     }

@@ -15,46 +15,66 @@ namespace ProjectMTG.App.DataAccess
 
         internal async Task<bool> AddDeckAsync(Deck deck)
         {
-            string json = JsonConvert.SerializeObject(deck);
-            HttpResponseMessage result = await _httpClient.PostAsync(_deckUri, new StringContent(json, Encoding.UTF8, "application/json"));
-
-            if (result.IsSuccessStatusCode)
+            try
             {
-                json = await result.Content.ReadAsStringAsync();
-                var returnedDeck = JsonConvert.DeserializeObject<Deck>(json);
-                deck.DeckId = returnedDeck.DeckId;
+                string json = JsonConvert.SerializeObject(deck);
+                HttpResponseMessage result = await _httpClient.PostAsync(_deckUri, new StringContent(json, Encoding.UTF8, "application/json"));
 
-                return true;
+                return result.IsSuccessStatusCode;
             }
-            else
+            catch (HttpRequestException ex)
             {
                 return false;
+                //Logg
             }
         }
 
         internal async Task<bool> DeleteDeckAsync(Deck deck)
         {
-            HttpResponseMessage result = await _httpClient.DeleteAsync(new Uri(_deckUri, "decks/" + deck.DeckId));
-            return result.IsSuccessStatusCode;
+            try
+            {
+                HttpResponseMessage result = await _httpClient.DeleteAsync(new Uri(_deckUri, "decks/" + deck.DeckId));
+                return result.IsSuccessStatusCode;
+            }
+            catch (HttpRequestException ex)
+            {
+                return false;
+                //LOgg
+            }
         }
 
         internal async Task<bool> EditDeckAsync(Deck deck)
         {
-            var json = JsonConvert.SerializeObject(deck);
-            HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_deckUri, "decks/" + deck.DeckId), new StringContent(json, Encoding.UTF8, "application/json"));
-            return result.IsSuccessStatusCode;
+            try
+            {
+                var json = JsonConvert.SerializeObject(deck);
+                HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_deckUri, "decks/" + deck.DeckId),
+                    new StringContent(json, Encoding.UTF8, "application/json"));
+                return result.IsSuccessStatusCode;
+            }
+            catch (HttpRequestException ex)
+            {
+                return false;
+            }
         }
 
 
         public async Task<Deck[]> GetUserDecksAsync(int userId)
         {
-            var clientResult = await _httpClient.GetAsync(_deckUri);
-            var jsonData = await clientResult.Content.ReadAsStringAsync();
-            Deck[] decks = JsonConvert.DeserializeObject<Deck[]>(jsonData);
+            try
+            {
+                var clientResult = await _httpClient.GetAsync(_deckUri);
+                var jsonData = await clientResult.Content.ReadAsStringAsync();
+                Deck[] decks = JsonConvert.DeserializeObject<Deck[]>(jsonData);
 
+                return decks.Where(x => x.UserId == userId).ToArray();
+            }
+            catch (HttpRequestException ex)
+            {
+                return null;
+                //Logger
+            }
 
-            return decks.Where(x => x.UserId == userId).ToArray();
-           
         }
 
     }

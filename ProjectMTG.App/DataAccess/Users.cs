@@ -16,26 +16,50 @@ namespace ProjectMTG.App.DataAccess
 
         public async Task<User[]> GetUsersAsync()
         {
-            var clientResult = await _httpClient.GetAsync(_userUri);
-            var jsonData = await clientResult.Content.ReadAsStringAsync();
-            User[] users = JsonConvert.DeserializeObject<User[]>(jsonData);
+            try
+            {
+                var clientResult = await _httpClient.GetAsync(_userUri);
+                var jsonData = await clientResult.Content.ReadAsStringAsync();
+                User[] users = JsonConvert.DeserializeObject<User[]>(jsonData);
 
-            return users;
+                return users;
+            }
+            catch (HttpRequestException ex)
+            {
+                return null;
+                //Logg
+            }
         }
 
         internal async Task<bool> AddUser(User user)
         {
-            string json = JsonConvert.SerializeObject(user);
-            HttpResponseMessage result = await _httpClient.PostAsync(_userUri, new StringContent(json, Encoding.UTF8, "application/json"));
+            try
+            {
+                string json = JsonConvert.SerializeObject(user);
+                HttpResponseMessage result = await _httpClient.PostAsync(_userUri, new StringContent(json, Encoding.UTF8, "application/json"));
 
-            return result.IsSuccessStatusCode;
+                return result.IsSuccessStatusCode;
+            }
+            catch (HttpRequestException ex)
+            {
+                return false;
+                //Logg
+            }
         }
 
         internal async Task<bool> ChangePassword(User user)
         {
-            var json = JsonConvert.SerializeObject(user);
-            HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_userUri, "users/" + user.UserId), new StringContent(json, Encoding.UTF8, "application/json"));
-            return result.IsSuccessStatusCode;
+            try
+            {
+                var json = JsonConvert.SerializeObject(user);
+                HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_userUri, "users/" + user.UserId),  new StringContent(json, Encoding.UTF8, "application/json"));
+                return result.IsSuccessStatusCode;
+            }
+            catch (HttpRequestException ex)
+            {
+                return false;
+                //Logg
+            }
         }
     }
 }

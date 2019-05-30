@@ -16,11 +16,18 @@ namespace ProjectMTG.App.DataAccess
 
         public async Task<Card[]> GetCardsAsync()
         {
-            var clientResult = await _httpClient.GetAsync(CardUri);
-            var jsonData = await clientResult.Content.ReadAsStringAsync();
-            Card[] cards = JsonConvert.DeserializeObject<Card[]>(jsonData);
+            try
+            {
+                var clientResult = await _httpClient.GetAsync(CardUri);
+                var jsonData = await clientResult.Content.ReadAsStringAsync();
+                Card[] cards = JsonConvert.DeserializeObject<Card[]>(jsonData);
 
-            return cards;
+                return cards;
+            }
+            catch (HttpRequestException ex)
+            {
+                return null;
+            }
         }
 
     }

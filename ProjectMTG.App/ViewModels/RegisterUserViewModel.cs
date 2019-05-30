@@ -20,7 +20,6 @@ namespace ProjectMTG.App.ViewModels
         {
             User newUser = new User() {UserName = username, Password = password};
 
-
             if (await usersDataAccess.AddUser(newUser))
             {
                 return true;

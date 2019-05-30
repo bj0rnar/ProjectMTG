@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Windows.UI.Xaml.Data;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
@@ -53,6 +54,8 @@ namespace ProjectMTG.App.ViewModels
 
         //DataStream (needed for filtering)
         public Card[] CompleteList;
+
+        private ILogger _logger;
 
 
         private int _creatures;
@@ -169,45 +172,6 @@ namespace ProjectMTG.App.ViewModels
                    deck.Cards.Add(card);
                }
 
-
-                //Set deck to user
-                //deck.UserId = _user.UserId;
-                //Set deckname to parameter
-                //deck.DeckName = param;
-
-                /*
-                Converter.ConvertToDatabaseDeck(GetObservableDeck);
-                /*
-                foreach (Card card in GetObservableDeck)
-                {
-                    //Add cards in acceptable database format
-                    deck.Cards.Add(new DeckCards()
-                    {
-                        DeckId = deck.DeckId,
-                        name = card.name,
-                        artist = card.artist,
-                        colors = card.colors,
-                        convertedManaCost = card.convertedManaCost,
-                        manaCost = card.manaCost,
-                        multiverseId = card.multiverseId,
-                        loyalty = card.loyalty,
-                        number = card.number,
-                        rarity = card.rarity,
-                        scryfallId = card.scryfallId,
-                        scryfallIllustrationId = card.scryfallIllustrationId,
-                        scryfallOracleId = card.scryfallOracleId,
-                        subtype = card.subtype,
-                        supertype = card.supertype,
-                        text = card.text,
-                        type = card.type,
-                        types = card.types,
-                        uuid = card.uuid,
-                        uuidV421 = card.uuidV421,
-                        power = card.power,
-                        toughness = card.toughness
-                    });
-                }
-                */
                 
                 if (await _decksDataAccess.AddDeckAsync(deck))
                 {
@@ -343,17 +307,18 @@ namespace ProjectMTG.App.ViewModels
 
         public void LoadDeckCards(Deck deck)
         {
-            foreach (var card in deck.Cards)
+            if (deck != null)
             {
-                ObservableDeck.Add(card);
+                foreach (var card in deck.Cards)
+                {
+                    ObservableDeck.Add(card);
+                }
             }
-            /*
-            var cardList = Converter.ConvertToLocalCards(deck);
-            foreach (var card in cardList)
+            else
             {
-                ObservableDeck.Add(card);
+                throw new ArgumentException("No deck found");
             }
-            */
+
         }
     }
 }
