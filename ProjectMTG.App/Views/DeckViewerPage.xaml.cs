@@ -7,6 +7,7 @@ using ProjectMTG.Model;
 
 namespace ProjectMTG.App.Views
 {
+
     public sealed partial class DeckViewerPage : Page
     {
         public DeckViewerViewModel ViewModel { get; } = new DeckViewerViewModel();

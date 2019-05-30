@@ -140,6 +140,9 @@
     <Compile Include="Views\DeckViewerPage.xaml.cs">
       <DependentUpon>DeckViewerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EmptyDeckWarning.xaml.cs">
+      <DependentUpon>EmptyDeckWarning.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,10 @@
     <Page Include="Views\DeckViewerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EmptyDeckWarning.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>

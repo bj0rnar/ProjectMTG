@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Newtonsoft.Json;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
+using ProjectMTG.App.Views;
 using ProjectMTG.DataAccess;
 using ProjectMTG.Model;
 
@@ -259,7 +260,27 @@ namespace ProjectMTG.App.ViewModels
                 }
                 else
                 {
-                    Debug.WriteLine("Can't save empty deck, wat");
+                    EmptyDeckWarning deckWarningDialog = new EmptyDeckWarning();
+                    await deckWarningDialog.ShowAsync();
+
+                    if (deckWarningDialog.DeleteChoice == DeletionChoices.Keep)
+                    {
+                        //Do nothing
+                    }
+                    else if (deckWarningDialog.DeleteChoice == DeletionChoices.Delete)
+                    {
+                        //Delete deck
+                        if (await _decksDataAccess.DeleteDeckAsync(EditDeck))
+                        {
+                            EditDeck = null;
+                            Debug.WriteLine("Successfully deleted");
+                        }
+                    }
+                    else
+                    {
+                        //There's a bug!?
+                    }
+
                 }
 
             }, string.IsNullOrEmpty);
