@@ -12,7 +12,7 @@
         <Grid
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
             <Button Content="Change password" HorizontalAlignment="Left" Margin="489,397,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.ChangePassword}"/>
-            <Button Content="Delete user" HorizontalAlignment="Left" Margin="805,397,0,0" VerticalAlignment="Top"/>
+            <Button Content="Delete user" HorizontalAlignment="Left" Margin="805,397,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.DeleteUser}"/>
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
         </Grid>

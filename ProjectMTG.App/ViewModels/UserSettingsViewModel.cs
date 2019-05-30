@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
+using ProjectMTG.App.Services;
 using ProjectMTG.App.Views;
 using ProjectMTG.Model;
 
@@ -20,6 +21,7 @@ namespace ProjectMTG.App.ViewModels
         public UserSettingsViewModel()
         {
             ChangePassword = new RelayCommand(ChangeUserPassword);
+            DeleteUser = new RelayCommand(DeleteCurrentUser);
         }
 
         private async void ChangeUserPassword()
@@ -37,6 +39,19 @@ namespace ProjectMTG.App.ViewModels
                 }
             }
 
+        }
+
+        private async void DeleteCurrentUser()
+        {
+            DeleteUserDialog delDialog = new DeleteUserDialog();
+            await delDialog.ShowAsync();
+
+            if (delDialog.UserDelete == UserDeleteChoice.Delete)
+            {
+                Debug.WriteLine("DELETE SELECTED");
+                ShellViewModel.LoggedInUser = null;
+                NavigationService.Navigate(typeof(LoginPage));
+            }
         }
     }
 }
