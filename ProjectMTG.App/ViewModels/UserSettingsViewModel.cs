@@ -15,7 +15,6 @@ namespace ProjectMTG.App.ViewModels
 
 
         public ICommand ChangePassword { get; set; }
-        public ICommand DeleteUser { get; set; }
 
         public UserSettingsViewModel()
         {
