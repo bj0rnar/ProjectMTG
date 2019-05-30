@@ -9,7 +9,7 @@
     x:Name="dialog"
     mc:Ignorable="d"
     Title="Select deck "
-    PrimaryButtonText="Create new" PrimaryButtonClick="ContentDialog1_OnPrimaryButtonClick"
+    PrimaryButtonText="Create new" PrimaryButtonClick="ContentDialog1_OnPrimaryButtonClick" ToolTipService.ToolTip="Select a user made deck or create one yourself"
     SecondaryButtonText="Edit deck" SecondaryButtonClick="ContentDialog1_OnSecondaryButtonClick">
 
 

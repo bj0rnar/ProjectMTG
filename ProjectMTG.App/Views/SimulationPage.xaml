@@ -26,8 +26,8 @@
 					</ItemsPanelTemplate>
 				</GridView.ItemsPanel>
 			</GridView>
-			<Button x:Name="DrawButton" Content="Draw new hand" HorizontalAlignment="Left" Margin="306,479,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.281,0.269" Click="DrawNewHand_OnClick"/>
-			<Button Content="Mulligan" HorizontalAlignment="Left" Margin="470,479,0,0" VerticalAlignment="Top" Width="104" Click="Mulligan_OnClick"/>
+			<Button x:Name="DrawButton" Content="Draw new hand" HorizontalAlignment="Left" Margin="306,479,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.281,0.269" Click="DrawNewHand_OnClick" ToolTipService.ToolTip="Draw 7 cards (symbolizing a starting hand). Select a deck first!"/>
+			<Button Content="Mulligan" HorizontalAlignment="Left" Margin="470,479,0,0" VerticalAlignment="Top" Width="104" Click="Mulligan_OnClick" ToolTipService.ToolTip="Mulligan means a redraw. If a player is dissatisfied with his opening hand, he can redraw with the penalty of drawing one less card"/>
 			<GridView Margin="1169,64,164,769">
 				<StackPanel HorizontalAlignment="Stretch">
 					<TextBlock Text="0 land"/>
@@ -51,7 +51,7 @@
 				</StackPanel>
 			</GridView>
 			<TextBlock HorizontalAlignment="Left" Margin="1104,27,0,0" Text="Land average in hand" VerticalAlignment="Top"/>
-			<Button Content="Simulate 100 draws" HorizontalAlignment="Left" Margin="957,178,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.SimulateDrawCommand}" CommandParameter="{Binding ElementName=DeckComboBox, Path=SelectedItem}" />
+			<Button Content="Simulate 100 openings" HorizontalAlignment="Left" Margin="905,117,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.SimulateDrawCommand}" CommandParameter="{Binding ElementName=DeckComboBox, Path=SelectedItem}" ToolTipService.ToolTip="Simulates 100 opening hands and calculates the card type Land from each opening hand" />
 			<TextBlock HorizontalAlignment="Left" Margin="128,571,0,0" Text="Sample Hand" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
 			<!--<ComboBox HorizontalAlignment="Left" Margin="1049,173,0,0" VerticalAlignment="Top" Name="SimulateComboBox" SelectedItem="{x:Bind ViewModel.SelectedValue}">
