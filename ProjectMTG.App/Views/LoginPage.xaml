@@ -9,13 +9,12 @@
 	<Grid
         x:Name="ContentArea"
         Margin="24,10,10,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TextBox x:Name="UsernameBox" HorizontalAlignment="Left" Header="Username" Margin="669,321,0,0" VerticalAlignment="Top" Width="160" Grid.Row="1"/>
-			<PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="669,381,0,0" Header="Password"  VerticalAlignment="Top" Width="160" Grid.Row="1"/>
-			<TextBlock HorizontalAlignment="Center" Text="ProjectMTG" FontSize="32" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,278,0,0" Height="47" Width="164" Grid.Row="1"/>
-			<HyperlinkButton Content="New user? Click here" Click="NewUser_OnClick" HorizontalAlignment="Left" Margin="670,521,0,0" VerticalAlignment="Top" Height="34" Width="160" Grid.Row="1"/>
-			<Button Content="Login" HorizontalAlignment="Left" Margin="722,459,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.097,0.406" Click="Login_OnClick" Grid.Row="1"/>
+		<Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+			<TextBox x:Name="UsernameBox"  Header="Username" Margin="651,342,655,0" VerticalAlignment="Top" Width="160" HorizontalAlignment="Stretch"/>
+			<PasswordBox x:Name="PasswordBox"  Margin="651,402,655,0" Header="Password"  VerticalAlignment="Top" Width="160" HorizontalAlignment="Stretch"/>
+			<TextBlock  Text="ProjectMTG" FontSize="32" TextWrapping="Wrap" VerticalAlignment="Top" Height="47" Width="164" Margin="649,294,653,0"/>
+			<HyperlinkButton Content="New user? Click here" Click="NewUser_OnClick"  Margin="861,524,0,0"  Height="34" Width="160" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+			<Button Content="Login"  Margin="913,474,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.097,0.406" Click="Login_OnClick" HorizontalAlignment="Left"/>
 		</Grid>
 	</Grid>
 </Page>

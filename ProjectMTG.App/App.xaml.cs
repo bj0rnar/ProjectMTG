@@ -44,7 +44,7 @@ namespace ProjectMTG.App
 
         private ActivationService CreateActivationService()
         {
-            //Har endra på detta hær
+            //Start on loginpage
             return new ActivationService(this, typeof(Views.LoginPage));
         }
 

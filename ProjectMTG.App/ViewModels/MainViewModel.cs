@@ -177,7 +177,7 @@ namespace ProjectMTG.App.ViewModels
 
                             if (await _deckCardsDataAccess.AddDeckCardAsync(card))
                             {
-                                //Logg?
+                                
                             }
                             else
                             {
@@ -196,7 +196,7 @@ namespace ProjectMTG.App.ViewModels
                         {
                             if (await _deckCardsDataAccess.DeleteDeckCardAsync(card))
                             {
-                                //Logg?
+                                
                             }
                             else
                             {
@@ -311,7 +311,6 @@ namespace ProjectMTG.App.ViewModels
                             DisplayCards.Clear();
                             foreach (var card in GetObservableCards)
                             {
-                                //TODO Detta skjit te filteren, finn ut no anna lurt
                                 DisplayCards.Add(card);
                             }
                         }
