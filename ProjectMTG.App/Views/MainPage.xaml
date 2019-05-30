@@ -28,7 +28,7 @@
                       BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="289" SelectionMode="Single"
                       ItemClick="DeckListView_OnItemClick" ItemsSource="{x:Bind ViewModel.GetObservableDeck}">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Card">
+                    <DataTemplate x:DataType="model:DeckCard">
                         <TextBlock Text="{x:Bind name}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>

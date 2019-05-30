@@ -51,7 +51,7 @@ namespace ProjectMTG.App.Views
                     ViewModel.LoadDeckCards(deck);
                     ViewModel.EditorMode = true;
                     SaveDecklistButton.Visibility = Visibility.Collapsed;
-                    //DeckListName.Visibility = Visibility.Collapsed;
+                    DeckListName.Visibility = Visibility.Collapsed;
                     SaveChangesButton.Visibility = Visibility.Visible;
                     ViewModel.EditDeck = deck;
                 }
@@ -68,7 +68,7 @@ namespace ProjectMTG.App.Views
                 ViewModel.EditorMode = false;
                 SaveChangesButton.Visibility = Visibility.Collapsed;
                 SaveDecklistButton.Visibility = Visibility.Visible;
-                //DeckListName.Visibility = Visibility.Visible;
+                DeckListName.Visibility = Visibility.Visible;
             }
 
         }
@@ -77,18 +77,27 @@ namespace ProjectMTG.App.Views
         private void CardListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             var selectedIndex = (Card) e.ClickedItem;
-            ImageBox.Source = getBitmapImage(selectedIndex);
+            ImageBox.Source = getCardImage(selectedIndex);
         }
 
         //Load image for clicked card
         private void DeckListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            var selectedIndex = (Card)e.ClickedItem;
-            ImageBox.Source = getBitmapImage(selectedIndex);
+            var selectedIndex = (DeckCard)e.ClickedItem;
+            ImageBox.Source = getDeckCardImage(selectedIndex);
+        }
+
+        private BitmapImage getDeckCardImage(DeckCard selectedIndex)
+        {
+            Uri baseUri = new Uri("https://api.scryfall.com/cards/)");
+            Uri indexUri = new Uri(baseUri, selectedIndex.scryfallId);
+            Uri scryUri = new Uri(indexUri, "?format=image");
+            var bitmapImage = new BitmapImage { UriSource = scryUri };
+            return bitmapImage;
         }
 
         //Get image from Scryfall
-        private BitmapImage getBitmapImage(Card selectedIndex)
+        private BitmapImage getCardImage(Card selectedIndex)
         {
             Uri baseUri = new Uri("https://api.scryfall.com/cards/)");
             Uri indexUri = new Uri(baseUri, selectedIndex.scryfallId);

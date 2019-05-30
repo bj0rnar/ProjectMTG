@@ -25,8 +25,8 @@ namespace ProjectMTG.App.ViewModels
         //Collections with getters
         private ObservableCollection<Card> ObservableCards = new ObservableCollection<Card>();
         public ObservableCollection<Card> GetObservableCards => ObservableCards;
-        private ObservableCollection<Card> ObservableDeck = new ObservableCollection<Card>();
-        public ObservableCollection<Card> GetObservableDeck => this.ObservableDeck;
+        private ObservableCollection<DeckCard> ObservableDeck = new ObservableCollection<DeckCard>();
+        public ObservableCollection<DeckCard> GetObservableDeck => this.ObservableDeck;
 
         //See if user is edit mode
         public bool EditorMode { get; set; }
@@ -77,45 +77,54 @@ namespace ProjectMTG.App.ViewModels
             {
                 if (param != null)
                 {
-                    //Check for equal cards
-                    var checkForEqualCards = GetObservableDeck.Where(u => u.Equals(param));
-                    var equalCardCounter = checkForEqualCards.Count();
-
-                    //If duplicate cards are more than 4 or card is a Land type.
-                    if (equalCardCounter < 4 || param.types.Contains("Land"))
+                    DeckCard converted = new DeckCard();
+                    converted = JsonConvert.DeserializeObject<DeckCard>(JsonConvert.SerializeObject(param));
+                    if (converted != null)
                     {
-                        if (param.types.Contains("Land"))
+                        //Check for equal cards
+                        var checkForEqualCards = GetObservableDeck.Where(u => u.Equals(param));
+                        var equalCardCounter = checkForEqualCards.Count();
+
+                        //If duplicate cards are more than 4 or card is a Land type.
+                        if (equalCardCounter < 4 || param.types.Contains("Land"))
                         {
-                            Land++;
-                        }
-                        else if (param.types.Contains("Instant") || param.types.Contains("Sorcery"))
-                        {
-                            InstantSorcery++;
-                        }
-                        else if (param.types.Contains("PlanesWalker"))
-                        {
-                            Planeswalker++;
-                        }
-                        else if (param.types.Contains("Creature"))
-                        {
-                            Creatures++;
+                            if (converted.types.Contains("Land"))
+                            {
+                                Land++;
+                            }
+                            else if (converted.types.Contains("Instant") || converted.types.Contains("Sorcery"))
+                            {
+                                InstantSorcery++;
+                            }
+                            else if (converted.types.Contains("PlanesWalker"))
+                            {
+                                Planeswalker++;
+                            }
+                            else if (converted.types.Contains("Creature"))
+                            {
+                                Creatures++;
+                            }
+                            else
+                            {
+                                Artifact++;
+                            }
+
+                            TotalCardCount++;
+                            GetObservableDeck.Add(converted);
                         }
                         else
                         {
-                            Artifact++;
+                            //Legg te feilhåndtering?
                         }
-
-                        TotalCardCount++;
-                        GetObservableDeck.Add(param);
                     }
                     else
                     {
-                        //Legg te feilhåndtering?
+                        Debug.WriteLine("Could not convert");
                     }
                 }
             }, card => card != null );
 
-            RemoveCardFromDeck = new RelayCommand<Card>(param =>
+            RemoveCardFromDeck = new RelayCommand<DeckCard>(param =>
             {
                 if (param != null)
                 {
@@ -156,9 +165,8 @@ namespace ProjectMTG.App.ViewModels
 
                foreach (var card in GetObservableDeck)
                {
-                   deck.Cards.Add(JsonConvert.DeserializeObject<DeckCard>(JsonConvert.SerializeObject(card)));
+                   deck.Cards.Add(card);
                }
-
 
 
                 //Set deck to user
@@ -213,131 +221,48 @@ namespace ProjectMTG.App.ViewModels
 
             SaveChanges = new RelayCommand<string>(async param =>
             {
-                //var deckWithEditedCards = Converter.ConvertToEditableDeck(GetObservableDeck, EditDeck.DeckId);
 
-                //deckWithEditedCards.DeckName = param;
-
-                Deck newDeck = new Deck() {DeckName = param, DeckId = EditDeck.DeckId};
-
-                foreach (var card in GetObservableDeck)
-                {
-                    var s = JsonConvert.DeserializeObject<DeckCard>(JsonConvert.SerializeObject(card));
-                    s.DeckId = EditDeck.DeckId;
-                    newDeck.Cards.Add(s);
-                    Debug.WriteLine("DEckID: " + EditDeck.DeckId);
-                    Debug.WriteLine("Kort sin DeckID: " + s.DeckId);
-                }
-
-
-
-
-                /*
-               
-                foreach (var card in EditDeck.Cards)
+                if (GetObservableDeck.Count > 0)
                 {
 
-                    foreach (var editCard in deckWithEditedCards.Cards)
+                    //Check if a new card is added, if new add to DB
+                    foreach (var card in GetObservableDeck)
                     {
-                        if(card.DeckCardId != editCard.DeckCardId)
-                    }
-
-
-                    if (!deckWithEditedCards.Cards.Contains(card))
-                    {
-                        Debug.WriteLine("New card!: " + card.name + " <-- should probably add this to DB");
-                    }
-                }
-
-
-
-                /* Shits not working
-                foreach (var card in deckWithEditedCards.Cards)
-                {
-                    if (!EditDeck.Cards.Contains(card))
-                    {
-                        Debug.WriteLine("Missing card!: " + card.name + " <-- should remove this from DB");
-                    }
-                }
-
-
-                /*
-                if (databaseDeck != null)
-                {
-                    var userDeck = databaseDeck.FirstOrDefault(x => x.DeckId == EditDeck.DeckId);
-
-                    if (userDeck != null)
-                    {
-
-                    }
-                    else
-                    {
-                        Debug.WriteLine("Deck does not match UserID");
-                    }
-
-
-                }
-                else
-                {
-                    Debug.WriteLine("Couldn't find deck");
-                }
-
-
-                /*
-                var deckWithEditedCards = Converter.ConvertToEditableDeck(GetObservableDeck, EditDeck);
-
-                var databaseDeck = await _decksDataAccess.GetUserDecksAsync(_user.UserId);
-
-                var userDeck = databaseDeck.FirstOrDefault(x => x.DeckId == EditDeck.DeckId);
-
-                if (userDeck != null)
-                {
-                    foreach (var card in deckWithEditedCards.Cards)
-                    {
-                        //If the card is a new card
-                        if (!userDeck.Cards.Contains(card))
+                        //Not assigned value means a new card
+                        if (card.DeckCardId == 0)
                         {
+                            card.DeckId = EditDeck.DeckId;
+
                             if (await _deckCardsDataAccess.AddDeckCardAsync(card))
                             {
-                                Debug.WriteLine("Added new card successfully");
+                                Debug.WriteLine("Successfully added new card");
                             }
-                            else
-                            {
-                                break;
-                            }
+
                         }
+
                     }
 
-                    foreach (var card in userDeck.Cards)
+                    //Check if card is missing, if missing delete 
+                    foreach (var card in EditDeck.Cards)
                     {
-                        //If card is missing from deck
-                        if (!deckWithEditedCards.Cards.Contains(card))
+                        if (!GetObservableDeck.Contains(card))
                         {
                             if (await _deckCardsDataAccess.DeleteDeckCardAsync(card))
                             {
-                                Debug.WriteLine("Deleted card from deck");
-                            }
-                            else
-                            {
-                                break;
+                                Debug.WriteLine("Successfully deleted card");
                             }
                         }
                     }
 
-                }
 
-                /*
-                deckWithEditedCards.DeckName = param;
-               
-                if (await _decksDataAccess.EditDeckAsync(deckWithEditedCards))
+                    GetObservableDeck.Clear();
+                }
+                else
                 {
-                    Debug.WriteLine("Edit cards success!");
+                    Debug.WriteLine("Can't save empty deck, wat");
                 }
-                */
 
-
-                GetObservableDeck.Clear();
-
-            }, s => !string.IsNullOrEmpty(s));
+            }, string.IsNullOrEmpty);
 
         }
 
@@ -399,7 +324,7 @@ namespace ProjectMTG.App.ViewModels
         {
             foreach (var card in deck.Cards)
             {
-                ObservableDeck.Add(JsonConvert.DeserializeObject<Card>(JsonConvert.SerializeObject(card)));
+                ObservableDeck.Add(card);
             }
             /*
             var cardList = Converter.ConvertToLocalCards(deck);
