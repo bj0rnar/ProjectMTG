@@ -50,7 +50,6 @@ namespace ProjectMTG.App.DataAccess
             {
                 await CustomLogger.Log("DeleteDeckCardAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
             catch (InvalidOperationException ex)
             {
