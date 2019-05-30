@@ -33,7 +33,7 @@ namespace ProjectMTG.App.Views
             base.OnNavigatedTo(e);
 
             User x = (User) e.Parameter;
-            //Sett global user
+            //Sett global user, håndter i egen klasse?
             ShellViewModel.LoggedInUser = x;
         }
 

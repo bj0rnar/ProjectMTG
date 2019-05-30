@@ -77,6 +77,12 @@ namespace ProjectMTG.App.ViewModels
 
         public MainViewModel()
         {
+            if (EditorMode == true)
+            {
+                TotalCardCount = GetObservableDeck.Count;
+            }
+
+
             //Convert from baseCard to DeckCard
             AddCardToDeck = new RelayCommand<Card>( param =>
             {
@@ -91,7 +97,7 @@ namespace ProjectMTG.App.ViewModels
                         var equalCardCounter = checkForEqualCards.Count();
 
                         //If duplicate cards are more than 4 or card is a Land type.
-                        if (equalCardCounter < 4 || param.types.Contains("Land"))
+                        if (equalCardCounter < 4 || converted.types.Contains("Land"))
                         {
                             IncreaseCardCounter(converted);
 
@@ -100,7 +106,7 @@ namespace ProjectMTG.App.ViewModels
                         }
                         else
                         {
-                            //TODO: Feilhåndtering?
+                            ToastCreator.ShowUserToast("Only four equal cards allowed");
                         }
                     }
                     else
@@ -134,14 +140,20 @@ namespace ProjectMTG.App.ViewModels
                }
 
                 //Upload
-                if (await _decksDataAccess.AddDeckAsync(deck))
+                try
                 {
-                    Debug.WriteLine("Success");
-                    _user.Decks.Add(deck);
+                    if (await _decksDataAccess.AddDeckAsync(deck))
+                    {
+                        ToastCreator.ShowUserToast("Deck successfully saved");
+                        _user.Decks.Add(deck);
+                        GetObservableDeck.Clear();
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    ToastCreator.ShowUserToast("No internet connection, was not able to save deck");
                 }
 
-                //Clear screen
-                GetObservableDeck.Clear();
                 
 
             }, s => !string.IsNullOrEmpty(s));
@@ -199,17 +211,23 @@ namespace ProjectMTG.App.ViewModels
                     }
                     else if (deckWarningDialog.DeleteChoice == DeletionChoices.Delete)
                     {
-                        //Delete deck
-                        if (await _decksDataAccess.DeleteDeckAsync(EditDeck))
+                        try
                         {
-                            EditDeck = null;
-                            Debug.WriteLine("Successfully deleted");
-                            //TODO: Feilhåndtering
+                            //Delete deck
+                            if (await _decksDataAccess.DeleteDeckAsync(EditDeck))
+                            {
+                                EditDeck = null;
+                                ToastCreator.ShowUserToast("Deck successfully deleted");
+                            }
+                        }
+                        catch (HttpRequestException)
+                        {
+                            ToastCreator.ShowUserToast("No internet connection, can't delete deck");
                         }
                     }
                     else
                     {
-                        //There's a bug!?
+                        ToastCreator.ShowUserToast("Unexpected error");
                     }
 
                 }

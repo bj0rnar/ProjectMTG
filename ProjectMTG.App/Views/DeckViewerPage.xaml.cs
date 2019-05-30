@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net.Http;
 using ProjectMTG.App.ViewModels;
 
 using Windows.UI.Xaml.Controls;
+using Newtonsoft.Json;
+using ProjectMTG.App.Helpers;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.Views
@@ -21,7 +24,18 @@ namespace ProjectMTG.App.Views
 
         private async void DeckViewerPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            await ViewModel.GetUserDecks();
+            try
+            {
+                await ViewModel.GetUserDecks().ConfigureAwait(true);
+            }
+            catch (HttpRequestException ex)
+            {
+                ToastCreator.ShowUserToast("Could not load decks");
+            }
+            catch (JsonReaderException ex)
+            {
+                ToastCreator.ShowUserToast("Could not read data from database");
+            }
         }
 
 
@@ -29,7 +43,7 @@ namespace ProjectMTG.App.Views
         {
             var selectedDeck = (Deck) e.ClickedItem;
             Debug.WriteLine(selectedDeck.Cards.Count);
-            await ViewModel.LoadImages(selectedDeck);
+            await ViewModel.LoadImages(selectedDeck).ConfigureAwait(true);
         }
     }
 }

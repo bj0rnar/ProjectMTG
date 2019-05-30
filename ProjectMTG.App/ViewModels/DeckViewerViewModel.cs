@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -43,37 +44,83 @@ namespace ProjectMTG.App.ViewModels
         //Load decks from user
         internal async Task GetUserDecks()
         {
-            var decks = await _decksDataAccess.GetUserDecksAsync(_user.UserId);
-            foreach (Deck deck in decks)
+            Deck[] decks = null;
+            try
             {
-                _observableDeckList.Add(deck);
+                decks = await _decksDataAccess.GetUserDecksAsync(_user.UserId);
+            }
+            catch (HttpRequestException ex)
+            {
+                ToastCreator.ShowUserToast("Could not load decks from database ");
+            }
+
+            if (decks != null)
+            {
+                foreach (Deck deck in decks)
+                {
+                    _observableDeckList.Add(deck);
+                }
             }
         }
 
         //Delete deck
         private async void DeleteDeck(Deck deck)
         {
-            if (await _decksDataAccess.DeleteDeckAsync(deck))
+            if (deck != null)
             {
-                _observableDeckList.Remove(deck);
-                _observableImage.Clear();
+
+                try
+                {
+                    if (await _decksDataAccess.DeleteDeckAsync(deck))
+                    {
+                        _observableDeckList.Remove(deck);
+                        _observableImage.Clear();
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    ToastCreator.ShowUserToast("Could not delete deck from database");
+                }
+            }
+            else
+            {
+                ToastCreator.ShowUserToast("Select deck for deletion");
             }
         }
 
         //Edit deckname
         private async void EditDeckName(Deck deck)
         {
-            deck.DeckName = DeckName;
-
-            if (!string.IsNullOrEmpty(deck.DeckName))
+            if (deck != null)
             {
-                if (await _decksDataAccess.EditDeckAsync(deck))
+
+                if (!string.IsNullOrEmpty(deck.DeckName))
                 {
-                    _observableDeckList.Remove(deck);
-                    _observableDeckList.Add(deck);
+                    deck.DeckName = DeckName;
+
+                    try
+                    {
+                        if (await _decksDataAccess.EditDeckAsync(deck).ConfigureAwait(true))
+                        {
+                            _observableDeckList.Remove(deck);
+                            _observableDeckList.Add(deck);
+                        }
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        ToastCreator.ShowUserToast("Can't connect with database, no changes saved");
+                    }
+                }
+                else
+                {
+                    ToastCreator.ShowUserToast("Invalid deckname");
                 }
             }
-            
+            else
+            {
+                ToastCreator.ShowUserToast("Select deck first");
+            }
+
         }
 
 

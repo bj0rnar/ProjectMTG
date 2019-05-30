@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Windows.Input;
 using ProjectMTG.App.DataAccess;
 using ProjectMTG.App.Helpers;
@@ -31,9 +32,16 @@ namespace ProjectMTG.App.ViewModels
             {
                 string pw = (string) pwDialog.Content;
                 _user.Password = pw;
-                if (await _usersDataAccess.ChangePassword(_user))
+                try
                 {
-                    Debug.WriteLine("Change password!");
+                    if (await _usersDataAccess.ChangePassword(_user))
+                    {
+                        ToastCreator.ShowUserToast("Password changed!");
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    ToastCreator.ShowUserToast("No database connection, password was not changed");
                 }
             }
 

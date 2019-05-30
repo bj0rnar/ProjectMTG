@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Media.Imaging;
@@ -57,7 +58,7 @@ namespace ProjectMTG.App.ViewModels
 
         internal async Task LoadDecks()
         {
-            var decks = await decksDataAccess.GetUserDecksAsync(user.UserId);
+            var decks = await decksDataAccess.GetUserDecksAsync(user.UserId).ConfigureAwait(true);
 
             foreach (var deck in decks)
             {

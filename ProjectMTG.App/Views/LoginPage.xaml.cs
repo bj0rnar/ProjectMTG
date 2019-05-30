@@ -29,7 +29,7 @@ namespace ProjectMTG.App.Views
         private async void Login_OnClick(object sender, RoutedEventArgs e)
         {
             //Validate user
-            var loginUser = await ViewModel.ValidateUser(UsernameBox.Text, PasswordBox.Password);
+            var loginUser = await ViewModel.ValidateUser(UsernameBox.Text, PasswordBox.Password).ConfigureAwait(true);
 
             if (loginUser != null)
             {

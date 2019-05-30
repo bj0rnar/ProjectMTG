@@ -37,8 +37,8 @@ namespace ProjectMTG.App.DataAccess
             {
                 string json = JsonConvert.SerializeObject(user);
                 HttpResponseMessage result = await _httpClient.PostAsync(_userUri, new StringContent(json, Encoding.UTF8, "application/json"));
-
                 return result.IsSuccessStatusCode;
+
             }
             catch (HttpRequestException ex)
             {
@@ -60,6 +60,11 @@ namespace ProjectMTG.App.DataAccess
                 return false;
                 //Logg
             }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

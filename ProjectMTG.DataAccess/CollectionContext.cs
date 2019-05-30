@@ -22,9 +22,10 @@ namespace ProjectMTG.DataAccess
 		{
 			SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
 			{
-				DataSource = "(localdb)\\MSSQLLocalDB",
-				InitialCatalog = "ProjectMTGDemoWAT",
-				IntegratedSecurity = true
+				DataSource = "donau.hiof.no",
+				InitialCatalog = "bjornap",
+				UserID = "bjornap",
+				Password = "4DcDevRv"
 			};
 
 			optionsBuilder.UseSqlServer(builder.ConnectionString);

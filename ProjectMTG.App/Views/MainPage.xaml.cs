@@ -9,6 +9,8 @@ using ProjectMTG.App.ViewModels;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using Newtonsoft.Json;
+using ProjectMTG.App.Helpers;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.Views
@@ -27,12 +29,34 @@ namespace ProjectMTG.App.Views
 
         private async void LoadUserDecks(object sender, RoutedEventArgs e)
         {
-            await ViewModel.GetUserDecks();
+            try
+            {
+                await ViewModel.GetUserDecks();
+            }
+            catch (HttpRequestException ex)
+            {
+                ToastCreator.ShowUserToast("No database connection, can't display user decks");
+            }
+            catch (JsonReaderException ex)
+            {
+                ToastCreator.ShowUserToast("No database connection, can't display user decks");
+            }
         }
 
         private async void MainPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            await ViewModel.LoadCardsAsync();
+            try
+            {
+                await ViewModel.LoadCardsAsync().ConfigureAwait(true);
+            }
+            catch (HttpRequestException ex)
+            {
+                ToastCreator.ShowUserToast("No database connection, can't load cards");
+            }
+            catch (NullReferenceException ex)
+            {
+                ToastCreator.ShowUserToast("No database connection, can't find cards");
+            }
         }
 
         private async void ShowSelectDialog(ObservableCollection<Deck> userDeckList)

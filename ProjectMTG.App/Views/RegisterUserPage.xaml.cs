@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ProjectMTG.App.ViewModels;
 
 using Windows.UI.Xaml.Controls;
+using ProjectMTG.App.Helpers;
 using ProjectMTG.App.Services;
 using ProjectMTG.Model;
 
@@ -27,7 +28,7 @@ namespace ProjectMTG.App.Views
             }
             else
             {
-                Debug.WriteLine("User could not be created");
+                ToastCreator.ShowUserToast("ERROR: User could not be created");
             }
         }
     }
