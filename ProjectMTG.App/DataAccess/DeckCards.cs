@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using ProjectMTG.App.Helpers;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.DataAccess
@@ -26,11 +27,12 @@ namespace ProjectMTG.App.DataAccess
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("AddDeckCardAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
             catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("AddDeckCardAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
             }
 
@@ -46,15 +48,18 @@ namespace ProjectMTG.App.DataAccess
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("DeleteDeckCardAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
                 //Logg
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+                await CustomLogger.Log("DeleteDeckCardAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("DeleteDeckCardAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
             }
         }

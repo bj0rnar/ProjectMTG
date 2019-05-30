@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using ProjectMTG.App.Helpers;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.DataAccess
@@ -27,13 +28,13 @@ namespace ProjectMTG.App.DataAccess
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("GetUserAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return null;
-                //Logg
             }
             catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("GetUserAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return null;
-                //Logg
             }
         }
 
@@ -48,13 +49,13 @@ namespace ProjectMTG.App.DataAccess
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("AddUser: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
             catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("AddUser: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
         }
 
@@ -63,24 +64,23 @@ namespace ProjectMTG.App.DataAccess
             try
             {
                 var json = JsonConvert.SerializeObject(user);
-                HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_userUri, "users/" + user.UserId),
-                    new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_userUri, "users/" + user.UserId), new StringContent(json, Encoding.UTF8, "application/json")).ConfigureAwait(true);
                 return result.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("ChangePassword: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
-            catch (UriFormatException)
+            catch (UriFormatException ex)
             {
+                await CustomLogger.Log("ChangePassword: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("ChangePassword: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
         }
         

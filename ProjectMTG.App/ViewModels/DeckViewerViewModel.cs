@@ -45,14 +45,9 @@ namespace ProjectMTG.App.ViewModels
         internal async Task GetUserDecks()
         {
             Deck[] decks = null;
-            try
-            {
-                decks = await _decksDataAccess.GetUserDecksAsync(_user.UserId);
-            }
-            catch (HttpRequestException ex)
-            {
-                ToastCreator.ShowUserToast("Database connection lost: Cannot load user decks");
-            }
+           
+            decks = await _decksDataAccess.GetUserDecksAsync(_user.UserId).ConfigureAwait(true);
+           
 
             if (decks != null)
             {
@@ -61,6 +56,10 @@ namespace ProjectMTG.App.ViewModels
                     _observableDeckList.Add(deck);
                 }
             }
+            else
+            {
+                ToastCreator.ShowUserToast("Database connection lost: Cannot load user decks");
+            }
         }
 
         //Delete deck
@@ -68,7 +67,7 @@ namespace ProjectMTG.App.ViewModels
         {
             if (deck != null)
             {
-                if (!await _decksDataAccess.DeleteDeckAsync(deck)) return;
+                if (!await _decksDataAccess.DeleteDeckAsync(deck).ConfigureAwait(true)) return;
                 _observableDeckList.Remove(deck);
                 _observableImage.Clear();
 
@@ -93,6 +92,10 @@ namespace ProjectMTG.App.ViewModels
                     {
                         _observableDeckList.Remove(deck);
                         _observableDeckList.Add(deck);
+                    }
+                    else
+                    {
+                        ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
                     }
                 }
                 else

@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using ProjectMTG.App.Helpers;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.DataAccess
@@ -26,11 +27,13 @@ namespace ProjectMTG.App.DataAccess
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("GetCardsAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return null;
 
             }
             catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("GetCardsAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return null;
             }
         }

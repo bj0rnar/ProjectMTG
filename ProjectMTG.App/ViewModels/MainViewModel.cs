@@ -324,6 +324,7 @@ namespace ProjectMTG.App.ViewModels
 
         internal async Task LoadCardsAsync()
         {
+
             CompleteList = await _cardsDataAccess.GetCardsAsync().ConfigureAwait(true);
             if (CompleteList != null)
             {

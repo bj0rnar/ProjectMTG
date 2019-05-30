@@ -22,6 +22,7 @@ namespace ProjectMTG.App.ViewModels
 
     public class LoginViewModel : Observable
     {
+
         //Get users
         Users _usersDataAccess = new Users();
 

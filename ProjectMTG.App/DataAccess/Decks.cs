@@ -19,20 +19,19 @@ namespace ProjectMTG.App.DataAccess
             try
             {
                 string json = JsonConvert.SerializeObject(deck);
-                HttpResponseMessage result = await _httpClient.PostAsync(_deckUri,
-                    new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage result = await _httpClient.PostAsync(_deckUri, new StringContent(json, Encoding.UTF8, "application/json")).ConfigureAwait(true);
 
                 return result.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("AddDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("AddDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
         }
 
@@ -45,18 +44,18 @@ namespace ProjectMTG.App.DataAccess
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("DeleteDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //LOgg
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+                await CustomLogger.Log("DeleteDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("DeleteDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
-                //Logg
             }
         }
 
@@ -71,17 +70,17 @@ namespace ProjectMTG.App.DataAccess
             }
             catch (HttpRequestException ex)
             {
-                ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
+                await CustomLogger.Log("EditDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
             }
             catch (JsonReaderException ex)
             {
-                ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
+                await CustomLogger.Log("EditDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
             }
             catch (ArgumentNullException ex)
             {
-                ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
+                await CustomLogger.Log("EditDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return false;
             }
         }
@@ -99,11 +98,13 @@ namespace ProjectMTG.App.DataAccess
             }
             catch (HttpRequestException ex)
             {
+                await CustomLogger.Log("GetUserDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return null;
-                //Logger
+                
             }
             catch (ArgumentNullException ex)
             {
+                await CustomLogger.Log("GetUserDeckAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
                 return null;
             }
 
