@@ -20,6 +20,7 @@ namespace ProjectMTG.App.Views
 
         private async void Register_OnClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            //Registration complete, navigate back to loginpage
             if (await ViewModel.RegisterNewUser(UsernameBox.Text, PasswordBox.Password))
             {
                 NavigationService.Navigate(typeof(LoginPage));

@@ -55,6 +55,7 @@ namespace ProjectMTG.App.ViewModels
         //DataStream (needed for filtering)
         public Card[] CompleteList;
 
+        //how 2 use?
         private ILogger _logger;
 
 
@@ -76,7 +77,7 @@ namespace ProjectMTG.App.ViewModels
 
         public MainViewModel()
         {
-
+            //Convert from baseCard to DeckCard
             AddCardToDeck = new RelayCommand<Card>( param =>
             {
                 if (param != null)
@@ -92,33 +93,14 @@ namespace ProjectMTG.App.ViewModels
                         //If duplicate cards are more than 4 or card is a Land type.
                         if (equalCardCounter < 4 || param.types.Contains("Land"))
                         {
-                            if (converted.types.Contains("Land"))
-                            {
-                                Land++;
-                            }
-                            else if (converted.types.Contains("Instant") || converted.types.Contains("Sorcery"))
-                            {
-                                InstantSorcery++;
-                            }
-                            else if (converted.types.Contains("PlanesWalker"))
-                            {
-                                Planeswalker++;
-                            }
-                            else if (converted.types.Contains("Creature"))
-                            {
-                                Creatures++;
-                            }
-                            else
-                            {
-                                Artifact++;
-                            }
+                            IncreaseCardCounter(converted);
 
                             TotalCardCount++;
                             GetObservableDeck.Add(converted);
                         }
                         else
                         {
-                            //Legg te feilhåndtering?
+                            //TODO: Feilhåndtering?
                         }
                     }
                     else
@@ -128,30 +110,12 @@ namespace ProjectMTG.App.ViewModels
                 }
             }, card => card != null );
 
+            //Remove card from observablelist
             RemoveCardFromDeck = new RelayCommand<DeckCard>(param =>
             {
                 if (param != null)
                 {
-                    if (param.types.Contains("Land"))
-                    {
-                        Land--;
-                    }
-                    else if (param.types.Contains("Instant") || param.types.Contains("Sorcery"))
-                    {
-                        InstantSorcery--;
-                    }
-                    else if (param.types.Contains("PlanesWalker"))
-                    {
-                        Planeswalker--;
-                    }
-                    else if (param.types.Contains("Creature"))
-                    {
-                        Creatures--;
-                    }
-                    else
-                    {
-                        Artifact--;
-                    }
+                    DecreaseCardCounter(param);
 
                     TotalCardCount--;
                     GetObservableDeck.Remove(param);
@@ -160,25 +124,23 @@ namespace ProjectMTG.App.ViewModels
 
             SaveDeckList = new RelayCommand<string>(async param =>
             {
-                //Create new deck
-
-                //Deck deck = Converter.ConvertToDatabaseDeck(GetObservableDeck);
-               // Deck rere = new Deck() {DeckName = param, UserId = user.UserId};
-
+               //Dummy deck
                Deck deck = new Deck() {UserId = _user.UserId, DeckName = param};
 
+               //Get from newly created list
                foreach (var card in GetObservableDeck)
                {
                    deck.Cards.Add(card);
                }
 
-                
+                //Upload
                 if (await _decksDataAccess.AddDeckAsync(deck))
                 {
                     Debug.WriteLine("Success");
                     _user.Decks.Add(deck);
                 }
-                
+
+                //Clear screen
                 GetObservableDeck.Clear();
                 
 
@@ -186,7 +148,7 @@ namespace ProjectMTG.App.ViewModels
 
             SaveChanges = new RelayCommand<string>(async param =>
             {
-
+                //Has to be cards to save changes, otherwise start deletedialog
                 if (GetObservableDeck.Count > 0)
                 {
 
@@ -196,11 +158,13 @@ namespace ProjectMTG.App.ViewModels
                         //Not assigned value means a new card
                         if (card.DeckCardId == 0)
                         {
+                            //Edit deck is the original selected deck
                             card.DeckId = EditDeck.DeckId;
 
                             if (await _deckCardsDataAccess.AddDeckCardAsync(card))
                             {
                                 Debug.WriteLine("Successfully added new card");
+                                //TODO: Feilhåndtering
                             }
 
                         }
@@ -210,11 +174,13 @@ namespace ProjectMTG.App.ViewModels
                     //Check if card is missing, if missing delete 
                     foreach (var card in EditDeck.Cards)
                     {
+                        //Check if card does not exist in new list
                         if (!GetObservableDeck.Contains(card))
                         {
                             if (await _deckCardsDataAccess.DeleteDeckCardAsync(card))
                             {
                                 Debug.WriteLine("Successfully deleted card");
+                                //TODO: Feilhåndtering
                             }
                         }
                     }
@@ -238,6 +204,7 @@ namespace ProjectMTG.App.ViewModels
                         {
                             EditDeck = null;
                             Debug.WriteLine("Successfully deleted");
+                            //TODO: Feilhåndtering
                         }
                     }
                     else
@@ -249,6 +216,54 @@ namespace ProjectMTG.App.ViewModels
 
             }, string.IsNullOrEmpty);
 
+        }
+
+        private void DecreaseCardCounter(DeckCard param)
+        {
+            if (param.types.Contains("Land"))
+            {
+                Land--;
+            }
+            else if (param.types.Contains("Instant") || param.types.Contains("Sorcery"))
+            {
+                InstantSorcery--;
+            }
+            else if (param.types.Contains("PlanesWalker"))
+            {
+                Planeswalker--;
+            }
+            else if (param.types.Contains("Creature"))
+            {
+                Creatures--;
+            }
+            else
+            {
+                Artifact--;
+            }
+        }
+
+        private void IncreaseCardCounter(DeckCard converted)
+        {
+            if (converted.types.Contains("Land"))
+            {
+                Land++;
+            }
+            else if (converted.types.Contains("Instant") || converted.types.Contains("Sorcery"))
+            {
+                InstantSorcery++;
+            }
+            else if (converted.types.Contains("PlanesWalker"))
+            {
+                Planeswalker++;
+            }
+            else if (converted.types.Contains("Creature"))
+            {
+                Creatures++;
+            }
+            else
+            {
+                Artifact++;
+            }
         }
 
         //AutoSuggestBox dynamic search

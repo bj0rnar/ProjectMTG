@@ -8,6 +8,7 @@ using ProjectMTG.Model;
 
 namespace ProjectMTG.App.Helpers
 {
+    //TODO: Slettmeg
     public class Converter
     {
         public static Deck ConvertToDatabaseDeck(ObservableCollection<Card> cardList)

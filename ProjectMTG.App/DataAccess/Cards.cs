@@ -27,6 +27,7 @@ namespace ProjectMTG.App.DataAccess
             catch (HttpRequestException ex)
             {
                 return null;
+                //LOgg
             }
         }
 

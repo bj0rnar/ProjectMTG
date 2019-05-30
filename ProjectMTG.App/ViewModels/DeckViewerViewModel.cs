@@ -20,9 +20,11 @@ namespace ProjectMTG.App.ViewModels
         private User _user = ShellViewModel.LoggedInUser;
         private Decks _decksDataAccess = new Decks();
 
+        //Decklist
         private ObservableCollection<Deck> _observableDeckList = new ObservableCollection<Deck>();
         public ObservableCollection<Deck> GetObservableDeckList => this._observableDeckList;
 
+        //Imagelist
         private ObservableCollection<BitmapImage> _observableImage = new ObservableCollection<BitmapImage>();
         public ObservableCollection<BitmapImage> GetObservableImage => this._observableImage;
 
@@ -75,7 +77,7 @@ namespace ProjectMTG.App.ViewModels
         }
 
 
-        //Load images from decks.
+        //Load images from decks. Internal?
         public async Task LoadImages(Deck selectedDeck)
         {
             _observableImage.Clear();

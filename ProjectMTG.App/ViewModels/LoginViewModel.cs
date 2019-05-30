@@ -20,7 +20,7 @@ namespace ProjectMTG.App.ViewModels
 
         }
 
-
+        //TODO: Try catch
         public async Task<User> ValidateUser(string username, string password)
         {
             var allUsers = await _usersDataAccess.GetUsersAsync().ConfigureAwait(false);

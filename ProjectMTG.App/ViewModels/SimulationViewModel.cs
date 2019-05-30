@@ -90,41 +90,46 @@ namespace ProjectMTG.App.ViewModels
                     }
                 }
 
-                switch (landPerDraw)
-                {
-                    case 0:
-                        ZeroLand++;
-                        break;
-                    case 1:
-                        OneLand++;
-                        break;
-                    case 2:
-                        TwoLand++;
-                        break;
-                    case 3:
-                        ThreeLand++;
-                        break;
-                    case 4:
-                        FourLand++;
-                        break;
-                    case 5:
-                        FiveLand++;
-                        break;
-                    case 6:
-                        SixLand++;
-                        break;
-                    case 7:
-                        SevenLand++;
-                        break;
-                    default: //Default means more than seven, which in this case just means 7.
-                        SevenLand++;
-                        break;
-                }
+                CalculateLandPerDraw(landPerDraw);
 
                 landPerDraw = 0;
 
             }
 
+        }
+
+        private void CalculateLandPerDraw(int landPerDraw)
+        {
+            switch (landPerDraw)
+            {
+                case 0:
+                    ZeroLand++;
+                    break;
+                case 1:
+                    OneLand++;
+                    break;
+                case 2:
+                    TwoLand++;
+                    break;
+                case 3:
+                    ThreeLand++;
+                    break;
+                case 4:
+                    FourLand++;
+                    break;
+                case 5:
+                    FiveLand++;
+                    break;
+                case 6:
+                    SixLand++;
+                    break;
+                case 7:
+                    SevenLand++;
+                    break;
+                default: //Default means more than seven, which in this case just means 7.
+                    SevenLand++;
+                    break;
+            }
         }
 
         public async void DrawNewHand(Deck selectedDeck, int draw)
@@ -136,25 +141,27 @@ namespace ProjectMTG.App.ViewModels
 
             if (randomList != null)
             {
-
-                foreach (var card in randomList)
-                {
-                    await Task.Delay(150);
-                    var baseUri = new Uri("https://api.scryfall.com/cards/)");
-                    var indexUri = new Uri(baseUri, card.scryfallId);
-                    var scryUri = new Uri(indexUri, "?format=image");
-                    var bitmapImage = new BitmapImage {UriSource = scryUri};
-                    GetDisplayImages.Add(bitmapImage);
-                    GetDisplayCards.Add(card);
-                }
-
+                await FindCardImage(randomList);
             }
             else
             {
-                //Throw exception?
+                //Do something smart
             }
 
         }
-        
+
+        private async Task FindCardImage(IEnumerable<DeckCard> randomList)
+        {
+            foreach (var card in randomList)
+            {
+                await Task.Delay(150);
+                var baseUri = new Uri("https://api.scryfall.com/cards/)");
+                var indexUri = new Uri(baseUri, card.scryfallId);
+                var scryUri = new Uri(indexUri, "?format=image");
+                var bitmapImage = new BitmapImage {UriSource = scryUri};
+                GetDisplayImages.Add(bitmapImage);
+                GetDisplayCards.Add(card);
+            }
+        }
     }
 }

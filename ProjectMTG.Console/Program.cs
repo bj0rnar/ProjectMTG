@@ -29,39 +29,6 @@ namespace ProjectMTG
 			//If DB is empty, use these to populate. 
 			addToDb();
 			CreateDeck();
-			//checker();
-		}
-
-		public static void checker()
-		{
-			/*using (var db = new CollectionContext())
-			{
-				/*
-				var user = db.Users.FirstOrDefault(x => x.UserName == "Kjellemann");
-
-				var card = db.Cards.FirstOrDefault(z => z.name == "Arclight Phoenix");
-
-				var deck = new Deck() {User = user};
-
-				deck.Cards.Add(card);
-				deck.Cards.Add(card);
-
-				user.Decks.Add(deck);
-
-
-				Console.WriteLine(user.Decks.Count);
-
-				foreach (var userdeck in user.Decks)
-				{
-					foreach (var usercard in userdeck.Cards)
-					{
-						Console.WriteLine(usercard.name);
-					}
-				}
-
-							 Console.ReadKey();
-
-			}*/
 		}
 
 		public static void CreateDeck()
@@ -74,6 +41,7 @@ namespace ProjectMTG
 			}
 		}
 
+		//TODO: Do at startup
 		public static void addToDb()
 		{
 			using (var db = new CollectionContext())

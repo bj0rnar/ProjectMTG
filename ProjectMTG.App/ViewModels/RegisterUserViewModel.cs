@@ -15,7 +15,7 @@ namespace ProjectMTG.App.ViewModels
 
         }
 
-
+        //TODO: Check credentials, add try catch
         internal async Task<bool> RegisterNewUser(string username, string password)
         {
             User newUser = new User() {UserName = username, Password = password};

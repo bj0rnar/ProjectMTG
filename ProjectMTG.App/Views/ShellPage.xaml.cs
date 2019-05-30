@@ -33,10 +33,11 @@ namespace ProjectMTG.App.Views
             base.OnNavigatedTo(e);
 
             User x = (User) e.Parameter;
-            //Cheesy?
+            //Sett global user
             ShellViewModel.LoggedInUser = x;
         }
 
+        //Set startup pages.
         private void OnStart()
         {
             NavigationService.Navigate<Views.ShellPage>();

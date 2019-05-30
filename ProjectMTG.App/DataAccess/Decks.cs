@@ -48,8 +48,7 @@ namespace ProjectMTG.App.DataAccess
             try
             {
                 var json = JsonConvert.SerializeObject(deck);
-                HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_deckUri, "decks/" + deck.DeckId),
-                    new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_deckUri, "decks/" + deck.DeckId), new StringContent(json, Encoding.UTF8, "application/json"));
                 return result.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)

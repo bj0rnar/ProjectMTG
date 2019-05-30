@@ -28,11 +28,12 @@ namespace ProjectMTG.App.Views
 
         private async void Login_OnClick(object sender, RoutedEventArgs e)
         {
-            //ConfigureAwait blokkere UI tråden her!!!!!!!
+            //Validate user
             var loginUser = await ViewModel.ValidateUser(UsernameBox.Text, PasswordBox.Password);
 
             if (loginUser != null)
             {
+                //Start shell page, send user
                 NavigationService.Navigate(typeof(ShellPage), loginUser);
             }
             else
@@ -41,6 +42,7 @@ namespace ProjectMTG.App.Views
             }
         }
 
+        //???
         private void NavigateToMain()
         {
             NavigationService.Navigate(typeof(ShellPage));
