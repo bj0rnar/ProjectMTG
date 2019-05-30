@@ -130,7 +130,11 @@ namespace ProjectMTG.App.Views
             return bitmapImage;
         }
 
-        //Filter based on color
+
+        /// <summary>Handles the OnClick event of the CheckBox control.
+        /// Filters the ObservableCollection in viewmodel based on color</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void CheckBox_OnClick(object sender, RoutedEventArgs e)
         {
             CheckBox[] checkboxes = new CheckBox[] {BlueCheckBox, BlackCheckBox, GreenCheckBox, ColorlessCheckBox, RedCheckBox, WhiteCheckBox, ColorlessCheckBox};
@@ -182,7 +186,11 @@ namespace ProjectMTG.App.Views
             }
         }
 
-        //Filter checkbox based on type
+
+        /// <summary>Handles the Onclick event of the Typebox control.
+        /// Filters the ObservableCollection in Viewmodel based on type</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Typebox_Onclick(object sender, RoutedEventArgs e)
         {
             CheckBox[] checkboxes = new CheckBox[] { LandCheckBox, CreatureCheckBox, PlaneswalkerCheckBox, ArtifactCheckBox, InstantCheckBox, SorceryCheckBox };

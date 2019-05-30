@@ -11,14 +11,6 @@ using ProjectMTG.Model;
 
 namespace ProjectMTG.App.ViewModels
 {
-    public enum LoginAttempts
-    {
-        UserNotFound,
-        WrongPassword,
-        NoConnection,
-        MissingValues,
-        Nothing
-    }
 
     public class LoginViewModel : Observable
     {
@@ -26,27 +18,22 @@ namespace ProjectMTG.App.ViewModels
         //Get users
         Users _usersDataAccess = new Users();
 
-        public LoginAttempts LoginEnum;
-
-        //Wat to do
-        private string _loginStatus;
-        public string LoginStatus
-        {
-            get => _loginStatus;
-            set => Set(ref _loginStatus, value);
-        }
+        
 
         public LoginViewModel()
         {
-            this.LoginEnum = LoginAttempts.Nothing;
         }
 
-        //TODO: Try catch
+
+
+        /// <summary>Validates the user with the database</summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         public async Task<User> ValidateUser(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                this.LoginEnum = LoginAttempts.MissingValues;
                 ToastCreator.ShowUserToast("Input error: Either name or password is missing");
                 return null;
 
@@ -75,7 +62,6 @@ namespace ProjectMTG.App.ViewModels
                 else
                 {
                     ToastCreator.ShowUserToast("Input error: Wrong password inserted");
-                    this.LoginEnum = LoginAttempts.WrongPassword;
                    
                     return null;
                 }
@@ -83,7 +69,6 @@ namespace ProjectMTG.App.ViewModels
             else
             {
                 ToastCreator.ShowUserToast("Input error: No username found");
-                this.LoginEnum = LoginAttempts.UserNotFound;
                
                 return null;
             }

@@ -68,6 +68,10 @@ namespace ProjectMTG.App.ViewModels
             }
         }
 
+        /// <summary>In MTG a starting hand beings with 7 card.
+        /// This method simulates 100 starting hands from a deck
+        /// to calculate the land average drawn.</summary>
+        /// <param name="deck">The deck.</param>
         private void SimulateDraw(Deck deck)
         {
             ZeroLand = 0;
@@ -101,6 +105,9 @@ namespace ProjectMTG.App.ViewModels
 
         }
 
+        /// <summary>Assist method to SimulateDraw.
+        /// Used for calculating land per draw</summary>
+        /// <param name="landPerDraw">The land per draw.</param>
         private void CalculateLandPerDraw(int landPerDraw)
         {
             switch (landPerDraw)
@@ -135,6 +142,9 @@ namespace ProjectMTG.App.ViewModels
             }
         }
 
+        /// <summary>Draws the new hand of cards</summary>
+        /// <param name="selectedDeck">The selected deck.</param>
+        /// <param name="draw">Amount of cards to draw.</param>
         public async void DrawNewHand(Deck selectedDeck, int draw)
         {
             GetDisplayCards.Clear();
@@ -144,11 +154,7 @@ namespace ProjectMTG.App.ViewModels
 
             if (randomList != null)
             {
-                await FindCardImage(randomList);
-            }
-            else
-            {
-                //Do something smart
+                await FindCardImage(randomList).ConfigureAwait(true);
             }
 
         }

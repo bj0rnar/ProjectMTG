@@ -32,8 +32,8 @@ namespace ProjectMTG.App.Views
         {
             base.OnNavigatedTo(e);
 
+            //Receive user from login page and set in ShellViewModel for easy access
             User x = (User) e.Parameter;
-            //Sett global user, håndter i egen klasse?
             ShellViewModel.LoggedInUser = x;
         }
 

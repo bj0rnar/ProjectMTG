@@ -77,8 +77,9 @@ namespace ProjectMTG.App.ViewModels
 
         public MainViewModel()
         {
-
-            //Convert from baseCard to DeckCard
+            /**
+             * Converts card from Card model to DeckCard model and adds to Decklist
+             */
             AddCardToDeck = new RelayCommand<Card>( param =>
             {
                 if (param != null)
@@ -121,7 +122,10 @@ namespace ProjectMTG.App.ViewModels
                 }
             }, card => card != null );
 
-            //Remove card from observablelist
+            /**
+             * Removes a card from decklist.
+             */
+           
             RemoveCardFromDeck = new RelayCommand<DeckCard>(param =>
             {
                 if (param != null)
@@ -133,6 +137,9 @@ namespace ProjectMTG.App.ViewModels
                 }
             }, card => card != null );
 
+            /**
+             * Uploads a new deck with all the cards from Decklist
+             */
             SaveDeckList = new RelayCommand<string>(async param =>
             {
                //Dummy deck
@@ -144,8 +151,7 @@ namespace ProjectMTG.App.ViewModels
                    deck.Cards.Add(card);
                }
 
-                //Upload
-               
+               //Upload
                if (await _decksDataAccess.AddDeckAsync(deck))
                {
                     ToastCreator.ShowUserToast("Deck successfully saved");
@@ -160,6 +166,11 @@ namespace ProjectMTG.App.ViewModels
 
             }, s => !string.IsNullOrEmpty(s));
 
+            /**
+             * Compares cards in DeckList and originally loaded list to look for
+             * differences and either deletes or adds to database depending on if card
+             * is missing or not.
+             */
             SaveChanges = new RelayCommand<string>(async param =>
             {
                 //Has to be cards to save changes, otherwise start deletedialog
@@ -237,7 +248,8 @@ namespace ProjectMTG.App.ViewModels
             }, string.IsNullOrEmpty);
 
         }
-
+        /// <summary>When removing a card from a deck, method decrements whichever type it belongs to</summary>
+        /// <param name="param">Removed card</param>
         private void DecreaseCardCounter(DeckCard param)
         {
             if (param.types.Contains("Land"))
@@ -262,6 +274,8 @@ namespace ProjectMTG.App.ViewModels
             }
         }
 
+        /// <summary>When adding a new card to a deck, method increments whichever type it belongs to</summary>
+        /// <param name="converted">Newly added card</param>
         private void IncreaseCardCounter(DeckCard converted)
         {
             if (converted.types.Contains("Land"))
@@ -286,7 +300,11 @@ namespace ProjectMTG.App.ViewModels
             }
         }
 
-        //AutoSuggestBox dynamic search
+
+        /// <summary>This is a modified usage of AutoSuggestBox.
+        /// It uses the event trigger from AutoSuggestBox (which triggers with every
+        /// character input) to do a LINQ search on the ObservableCollection containing all cards
+        /// which gives a pseudo-dynamic search box. </summary>
         public ICommand SearchText
         {
             get

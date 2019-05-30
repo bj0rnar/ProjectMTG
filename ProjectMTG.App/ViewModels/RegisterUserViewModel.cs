@@ -17,6 +17,10 @@ namespace ProjectMTG.App.ViewModels
 
         }
 
+        /// <summary>Registers the new user.</summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         internal async Task<bool> RegisterNewUser(string username, string password)
         {
             if (ValidateUserInput(username, password))
@@ -41,6 +45,10 @@ namespace ProjectMTG.App.ViewModels
           
         }
 
+        /// <summary>Validates the user input.</summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         private bool ValidateUserInput(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))

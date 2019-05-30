@@ -41,7 +41,9 @@ namespace ProjectMTG.App.ViewModels
             EditDeckNameCommand = new RelayCommand<Deck>(EditDeckName);
         }
 
-        //Load decks from user
+
+        /// <summary>Gets the user decks from database and sets them in ObservableCollection</summary>
+        /// <returns></returns>
         internal async Task GetUserDecks()
         {
             Deck[] decks = null;
@@ -62,7 +64,9 @@ namespace ProjectMTG.App.ViewModels
             }
         }
 
-        //Delete deck
+
+        /// <summary>Deletes user selected deck.</summary>
+        /// <param name="deck">The deck.</param>
         private async void DeleteDeck(Deck deck)
         {
             if (deck != null)
@@ -78,7 +82,9 @@ namespace ProjectMTG.App.ViewModels
             }
         }
 
-        //Edit deckname
+
+        /// <summary>Edits the name of the deck and saves to database</summary>
+        /// <param name="deck">The deck.</param>
         private async void EditDeckName(Deck deck)
         {
             if (deck != null)
@@ -111,7 +117,10 @@ namespace ProjectMTG.App.ViewModels
         }
 
 
-        //Load images from decks
+
+        /// <summary>Loads images from each card in deck and puts them in ObservableCollection</summary>
+        /// <param name="selectedDeck">The selected deck.</param>
+        /// <returns></returns>
         public async Task LoadImages(Deck selectedDeck)
         {
             _observableImage.Clear();

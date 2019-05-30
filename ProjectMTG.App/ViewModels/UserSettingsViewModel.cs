@@ -22,7 +22,7 @@ namespace ProjectMTG.App.ViewModels
             ChangePassword = new RelayCommand(ChangeUserPassword);
         }
 
-        //TODO: Try catch
+        
         private async void ChangeUserPassword()
         {
             ChangePasswordDialog pwDialog = new ChangePasswordDialog();
