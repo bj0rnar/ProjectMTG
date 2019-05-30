@@ -14,7 +14,7 @@ namespace ProjectMTG.Model
 		[ForeignKey("UserId")]
 		public int UserId { get; set; }
 		
-		public ICollection<DeckCards> Cards { get; set; } = new List<DeckCards>();
+		public ICollection<DeckCard> Cards { get; set; } = new List<DeckCard>();
 
 
 	}

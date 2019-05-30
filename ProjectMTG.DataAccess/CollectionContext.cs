@@ -12,7 +12,7 @@ namespace ProjectMTG.DataAccess
 		public DbSet<Card> Cards { get; set; }
 		public DbSet<Deck> Decks { get; set; }
 		public DbSet<User> Users { get; set; }
-		public DbSet<DeckCards> DeckCards { get; set; }
+		public DbSet<DeckCard> DeckCards { get; set; }
 
 		public CollectionContext(DbContextOptions<CollectionContext> options) : base(options) { }
 
@@ -55,25 +55,25 @@ namespace ProjectMTG.DataAccess
 				*/
 
 			//Støttemodell
-			modelBuilder.Entity<DeckCards>()
+			modelBuilder.Entity<DeckCard>()
 				.Property(e => e.colors)
 				.HasConversion(
 					v => string.Join(";", v),
 					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
-			modelBuilder.Entity<DeckCards>()
+			modelBuilder.Entity<DeckCard>()
 				.Property(e => e.subtype)
 				.HasConversion(
 					v => string.Join(";", v),
 					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
-			modelBuilder.Entity<DeckCards>()
+			modelBuilder.Entity<DeckCard>()
 				.Property(e => e.supertype)
 				.HasConversion(
 					v => string.Join(";", v),
 					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
-			modelBuilder.Entity<DeckCards>()
+			modelBuilder.Entity<DeckCard>()
 				.Property(e => e.types)
 				.HasConversion(
 					v => string.Join(";", v),

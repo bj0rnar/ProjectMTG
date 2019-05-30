@@ -7,7 +7,7 @@ using System.Text;
 namespace ProjectMTG.Model
 {
 	[Table("DeckCard")]
-	public class DeckCards
+	public class DeckCard
 	{
 		[Key]
 		public int DeckCardId { get; set; }

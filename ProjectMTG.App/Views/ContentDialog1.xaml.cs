@@ -46,7 +46,6 @@ namespace ProjectMTG.App.Views
         private void ContentDialog1_OnPrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             this.choice = UserChoice.Create;
-            this._selectedDeck = null;
             dialog.Hide();
         }
 

@@ -16,7 +16,7 @@ namespace ProjectMTG.App.Helpers
 
             foreach (var card in cardList)
             {
-                deck.Cards.Add(new DeckCards()
+                deck.Cards.Add(new DeckCard()
                 {
                     DeckId = deck.DeckId,
                     name = card.name,
@@ -81,14 +81,16 @@ namespace ProjectMTG.App.Helpers
             return cardList;
         }
 
-        public static Deck ConvertToEditableDeck(ObservableCollection<Card> cardList, Deck deck)
+        public static Deck ConvertToEditableDeck(ObservableCollection<Card> cardList, int deckId)
         {
+            //HMMM
+            Deck editDeck = new Deck() {DeckId = deckId};
 
             foreach (var card in cardList)
             {
-                deck.Cards.Add(new DeckCards()
+                editDeck.Cards.Add(new DeckCard()
                 {
-                    DeckId = deck.DeckId,
+                    DeckId = deckId,
                     name = card.name,
                     artist = card.artist,
                     colors = card.colors,
@@ -113,7 +115,7 @@ namespace ProjectMTG.App.Helpers
                 });
             }
 
-            return deck;
+            return editDeck;
         }
     }
 }

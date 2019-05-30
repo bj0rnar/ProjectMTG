@@ -23,8 +23,8 @@ namespace ProjectMTG.App.ViewModels
         private ObservableCollection<Deck> ComboBoxDecks = new ObservableCollection<Deck>();
         public ObservableCollection<Deck> GetComboBoxDecks => this.ComboBoxDecks;
 
-        private ObservableCollection<DeckCards> DisplayCards = new ObservableCollection<DeckCards>();
-        public ObservableCollection<DeckCards> GetDisplayCards => this.DisplayCards;
+        private ObservableCollection<DeckCard> DisplayCards = new ObservableCollection<DeckCard>();
+        public ObservableCollection<DeckCard> GetDisplayCards => this.DisplayCards;
 
         private ObservableCollection<BitmapImage> DisplayImages = new ObservableCollection<BitmapImage>();
         public ObservableCollection<BitmapImage> GetDisplayImages => this.DisplayImages;

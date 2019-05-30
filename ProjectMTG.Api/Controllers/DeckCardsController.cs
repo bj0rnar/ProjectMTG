@@ -23,7 +23,7 @@ namespace ProjectMTG.Api.Controllers
 
         // GET: api/DeckCards
         [HttpGet]
-        public IEnumerable<DeckCards> GetDeckCards()
+        public IEnumerable<DeckCard> GetDeckCards()
         {
             return _context.DeckCards;
         }
@@ -49,7 +49,7 @@ namespace ProjectMTG.Api.Controllers
 
         // PUT: api/DeckCards/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDeckCards([FromRoute] int id, [FromBody] DeckCards deckCards)
+        public async Task<IActionResult> PutDeckCards([FromRoute] int id, [FromBody] DeckCard deckCards)
         {
             if (!ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace ProjectMTG.Api.Controllers
 
         // POST: api/DeckCards
         [HttpPost]
-        public async Task<IActionResult> PostDeckCards([FromBody] DeckCards deckCards)
+        public async Task<IActionResult> PostDeckCards([FromBody] DeckCard deckCards)
         {
             if (!ModelState.IsValid)
             {

@@ -10,13 +10,13 @@ namespace ProjectMTG.App.DataAccess
 {
     public class Decks
     {
-        static Uri DeckUri = new Uri("http://localhost:61254/api/decks");
+        static Uri _deckUri = new Uri("http://localhost:61254/api/decks");
         readonly HttpClient _httpClient = new HttpClient();
 
         internal async Task<bool> AddDeckAsync(Deck deck)
         {
             string json = JsonConvert.SerializeObject(deck);
-            HttpResponseMessage result = await _httpClient.PostAsync(DeckUri, new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage result = await _httpClient.PostAsync(_deckUri, new StringContent(json, Encoding.UTF8, "application/json"));
 
             if (result.IsSuccessStatusCode)
             {
@@ -34,30 +34,27 @@ namespace ProjectMTG.App.DataAccess
 
         internal async Task<bool> DeleteDeckAsync(Deck deck)
         {
-            HttpResponseMessage result = await _httpClient.DeleteAsync(new Uri(DeckUri, "decks/" + deck.DeckId));
+            HttpResponseMessage result = await _httpClient.DeleteAsync(new Uri(_deckUri, "decks/" + deck.DeckId));
             return result.IsSuccessStatusCode;
         }
 
         internal async Task<bool> EditDeckAsync(Deck deck)
         {
             var json = JsonConvert.SerializeObject(deck);
-            HttpResponseMessage result = await _httpClient.PutAsync(new Uri(DeckUri, "decks/" + deck.DeckId), new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_deckUri, "decks/" + deck.DeckId), new StringContent(json, Encoding.UTF8, "application/json"));
             return result.IsSuccessStatusCode;
         }
 
 
         public async Task<Deck[]> GetUserDecksAsync(int userId)
         {
-            var clientResult = await _httpClient.GetAsync(DeckUri);
+            var clientResult = await _httpClient.GetAsync(_deckUri);
             var jsonData = await clientResult.Content.ReadAsStringAsync();
             Deck[] decks = JsonConvert.DeserializeObject<Deck[]>(jsonData);
 
-            if (decks.Any(deck => deck.UserId == userId))
-            {
-                return decks;
-            }
 
-            return null;
+            return decks.Where(x => x.UserId == userId).ToArray();
+           
         }
 
     }
