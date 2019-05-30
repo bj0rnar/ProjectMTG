@@ -11,12 +11,12 @@ namespace ProjectMTG.App.DataAccess
 {
     public class Users
     {
-        static Uri UserUri = new Uri("http://localhost:61254/api/users");
+        static Uri _userUri = new Uri("http://localhost:61254/api/users");
         readonly HttpClient _httpClient = new HttpClient();
 
         public async Task<User[]> GetUsersAsync()
         {
-            var clientResult = await _httpClient.GetAsync(UserUri);
+            var clientResult = await _httpClient.GetAsync(_userUri);
             var jsonData = await clientResult.Content.ReadAsStringAsync();
             User[] users = JsonConvert.DeserializeObject<User[]>(jsonData);
 
@@ -26,8 +26,15 @@ namespace ProjectMTG.App.DataAccess
         internal async Task<bool> AddUser(User user)
         {
             string json = JsonConvert.SerializeObject(user);
-            HttpResponseMessage result = await _httpClient.PostAsync(UserUri, new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage result = await _httpClient.PostAsync(_userUri, new StringContent(json, Encoding.UTF8, "application/json"));
 
+            return result.IsSuccessStatusCode;
+        }
+
+        internal async Task<bool> ChangePassword(User user)
+        {
+            var json = JsonConvert.SerializeObject(user);
+            HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_userUri, "users/" + user.UserId), new StringContent(json, Encoding.UTF8, "application/json"));
             return result.IsSuccessStatusCode;
         }
     }
