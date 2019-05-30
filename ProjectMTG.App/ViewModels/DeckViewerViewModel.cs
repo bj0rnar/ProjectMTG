@@ -51,7 +51,7 @@ namespace ProjectMTG.App.ViewModels
             }
             catch (HttpRequestException ex)
             {
-                ToastCreator.ShowUserToast("Could not load decks from database ");
+                ToastCreator.ShowUserToast("Database connection lost: Cannot load user decks");
             }
 
             if (decks != null)
@@ -79,12 +79,12 @@ namespace ProjectMTG.App.ViewModels
                 }
                 catch (HttpRequestException ex)
                 {
-                    ToastCreator.ShowUserToast("Could not delete deck from database");
+                    ToastCreator.ShowUserToast("Database connection lost: Cannot delete deck");
                 }
             }
             else
             {
-                ToastCreator.ShowUserToast("Select deck for deletion");
+                ToastCreator.ShowUserToast("Input error: Select a deck before pressing delete");
             }
         }
 
@@ -108,17 +108,17 @@ namespace ProjectMTG.App.ViewModels
                     }
                     catch (HttpRequestException ex)
                     {
-                        ToastCreator.ShowUserToast("Can't connect with database, no changes saved");
+                        ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
                     }
                 }
                 else
                 {
-                    ToastCreator.ShowUserToast("Invalid deckname");
+                    ToastCreator.ShowUserToast("Input error: Missing name!");
                 }
             }
             else
             {
-                ToastCreator.ShowUserToast("Select deck first");
+                ToastCreator.ShowUserToast("Input error: Select a deck before editing name");
             }
 
         }

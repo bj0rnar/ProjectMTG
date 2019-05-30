@@ -25,7 +25,7 @@ namespace ProjectMTG.Api.Controllers
         [HttpGet]
         public async Task<IEnumerable<Deck>> GetDecks()
         {
-	        return await _context.Decks.Include(m => m.Cards).ToListAsync().ConfigureAwait(true);
+		    return await _context.Decks.Include(m => m.Cards).ToListAsync().ConfigureAwait(true);
         }
 
         // GET: api/Decks/5

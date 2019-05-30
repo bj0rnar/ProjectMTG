@@ -77,11 +77,6 @@ namespace ProjectMTG.App.ViewModels
 
         public MainViewModel()
         {
-            if (EditorMode == true)
-            {
-                TotalCardCount = GetObservableDeck.Count;
-            }
-
 
             //Convert from baseCard to DeckCard
             AddCardToDeck = new RelayCommand<Card>( param =>
@@ -93,8 +88,18 @@ namespace ProjectMTG.App.ViewModels
                     if (converted != null)
                     {
                         //Check for equal cards
-                        var checkForEqualCards = GetObservableDeck.Where(u => u.Equals(param));
-                        var equalCardCounter = checkForEqualCards.Count();
+                        var equalCardCounter = 0;
+
+                        foreach (var card in GetObservableDeck)
+                        {
+                            if (card.name == converted.name)
+                            {
+                                equalCardCounter++;
+                            }
+                        }
+
+                        //var checkForEqualCards = GetObservableDeck.Where(u => u.Equals(converted.name));
+                        //var equalCardCounter = checkForEqualCards.Count();
 
                         //If duplicate cards are more than 4 or card is a Land type.
                         if (equalCardCounter < 4 || converted.types.Contains("Land"))
@@ -336,6 +341,7 @@ namespace ProjectMTG.App.ViewModels
             {
                 ContentDialogDecks.Add(deck);
             }
+            
         }
 
         public void LoadDeckCards(Deck deck)
@@ -346,6 +352,7 @@ namespace ProjectMTG.App.ViewModels
                 {
                     ObservableDeck.Add(card);
                 }
+                
             }
             else
             {

@@ -46,7 +46,7 @@ namespace ProjectMTG.App.ViewModels
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 this.LoginEnum = LoginAttempts.MissingValues;
-                ToastCreator.ShowUserToast("Either password or username is missing");
+                ToastCreator.ShowUserToast("Input error: Either name or password is missing");
                 return null;
 
             }
@@ -59,7 +59,7 @@ namespace ProjectMTG.App.ViewModels
                 }
                 catch (HttpRequestException)
                 {
-                    ToastCreator.ShowUserToast("Could not connect to database");
+                    ToastCreator.ShowUserToast("Database connection lost: Cannot validate user");
                     this.LoginEnum = LoginAttempts.NoConnection;
                     
                     return null;
@@ -80,7 +80,7 @@ namespace ProjectMTG.App.ViewModels
                 }
                 else
                 {
-                    ToastCreator.ShowUserToast("Wrong password");
+                    ToastCreator.ShowUserToast("Input error: Wrong password inserted");
                     this.LoginEnum = LoginAttempts.WrongPassword;
                    
                     return null;
@@ -88,7 +88,7 @@ namespace ProjectMTG.App.ViewModels
             }
             else
             {
-                ToastCreator.ShowUserToast("No user by that username found");
+                ToastCreator.ShowUserToast("Input error: No username found");
                 this.LoginEnum = LoginAttempts.UserNotFound;
                
                 return null;
