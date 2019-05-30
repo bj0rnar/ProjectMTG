@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using ProjectMTG.App.Helpers;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.DataAccess
@@ -18,11 +19,17 @@ namespace ProjectMTG.App.DataAccess
             try
             {
                 string json = JsonConvert.SerializeObject(deck);
-                HttpResponseMessage result = await _httpClient.PostAsync(_deckUri, new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage result = await _httpClient.PostAsync(_deckUri,
+                    new StringContent(json, Encoding.UTF8, "application/json"));
 
                 return result.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)
+            {
+                return false;
+                //Logg
+            }
+            catch (ArgumentNullException)
             {
                 return false;
                 //Logg
@@ -41,6 +48,16 @@ namespace ProjectMTG.App.DataAccess
                 return false;
                 //LOgg
             }
+            catch (InvalidOperationException)
+            {
+                return false;
+                //Logg
+            }
+            catch (ArgumentNullException)
+            {
+                return false;
+                //Logg
+            }
         }
 
         internal async Task<bool> EditDeckAsync(Deck deck)
@@ -48,11 +65,23 @@ namespace ProjectMTG.App.DataAccess
             try
             {
                 var json = JsonConvert.SerializeObject(deck);
-                HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_deckUri, "decks/" + deck.DeckId), new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage result = await _httpClient.PutAsync(new Uri(_deckUri, "decks/" + deck.DeckId),
+                    new StringContent(json, Encoding.UTF8, "application/json")).ConfigureAwait(true);
                 return result.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)
             {
+                ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
+                return false;
+            }
+            catch (JsonReaderException ex)
+            {
+                ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
+                return false;
+            }
+            catch (ArgumentNullException ex)
+            {
+                ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
                 return false;
             }
         }
@@ -62,8 +91,8 @@ namespace ProjectMTG.App.DataAccess
         {
             try
             {
-                var clientResult = await _httpClient.GetAsync(_deckUri);
-                var jsonData = await clientResult.Content.ReadAsStringAsync();
+                var clientResult = await _httpClient.GetAsync(_deckUri).ConfigureAwait(true);
+                var jsonData = await clientResult.Content.ReadAsStringAsync().ConfigureAwait(true);
                 Deck[] decks = JsonConvert.DeserializeObject<Deck[]>(jsonData);
 
                 return decks.Where(x => x.UserId == userId).ToArray();
@@ -72,6 +101,10 @@ namespace ProjectMTG.App.DataAccess
             {
                 return null;
                 //Logger
+            }
+            catch (ArgumentNullException ex)
+            {
+                return null;
             }
 
         }

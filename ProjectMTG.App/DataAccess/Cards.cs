@@ -18,8 +18,8 @@ namespace ProjectMTG.App.DataAccess
         {
             try
             {
-                var clientResult = await _httpClient.GetAsync(CardUri);
-                var jsonData = await clientResult.Content.ReadAsStringAsync();
+                var clientResult = await _httpClient.GetAsync(CardUri).ConfigureAwait(true);
+                var jsonData = await clientResult.Content.ReadAsStringAsync().ConfigureAwait(true);
                 Card[] cards = JsonConvert.DeserializeObject<Card[]>(jsonData);
 
                 return cards;
@@ -27,7 +27,11 @@ namespace ProjectMTG.App.DataAccess
             catch (HttpRequestException ex)
             {
                 return null;
-                //LOgg
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                return null;
             }
         }
 

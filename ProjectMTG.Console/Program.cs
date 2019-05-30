@@ -28,7 +28,7 @@ namespace ProjectMTG
 		{
 			//If DB is empty, use these to populate. 
 			addToDb();
-			CreateDeck();
+			//CreateDeck();
 		}
 
 		public static void CreateDeck()
@@ -51,7 +51,7 @@ namespace ProjectMTG
 					var jsonData = httpclient.DownloadString("https://mtgjson.com/json/Standard.json");
 					var model = JsonConvert.DeserializeObject<Carddata>(jsonData);
 
-					var data = from i in model.GRN.cards
+					var data = from i in model.M19.cards
 						select i;
 
 					foreach (var q in data)

@@ -59,10 +59,12 @@ namespace ProjectMTG.App.ViewModels
         internal async Task LoadDecks()
         {
             var decks = await decksDataAccess.GetUserDecksAsync(user.UserId).ConfigureAwait(true);
-
-            foreach (var deck in decks)
+            if (decks != null)
             {
-                ComboBoxDecks.Add(deck);
+                foreach (var deck in decks)
+                {
+                    ComboBoxDecks.Add(deck);
+                }
             }
         }
 

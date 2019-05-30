@@ -122,7 +122,6 @@
     <Compile Include="DataAccess\DeckCards.cs" />
     <Compile Include="DataAccess\Decks.cs" />
     <Compile Include="DataAccess\Users.cs" />
-    <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\RandomPicker.cs" />

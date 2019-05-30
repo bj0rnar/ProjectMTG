@@ -68,19 +68,10 @@ namespace ProjectMTG.App.ViewModels
         {
             if (deck != null)
             {
+                if (!await _decksDataAccess.DeleteDeckAsync(deck)) return;
+                _observableDeckList.Remove(deck);
+                _observableImage.Clear();
 
-                try
-                {
-                    if (await _decksDataAccess.DeleteDeckAsync(deck))
-                    {
-                        _observableDeckList.Remove(deck);
-                        _observableImage.Clear();
-                    }
-                }
-                catch (HttpRequestException ex)
-                {
-                    ToastCreator.ShowUserToast("Database connection lost: Cannot delete deck");
-                }
             }
             else
             {
@@ -93,22 +84,15 @@ namespace ProjectMTG.App.ViewModels
         {
             if (deck != null)
             {
+                
+                deck.DeckName = DeckName;
 
                 if (!string.IsNullOrEmpty(deck.DeckName))
                 {
-                    deck.DeckName = DeckName;
-
-                    try
+                    if (await _decksDataAccess.EditDeckAsync(deck).ConfigureAwait(true))
                     {
-                        if (await _decksDataAccess.EditDeckAsync(deck).ConfigureAwait(true))
-                        {
-                            _observableDeckList.Remove(deck);
-                            _observableDeckList.Add(deck);
-                        }
-                    }
-                    catch (HttpRequestException ex)
-                    {
-                        ToastCreator.ShowUserToast("Database connection lost: Cannot save edited deck name");
+                        _observableDeckList.Remove(deck);
+                        _observableDeckList.Add(deck);
                     }
                 }
                 else
@@ -124,23 +108,23 @@ namespace ProjectMTG.App.ViewModels
         }
 
 
-        //Load images from decks. Internal?
+        //Load images from decks
         public async Task LoadImages(Deck selectedDeck)
         {
             _observableImage.Clear();
 
             foreach (var card in selectedDeck.Cards)
             {
-                await Task.Delay(150);
+                await Task.Delay(150).ConfigureAwait(true);
                 Uri baseUri = new Uri("https://api.scryfall.com/cards/)");
                 Uri indexUri = new Uri(baseUri, card.scryfallId);
                 Uri scryUri = new Uri(indexUri, "?format=image");
                 var bitmapImage = new BitmapImage { UriSource = scryUri };
                 GetObservableImage.Add(bitmapImage);
+
             }
             
         }
-
         
     }
 }

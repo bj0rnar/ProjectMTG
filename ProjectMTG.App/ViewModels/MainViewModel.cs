@@ -145,21 +145,18 @@ namespace ProjectMTG.App.ViewModels
                }
 
                 //Upload
-                try
-                {
-                    if (await _decksDataAccess.AddDeckAsync(deck))
-                    {
-                        ToastCreator.ShowUserToast("Deck successfully saved");
-                        _user.Decks.Add(deck);
-                        GetObservableDeck.Clear();
-                    }
-                }
-                catch (HttpRequestException ex)
-                {
-                    ToastCreator.ShowUserToast("No internet connection, was not able to save deck");
-                }
+               
+               if (await _decksDataAccess.AddDeckAsync(deck))
+               {
+                    ToastCreator.ShowUserToast("Deck successfully saved");
+                    _user.Decks.Add(deck);
+                    GetObservableDeck.Clear();
+               }
+               else
+               {
+                   ToastCreator.ShowUserToast("No internet connection, was not able to save deck");
+               }
 
-                
 
             }, s => !string.IsNullOrEmpty(s));
 
@@ -180,8 +177,11 @@ namespace ProjectMTG.App.ViewModels
 
                             if (await _deckCardsDataAccess.AddDeckCardAsync(card))
                             {
-                                Debug.WriteLine("Successfully added new card");
-                                //TODO: Feilhåndtering
+                                //Logg?
+                            }
+                            else
+                            {
+                                ToastCreator.ShowUserToast("No internet connection, was not able to save deck");
                             }
 
                         }
@@ -196,12 +196,14 @@ namespace ProjectMTG.App.ViewModels
                         {
                             if (await _deckCardsDataAccess.DeleteDeckCardAsync(card))
                             {
-                                Debug.WriteLine("Successfully deleted card");
-                                //TODO: Feilhåndtering
+                                //Logg?
+                            }
+                            else
+                            {
+                                ToastCreator.ShowUserToast("No internet connection, was not able to save deck");
                             }
                         }
                     }
-
 
                     GetObservableDeck.Clear();
                 }
@@ -212,27 +214,22 @@ namespace ProjectMTG.App.ViewModels
 
                     if (deckWarningDialog.DeleteChoice == DeletionChoices.Keep)
                     {
-                        //Do nothing
+                       //Nothing?
                     }
                     else if (deckWarningDialog.DeleteChoice == DeletionChoices.Delete)
                     {
-                        try
-                        {
                             //Delete deck
-                            if (await _decksDataAccess.DeleteDeckAsync(EditDeck))
-                            {
-                                EditDeck = null;
-                                ToastCreator.ShowUserToast("Deck successfully deleted");
-                            }
-                        }
-                        catch (HttpRequestException)
+                        if (await _decksDataAccess.DeleteDeckAsync(EditDeck))
                         {
-                            ToastCreator.ShowUserToast("No internet connection, can't delete deck");
+                            EditDeck = null;
+                            ToastCreator.ShowUserToast("Deck successfully deleted");
                         }
-                    }
-                    else
-                    {
-                        ToastCreator.ShowUserToast("Unexpected error");
+                        else
+                        {
+                            ToastCreator.ShowUserToast("Database connection lost: can't delete deck");
+                        }
+                        
+                       
                     }
 
                 }
@@ -299,6 +296,7 @@ namespace ProjectMTG.App.ViewModels
 
                     _searchText = new RelayCommand<string>(param =>
                     {
+                        //Argument null is handled here
                         if (!string.IsNullOrEmpty(param))
                         {
                             var temp = new ObservableCollection<Card>(DisplayCards.Where(x => x.name.ToLower().StartsWith(param.ToLower())));
@@ -326,37 +324,37 @@ namespace ProjectMTG.App.ViewModels
 
         internal async Task LoadCardsAsync()
         {
-            CompleteList = await _cardsDataAccess.GetCardsAsync();
-            foreach (Card card in CompleteList)
+            CompleteList = await _cardsDataAccess.GetCardsAsync().ConfigureAwait(true);
+            if (CompleteList != null)
             {
-                ObservableCards.Add(card);
-                DisplayCards.Add(card);
+                foreach (Card card in CompleteList)
+                {
+                    ObservableCards.Add(card);
+                    DisplayCards.Add(card);
+                }
             }
         }
 
         internal async Task GetUserDecks()
         {
-            var decks = await _decksDataAccess.GetUserDecksAsync(_user.UserId);
-            foreach (Deck deck in decks)
+            var decks = await _decksDataAccess.GetUserDecksAsync(_user.UserId).ConfigureAwait(true);
+            if (decks != null)
             {
-                ContentDialogDecks.Add(deck);
+                foreach (Deck deck in decks)
+                {
+                    ContentDialogDecks.Add(deck);
+                }
             }
-            
+
         }
 
         public void LoadDeckCards(Deck deck)
         {
-            if (deck != null)
+            if (deck == null) return;
+
+            foreach (var card in deck.Cards)
             {
-                foreach (var card in deck.Cards)
-                {
-                    ObservableDeck.Add(card);
-                }
-                
-            }
-            else
-            {
-                throw new ArgumentException("No deck found");
+                ObservableDeck.Add(card);
             }
 
         }

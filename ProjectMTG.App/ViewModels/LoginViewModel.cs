@@ -51,22 +51,15 @@ namespace ProjectMTG.App.ViewModels
 
             }
 
-            User[] allUsers = null;
-            {
-                try
-                {
-                    allUsers = await _usersDataAccess.GetUsersAsync().ConfigureAwait(true);
-                }
-                catch (HttpRequestException)
-                {
-                    ToastCreator.ShowUserToast("Database connection lost: Cannot validate user");
-                    this.LoginEnum = LoginAttempts.NoConnection;
-                    
-                    return null;
-                }
-            }
+                
+            var allUsers = await _usersDataAccess.GetUsersAsync().ConfigureAwait(true);
 
-            if (allUsers == null) return null;
+            //If null, means database caught an exception.
+            if (allUsers == null)
+            {
+                ToastCreator.ShowUserToast("Database connection lost: Cannot validate user");
+                return null;
+            }
 
             var checkUser = (from x in allUsers
                 where x.UserName == username

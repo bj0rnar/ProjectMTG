@@ -23,13 +23,15 @@ namespace ProjectMTG.App.DataAccess
 
                 return result.IsSuccessStatusCode;
 
-
-
             }
             catch (HttpRequestException ex)
             {
                 return false;
                 //Logg
+            }
+            catch (ArgumentNullException ex)
+            {
+                return false;
             }
 
         }
@@ -38,13 +40,22 @@ namespace ProjectMTG.App.DataAccess
         {
             try
             {
-                HttpResponseMessage result = await _httpClient.DeleteAsync(new Uri(_deckcardUri, "deckcards/" + card.DeckCardId));
+                HttpResponseMessage result =
+                    await _httpClient.DeleteAsync(new Uri(_deckcardUri, "deckcards/" + card.DeckCardId));
                 return result.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)
             {
                 return false;
                 //Logg
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+            catch (ArgumentNullException)
+            {
+                return false;
             }
         }
     }

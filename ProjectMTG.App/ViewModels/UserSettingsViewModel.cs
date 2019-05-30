@@ -32,14 +32,12 @@ namespace ProjectMTG.App.ViewModels
             {
                 string pw = (string) pwDialog.Content;
                 _user.Password = pw;
-                try
+                
+                if (await _usersDataAccess.ChangePassword(_user))
                 {
-                    if (await _usersDataAccess.ChangePassword(_user))
-                    {
-                        ToastCreator.ShowUserToast("Password changed!");
-                    }
+                    ToastCreator.ShowUserToast("Password changed!");
                 }
-                catch (HttpRequestException ex)
+                else
                 {
                     ToastCreator.ShowUserToast("No database connection, password was not changed");
                 }
