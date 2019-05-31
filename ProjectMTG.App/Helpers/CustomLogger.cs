@@ -17,9 +17,7 @@ namespace ProjectMTG.App.Helpers
         {
             var folder = ApplicationData.Current.LocalFolder;
             var logfile = await folder.CreateFileAsync("ProjectMTGLogFile.txt", CreationCollisionOption.OpenIfExists);
-            //Debug.WriteLine(logfile.Path);
             await FileIO.AppendTextAsync(logfile, log + Environment.NewLine);
-            //Debug.WriteLine(logfile.Path.ToString());
         }
     }
 }
