@@ -12,56 +12,56 @@ namespace ProjectMTG.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DecksController : ControllerBase
+    public class DeckCardsController : ControllerBase
     {
         private readonly CollectionContext _context;
 
-        public DecksController(CollectionContext context)
+        public DeckCardsController(CollectionContext context)
         {
             _context = context;
         }
 
-        // GET: api/Decks
+        // GET: api/DeckCards
         [HttpGet]
-        public async Task<IEnumerable<Deck>> GetDecks()
+        public IEnumerable<DeckCard> GetDeckCards()
         {
-		    return await _context.Decks.Include(m => m.Cards).ToListAsync().ConfigureAwait(true);
+            return _context.DeckCards;
         }
 
-        // GET: api/Decks/5
+        // GET: api/DeckCards/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDeck([FromRoute] int id)
+        public async Task<IActionResult> GetDeckCards([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var deck = await _context.Decks.FindAsync(id);
+            var deckCards = await _context.DeckCards.FindAsync(id);
 
-            if (deck == null)
+            if (deckCards == null)
             {
                 return NotFound();
             }
 
-            return Ok(deck);
+            return Ok(deckCards);
         }
 
-        // PUT: api/Decks/5
+        // PUT: api/DeckCards/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDeck([FromRoute] int id, [FromBody] Deck deck)
+        public async Task<IActionResult> PutDeckCards([FromRoute] int id, [FromBody] DeckCard deckCards)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != deck.DeckId)
+            if (id != deckCards.DeckCardId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(deck).State = EntityState.Modified;
+            _context.Entry(deckCards).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace ProjectMTG.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DeckExists(id))
+                if (!DeckCardsExists(id))
                 {
                     return NotFound();
                 }
@@ -82,59 +82,45 @@ namespace ProjectMTG.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Decks
+        // POST: api/DeckCards
         [HttpPost]
-        public async Task<IActionResult> PostDeck([FromBody] Deck deck)
+        public async Task<IActionResult> PostDeckCards([FromBody] DeckCard deckCards)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-			_context.Decks.Add(deck);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (DeckExists(deck.DeckId))
-                {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _context.DeckCards.Add(deckCards);
+            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDeck", new { id = deck.DeckId }, deck);
+            return CreatedAtAction("GetDeckCards", new { id = deckCards.DeckCardId }, deckCards);
         }
 
-        // DELETE: api/Decks/5
+        // DELETE: api/DeckCards/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDeck([FromRoute] int id)
+        public async Task<IActionResult> DeleteDeckCards([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var deck = await _context.Decks.FindAsync(id);
-            if (deck == null)
+            var deckCards = await _context.DeckCards.FindAsync(id);
+            if (deckCards == null)
             {
                 return NotFound();
             }
 
-            _context.Decks.Remove(deck);
+            _context.DeckCards.Remove(deckCards);
             await _context.SaveChangesAsync();
 
-            return Ok(deck);
+            return Ok(deckCards);
         }
 
-        private bool DeckExists(int id)
+        private bool DeckCardsExists(int id)
         {
-            return _context.Decks.Any(e => e.DeckId == id);
+            return _context.DeckCards.Any(e => e.DeckCardId == id);
         }
     }
 }

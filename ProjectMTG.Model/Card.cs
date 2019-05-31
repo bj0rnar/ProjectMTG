@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ProjectMTG.Model
 	{
@@ -44,26 +41,9 @@ namespace ProjectMTG.Model
 		{
 			[Key]
 			public int CardId { get; set; }
-
 			public string artist { get; set; }
 
 			public string[] colors { get; set; }
-
-
-			//public string[] colorIdentities { get; set; }
-			/*
-			public string colors
-			{
-				get { return string.Join(",", ColorList); }
-				set { ColorList = value.Split(',').ToList(); }
-			}
-
-			[NotMapped]
-			public ICollection<string> ColorList { get; set; }
-			eller den her metoda:
-			public List<Colors> colors { get; set; }
-			*/
-
 			public float convertedManaCost { get; set; }
 			public string loyalty { get; set; }
 			public string manaCost { get; set; }
@@ -85,10 +65,7 @@ namespace ProjectMTG.Model
 			public string uuidV421 { get; set; }
 			public string power { get; set; }
 			public string toughness { get; set; }
-
-			public Deck deck { get; set; }
-			public ICollection<DeckCardsDir> InCollection { get; set; } = new List<DeckCardsDir>();
-
+		
 		}
 	
 

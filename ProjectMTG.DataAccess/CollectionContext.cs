@@ -12,7 +12,7 @@ namespace ProjectMTG.DataAccess
 		public DbSet<Card> Cards { get; set; }
 		public DbSet<Deck> Decks { get; set; }
 		public DbSet<User> Users { get; set; }
-		public DbSet<DeckCardsDir> DeckCardsDirs { get; set; }
+		public DbSet<DeckCard> DeckCards { get; set; }
 
 		public CollectionContext(DbContextOptions<CollectionContext> options) : base(options) { }
 
@@ -22,9 +22,10 @@ namespace ProjectMTG.DataAccess
 		{
 			SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
 			{
-				DataSource = "(localdb)\\MSSQLLocalDB",
-				InitialCatalog = "ProjectMTGDemo",
-				IntegratedSecurity = true
+				DataSource = "donau.hiof.no",
+				InitialCatalog = "bjornap",
+				UserID = "bjornap",
+				Password = "4DcDevRv"
 			};
 
 			optionsBuilder.UseSqlServer(builder.ConnectionString);
@@ -32,30 +33,54 @@ namespace ProjectMTG.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			//wat?
-			modelBuilder.Entity<User>().HasData(new User() {UserId = 1, UserName = "Jell", Decks = null});
-
-			modelBuilder.Entity<DeckCardsDir>().HasKey(dc => new {dc.CardId, dc.DeckId});
-
-			modelBuilder.Entity<DeckCardsDir>()
-				.HasOne<Deck>(d => d.Deck)
-				.WithMany(s => s.Contains)
-				.HasForeignKey(c => c.DeckId);
-
-			modelBuilder.Entity<DeckCardsDir>()
-				.HasOne<Card>(c => c.Card)
-				.WithMany(r => r.InCollection)
-				.HasForeignKey(r => r.CardId);
-
+			/* Ska ikkje trenge detta
 			modelBuilder.Entity<Deck>()
 				.HasMany(c => c.Cards)
 				.WithOne(d => d.deck);
 
-			modelBuilder.Entity<User>()
-				.HasMany(d => d.Decks)
-				.WithOne(u => u.User)
-				.IsRequired();
+			modelBuilder.Entity<Deck>()
+				.HasOne(c => c.User)
+				.WithMany(d => d.Decks)
+				.HasForeignKey(x => x.UserId);
+			*/
+			/*
+			modelBuilder.Entity<Deck>()
+				.HasOne(c => c.User)
+				.WithMany(x => x.Decks)
+				.HasForeignKey(x => x.DeckId);
 
+			modelBuilder.Entity<Deck>()
+				.HasMany(x => x.Cards)
+				.WithOne(z => z.deck)
+				.HasForeignKey(x => x.DeckCardId);
+				*/
+
+			//Støttemodell
+			modelBuilder.Entity<DeckCard>()
+				.Property(e => e.colors)
+				.HasConversion(
+					v => string.Join(";", v),
+					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+			modelBuilder.Entity<DeckCard>()
+				.Property(e => e.subtype)
+				.HasConversion(
+					v => string.Join(";", v),
+					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+			modelBuilder.Entity<DeckCard>()
+				.Property(e => e.supertype)
+				.HasConversion(
+					v => string.Join(";", v),
+					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+			modelBuilder.Entity<DeckCard>()
+				.Property(e => e.types)
+				.HasConversion(
+					v => string.Join(";", v),
+					v => v.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+			//Basemodell
 			modelBuilder.Entity<Card>()
 				.Property(e => e.colors)
 				.HasConversion(

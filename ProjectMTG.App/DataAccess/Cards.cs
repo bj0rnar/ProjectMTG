@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using ProjectMTG.App.Helpers;
 using ProjectMTG.Model;
 
 namespace ProjectMTG.App.DataAccess
@@ -16,11 +17,25 @@ namespace ProjectMTG.App.DataAccess
 
         public async Task<Card[]> GetCardsAsync()
         {
-            var clientResult = await _httpClient.GetAsync(CardUri);
-            var jsonData = await clientResult.Content.ReadAsStringAsync();
-            Card[] cards = JsonConvert.DeserializeObject<Card[]>(jsonData);
+            try
+            {
+                var clientResult = await _httpClient.GetAsync(CardUri).ConfigureAwait(true);
+                var jsonData = await clientResult.Content.ReadAsStringAsync().ConfigureAwait(true);
+                Card[] cards = JsonConvert.DeserializeObject<Card[]>(jsonData);
 
-            return cards;
+                return cards;
+            }
+            catch (HttpRequestException ex)
+            {
+                await CustomLogger.Log("GetCardsAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
+                return null;
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                await CustomLogger.Log("GetCardsAsync: " + DateTime.Now.ToShortTimeString() + " " + ex.StackTrace).ConfigureAwait(true);
+                return null;
+            }
         }
 
     }

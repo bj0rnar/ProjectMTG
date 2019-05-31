@@ -34,6 +34,9 @@
             -->
             <winui:NavigationViewItem x:Uid="Shell_Main" Icon="Document" helpers:NavHelper.NavigateTo="views:MainPage" />
             <winui:NavigationViewItem x:Uid="Shell_DeckViewer" Icon="Document" helpers:NavHelper.NavigateTo="views:DeckViewerPage" />
+            <winui:NavigationViewItem x:Uid="Shell_Simulation" Icon="Document" helpers:NavHelper.NavigateTo="views:SimulationPage" />
+            <winui:NavigationViewItem x:Uid="Shell_MTGNews" Icon="Document" helpers:NavHelper.NavigateTo="views:MTGNewsPage" />
+            <winui:NavigationViewItem x:Uid="Shell_UserSettings" Icon="Document" helpers:NavHelper.NavigateTo="views:UserSettingsPage" />
         </winui:NavigationView.MenuItems>
         <i:Interaction.Behaviors>
             <behaviors:NavigationViewHeaderBehavior
@@ -54,7 +57,9 @@
             </ic:EventTriggerBehavior>
         </i:Interaction.Behaviors>
         <Grid>
-            <Frame x:Name="shellFrame" />
-        </Grid>
+            <Frame x:Name="shellFrame" >
+				<TextBlock HorizontalAlignment="Left" Margin="506,366,0,0" Text="Hei på deg" VerticalAlignment="Top"/>
+			</Frame>
+		</Grid>
     </winui:NavigationView>
 </Page>

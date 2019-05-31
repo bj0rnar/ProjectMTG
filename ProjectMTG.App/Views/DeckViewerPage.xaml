@@ -7,35 +7,38 @@
     xmlns:model="using:ProjectMTG.Model"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Grid
+	<Grid
         x:Name="ContentArea"
         Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid
+		<Grid
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <ListView Name ="DeckListView" HorizontalAlignment="Left" Height="291" Margin="87,318,0,0" IsItemClickEnabled="True"
-                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="201" SelectionMode="None"
+			<ListView Name ="DeckListView" HorizontalAlignment="Left" Height="291" Margin="87,318,0,0" IsItemClickEnabled="True"
+                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="201" SelectionMode="Single"
                       ItemClick="DeckLW_OnItemClick" ItemsSource="{x:Bind ViewModel.GetObservableDeckList}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Deck">
-                        <TextBlock Text="{x:Bind DeckName}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <TextBlock HorizontalAlignment="Left" Margin="169,294,0,0" Text="Decks" TextWrapping="Wrap" VerticalAlignment="Top"/>
+				<ListView.ItemTemplate>
+					<DataTemplate x:DataType="model:Deck">
+						<TextBlock Text="{x:Bind DeckName}"/>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<TextBlock HorizontalAlignment="Left" Margin="169,294,0,0" Text="Decks" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
-            <GridView x:Name ="ImageList" HorizontalAlignment="Left" Height="939" Margin="399,32,0,0" IsItemClickEnabled="False"
-                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Width="1043" SelectionMode="None"
+			<GridView x:Name ="ImageList" HorizontalAlignment="Stretch" Height="939" Margin="399,32,0,0" IsItemClickEnabled="False"
+                      BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Width="1043" SelectionMode="None"
                       ItemsSource="{x:Bind ViewModel.GetObservableImage}">
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding}" Width="256" Height="256" Margin="0,0,0,0"/>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
+				<GridView.ItemTemplate>
+					<DataTemplate>
+						<Image Source="{Binding}" Height="280" Width="200" Stretch="UniformToFill"/>
+					</DataTemplate>
+				</GridView.ItemTemplate>
+			</GridView>
+			<Button Content="Delete deck" HorizontalAlignment="Left" Margin="141,738,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.DeleteDeckCommand}" CommandParameter="{Binding ElementName=DeckListView, Path=SelectedItem}"/>
+			<Button Content="Change deckname" HorizontalAlignment="Left" Margin="120,670,0,0" VerticalAlignment="Top" Command="{x:Bind ViewModel.EditDeckNameCommand}" CommandParameter="{Binding ElementName=DeckListView, Path=SelectedItem}"/>
+			<TextBox HorizontalAlignment="Left" Margin="120,638,0,0" Text="{x:Bind ViewModel.DeckName, Mode=TwoWay}" VerticalAlignment="Top" RenderTransformOrigin="0.209,-0.188" Width="135"/>
 
 
-            <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
+			<!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
-        </Grid>
-    </Grid>
+		</Grid>
+	</Grid>
 </Page>

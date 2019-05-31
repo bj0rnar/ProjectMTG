@@ -28,21 +28,20 @@ namespace ProjectMTG
 		{
 			//If DB is empty, use these to populate. 
 			addToDb();
-			CreateDeck();
+			//CreateDeck();
 		}
 
 		public static void CreateDeck()
 		{
 			using (var db = new CollectionContext())
 			{
-				User demoUser = new User() {UserName = "DemoUser"};
-				Deck demoDeck = new Deck() {DeckName = "Testdeck", User = demoUser};
+				User demoUser = new User() {UserName = "Kjellemann", Password = "123"};
 				db.Users.Add(demoUser);
-				db.Decks.Add(demoDeck);
 				db.SaveChanges();
 			}
 		}
 
+		//TODO: Do at startup
 		public static void addToDb()
 		{
 			using (var db = new CollectionContext())
@@ -52,7 +51,7 @@ namespace ProjectMTG
 					var jsonData = httpclient.DownloadString("https://mtgjson.com/json/Standard.json");
 					var model = JsonConvert.DeserializeObject<Carddata>(jsonData);
 
-					var data = from i in model.GRN.cards
+					var data = from i in model.M19.cards
 						select i;
 
 					foreach (var q in data)
